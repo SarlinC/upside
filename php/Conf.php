@@ -6,7 +6,7 @@ class Conf {
   static private $databases = array(
     // Le nom d'hote est webinfo a l'IUT
     // ou localhost sur votre machine
-    'hostname' => 'https://phpmyadmin.cluster028.hosting.ovh.net/index.php?pma_servername=bgzhckuabdel.mysql.db',
+    'hostname' => '92.222.139.190',
     // A l'IUT, vous avez une BDD nommee comme votre login
     // Sur votre machine, vous devrez creer une BDD
     'database' => 'bgzhckuabdel',
