@@ -50,11 +50,11 @@ class ModelUser extends Model {
 
 		$req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
 
-		$tab_voit = $req_prep->fetchAll();
+		$tab_user = $req_prep->fetchAll();
 	    // Attention, si il n'y a pas de résultats, on renvoie false
-		if (empty($tab_voit))
+		if (empty($tab_user))
 			return false;
-		return $tab_voit[0];
+		return $tab_user[0];
 	}
 
 	public static function saveUser($data) {

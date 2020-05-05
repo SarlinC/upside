@@ -15,8 +15,11 @@
 		$duree = 12;
 	}
 
+	$req = ModelUser::selectUser($_GET['nom'], $_GET['prenom'], $_GET['email']);
+
 	// récupération du contenu du champ, passé en get
-	$data = array('duree' => $duree,
+	$data = array('numeroClient' => $req,
+				'duree' => $duree,
 				'date' => = $_GET['date'];
 				'nombreDePersonne' => $_GET['nombreDePersonne'],
 				'traiteur' => $_GET['traiteur'],
@@ -25,7 +28,7 @@
 
 	// lancement de la requête SQL avec selectByName et
 	// récupération du résultat de la requête SQL
-	$resultat = Model::saveDevis($data);
+	$resultat = ModelDevis::saveDevis($data);
 
 	// affichage en format JSON du résultat précédent
 	echo json_encode($resultat);

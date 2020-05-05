@@ -15,7 +15,7 @@
 
 	// lancement de la requête SQL avec selectByName et
 	// récupération du résultat de la requête SQL
-	$resultat = Model::saveUser($data);
+	$resultat = ModelUser::saveUser($data);
 
 	// affichage en format JSON du résultat précédent
 	echo json_encode($resultat);

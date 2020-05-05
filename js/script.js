@@ -28,7 +28,7 @@ form.addEventListener("submit", function() {
 });
 
 form2.addEventListener("submit", function() {
-	requeteDevis(date.value, moment.value, nombreDePersonne.value, traiteur.value, boisson.value);
+	requeteDevis(nom.value, prenom.value, email.value, date.value, moment.value, nombreDePersonne.value, traiteur.value, boisson.value);
 });
 
 
@@ -89,8 +89,8 @@ function requeteAJAX(nom, prenom, email, tel, callback) {
 
 //Requête Ajax pour la création des devis.
 
-function requeteAJAXDevis(date, moment, nombreDePersonne, traiteur, boisson, callback) {
-	let url = "php/requeteDevis.php?date=" + date + "&moment=" + moment + "&nombreDePersonne=" + nombreDePersonne + "&traiteur=" + traiteur + "&boisson" + boisson;
+function requeteAJAXDevis(nom, prenom, email, date, moment, nombreDePersonne, traiteur, boisson, callback) {
+	let url = "php/requeteDevis.php?date=" + date + "&moment=" + moment + "&nombreDePersonne=" + nombreDePersonne + "&traiteur=" + traiteur + "&boisson" + boisson + "&nom=" + nom + "&prenom=" + prenom + "&email=" + email;
 	let requete = new XMLHttpRequest();
 
 	requete.open("GET", url, true);
