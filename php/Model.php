@@ -30,30 +30,6 @@ class Model {
     }
   }
 
-  public static function select($primary_value) {
-    $table_name = ucfirst(static::$object);
-
-    $class_name = "Model" . ucfirst($table_name);
-
-    $primary_key = static::$primary;
-
-    $sql = "SELECT * from $table_name WHERE $primary_key = :primary";
-    // Préparation de la requête
-    $req_prep = Model::$pdo->prepare($sql);
-
-    $values = array("primary" => $primary_value);
-
-    $req_prep->execute($values);
-
-    $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
-    
-    $tab_voit = $req_prep->fetchAll();
-    // Attention, si il n'y a pas de résultats, on renvoie false
-    if (empty($tab_voit))
-        return false;
-    return $tab_voit[0];
-  }
-
   public static function update($data) {
     $table_name = ucfirst(static::$object);
 
