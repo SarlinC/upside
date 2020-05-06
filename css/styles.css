@@ -1,6 +1,5 @@
-div {
+/*div {
 	display: flex;
-	margin: 10px;
 	color: white;
 }
 
@@ -12,7 +11,7 @@ nav div a {
 button a {
 	color: black;
 	text-decoration: none;
-}
+}*/
 
 nav div a:hover {
 	text-decoration: underline;
@@ -29,39 +28,15 @@ main {
 	flex: 1 0 auto;
 }
 
-nav {
-	padding-bottom: 10px;
-}
-
-form {
-	display: block;
-}
-
-label {
+input {
 	color: white;
 }
 
-.card {
+/*.card {
 	display: flex;
 	background-color: #212121;
-	padding: 2%;
-	text-align: center;
-}
-
-.nav-wrapper {
-	background-color: #212121;
-	display: flex;
-}
-
-.page-footer {
-	background-color: #212121;
-	color: white;
-}
-
-#title {
-	font-size: medium;
-	color: white;
-}
+	padding: 1%;
+}*/
 
 #logo {
 	width: 64px;
@@ -70,4 +45,8 @@ label {
 
 #secondForm {
 	display: none;
+}
+
+.parallax-container {
+	height: 250px;
 }

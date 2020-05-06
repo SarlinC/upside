@@ -3,6 +3,15 @@
 <head>
 	<meta charset="utf-8">
 	<title>Devis automatique</title>
+
+	<!-- Materialize: Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	<!-- CSS and Script perso-->
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<script type="text/javascript" src="js/script.js" defer></script>
 </head>
@@ -13,78 +22,81 @@
 
 	<!--navbar-->
 
-	<nav>
-		<div class="nav-wrapper">
-			<img id="logo" src="image/logo.png" alt="logo_upside">
-			<div>
-				<div><a href="index.html">Accueil</a></div>
-				<div><a href="#">Univers</a></div>
-				<div><a href="#">Tarifs</a></div>
-				<div><a href="#">Infos pratiques</a></div>
-				<div><a href="#">Actualités</a></div>
-				<div><a href="#">Contact</a></div>
-				<div><a href="#">Réservation</a></div>
-			</div>
+	<nav class="grey darken-4">
+		<div class="nav-wrapper grey darken-4">
+			<img id="logo" src="src/logo.png" alt="logo_upside">
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="index.html">Accueil</a></li>
+				<li><a href="#">Univers</a></li>
+				<li><a href="#">Infos pratiques</a></li>
+				<li><a href="#">Actualitées</a></li>
+				<li><a href="#">Contact</a></li>
+				<li><a href="#">Réservation</a></li>
+			</ul>
 		</div>
 	</nav>
 
 	<main>
 
+		<div class="parallax-container">
+			<div class="parallax"><img src="src/test.png" alt="background 1"></div>
+		</div>
+
 		<!--formulaire-->
 
-		<div class="card">
-			<div id="card" class="card-content">
-				<h1 id="title">Solution entreprise : </h1>
-
-				<form id="form" action="" method="">
-					<fieldset>
+		<div class="section grey darken-4">
+			<div class="container">
+				<h3 class="white-text" id="title">Solution entreprise : </h3>
+				<div>
+					<form id="form" action="" method="">
 						<div>
 							<label for="nom_id">Entrez votre Nom:<span> *</span></label>
 							<input type="text" name="nom" id="nom_id" placeholder="Ex: Dupont" required>
 						</div>
+
 						<div>
 							<label for="prenom_id">Entrez votre Prénom:<span> *</span></label>
 							<input type="text" name="prenom" id="prenom_id" placeholder="Ex: Jean" required>
 						</div>
+
 						<div>
 							<label for="email_id">Entrez votre Email:<span> *</span></label>
-							<input type="email" name="email" id="email_id" placeholder="Ex: jean.dupont@gmail.com" required>
+							<input class="validate" type="email" name="email" id="email_id" placeholder="Ex: jean.dupont@gmail.com" required>
 						</div>
+
 						<div>
 							<label for="tel_id">Entrez votre numéro de Téléphone: </label>
 							<input type="number" name="tel" id="tel_id" placeholder="Ex: 06 XX XX XX XX">
 						</div>
+
 						<div>
-							<input value="continuer" type="submit">
+							<button class="btn waves-effect waves-light grey darken-3" type="submit" name="action">Continuer</button>
 						</div>
-					</fieldset>
-				</form>
-			</div>
+					</form>
+				</div>
 
-			<div id="secondForm">
-				<h1 id="title">Solution entreprise : </h1>
-
-				<form id="date" action="" method="">
-					<fieldset>
+				<div id="secondForm">
+					<form id="date" action="" method="">
 						<div>
-							<label for="date_id">Sélectionnez la date souhaité:<span> * </span> </label>
+							<label for="date_id">Sélectionnez la date souhaité:<span>*</span></label>
 							<input type="date" name="date" id="date_id" required>
 						</div>
-						<div>
-							<label for="moment_id">Sélectionnez le moment voulu:<span> * </span> </label>
+
+						<div class="input-field col s12">
 							<select name="moment" id="moment_id" required>
-								<option value="">--choisissez une option--</option>
+								<option value="" disabled selected>--choisissez une option--</option>
 								<option value="matinee">Matinée</option>
 								<option value="apresmidi">Après-midi</option>
 								<option value="soiree">Soirée</option>
 								<option value="journee">Journée entière</option>
 								<option value="journee&soiree">Journée et soirée</option>
 							</select>
+							<label for="moment_id">Sélectionnez le moment voulu:<span>*</span></label>
 						</div>
-						<div>
-							<label for="nombre_id">Sélectionnez le nombre de personne:<span> * </span> </label>
+
+						<div class="input-field col s12">
 							<select name="nombreDePersonne" id="nombre_id" required>
-								<option value="">--choisissez une option--</option>
+								<option value="" disabled selected>--choisissez une option--</option>
 								<option value="1">1-5 personnes</option>
 								<option value="5">5-10 personnes</option>
 								<option value="10">10-15 personnes</option>
@@ -97,40 +109,76 @@
 								<option value="45">45-50 personnes</option>
 								<option value="50">50+ personnes</option>
 							</select>
+							<label for="nombre_id">Sélectionnez le nombre de personne:<span> * </span> </label>
 						</div>
+
 						<div>
-							Forfait traiteur ?<span> * </span>
-							<label for="traiteur_oui">Oui</label>
-							<input type="radio" name="traiteur" id="traiteur_oui" value="1" required>
-							<label for="traiteur_non">Non</label>
-							<input type="radio" name="traiteur" id="traiteur_non" value="0" required>
+							<label for="traiteur">Forfait traiteur ?<span> * </span></label>
+							<p>
+								<label>
+									<input class="with-gap" name="traiteur" type="radio" value="1" required>
+									<span>Oui</span>
+								</label>
+								<label>
+									<input class="with-gap" name="traiteur" type="radio" value="0" required>
+									<span>Non</span>
+								</label>
+							</p>
 						</div>
+
 						<div>
-							Forfait boisson ?<span> * </span>
-							<label for="boisson_oui">Oui</label>
-							<input type="radio" name="boisson" id="boisson_oui" value="1" required>
-							<label for="boisson_non">Non</label>
-							<input type="radio" name="boisson" id="boisson_non" value="0" required>
+							<label for="bar">Forfait bar ?<span> * </span></label>
+							<p>
+								<label>
+									<input class="with-gap" name="bar" type="radio" value="1" required>
+									<span>Oui</span>
+								</label>
+								<label>
+									<input class="with-gap" name="bar" type="radio" value="0" required>
+									<span>Non</span>
+								</label>
+							</p>
 						</div>
+
 						<div>
-							<input id="end" type="submit" value="finaliser">
+							<label for="remarque_id">Remarques : </label>
+							<input type="text" name="remarque" id="remarque_id" placeholder="Tapez vos remarques ici">
 						</div>
-					</fieldset>
-				</form>
+
+						<div>
+							<button id="end" class="waves-effect waves-light btn grey darken-3" type="submit">Finaliser</button>
+						</div>
+					</form>
+				</div>
 			</div>
+		</div>
+
+		<div class="parallax-container">
+			<div class="parallax"><img src="src/test2.png" alt="background 2"></div>
 		</div>
 
 	</main>
 
 	<!--Pied de page-->
 
-	<footer class="page-footer">
+	<footer class="page-footer grey darken-4">
 		<div>
-			<img src="image/logo2.png" alt="logo_upside_2">
+			<img src="src/logo2.png" alt="logo_upside_2">
 		</div>
 		<div>
 			© 2020 All right reserves to Upside
 		</div>
 	</footer>
+	<script>
+		//parallax
+		$(document).ready(function(){
+			$('.parallax').parallax();
+		});
+
+		//selecteur
+		$(document).ready(function(){
+			$('select').formSelect();
+		});
+	</script>
 </body>
 </html>
