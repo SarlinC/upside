@@ -1,4 +1,5 @@
 let divForm2 = document.getElementById("secondForm");
+divForm2.style.display = "none";
 
 let form = document.getElementById("form");
 
@@ -24,7 +25,7 @@ form.addEventListener("submit", function() {
 		requeteUser(nom.value, prenom.value, email.value);
 	}
 	form.parentNode.remove(form);
-	divForm2.style.display = "flex";
+	divForm2.style.display = "block";
 });
 
 form2.addEventListener("submit", function() {

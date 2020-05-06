@@ -82,8 +82,9 @@
 							<input type="date" name="date" id="date_id" required>
 						</div>
 
-						<div class="input-field col s12">
-							<select name="moment" id="moment_id" required>
+						<div>
+							<label for="moment_id">Sélectionnez le moment voulu:<span>*</span></label>
+							<select class="browser-default grey darken-4 white-text" id="moment_id" required>
 								<option value="" disabled selected>--choisissez une option--</option>
 								<option value="matinee">Matinée</option>
 								<option value="apresmidi">Après-midi</option>
@@ -91,11 +92,11 @@
 								<option value="journee">Journée entière</option>
 								<option value="journee&soiree">Journée et soirée</option>
 							</select>
-							<label for="moment_id">Sélectionnez le moment voulu:<span>*</span></label>
 						</div>
 
-						<div class="input-field col s12">
-							<select name="nombreDePersonne" id="nombre_id" required>
+						<div>
+							<label for="nombre_id">Sélectionnez le nombre de personne:<span> * </span> </label>
+							<select class="browser-default grey darken-4 white-text" id="nombre_id" required>
 								<option value="" disabled selected>--choisissez une option--</option>
 								<option value="1">1-5 personnes</option>
 								<option value="5">5-10 personnes</option>
@@ -109,7 +110,6 @@
 								<option value="45">45-50 personnes</option>
 								<option value="50">50+ personnes</option>
 							</select>
-							<label for="nombre_id">Sélectionnez le nombre de personne:<span> * </span> </label>
 						</div>
 
 						<div>
@@ -142,11 +142,11 @@
 
 						<div>
 							<label for="remarque_id">Remarques : </label>
-							<input type="text" name="remarque" id="remarque_id" placeholder="Tapez vos remarques ici">
+							<input type="text" name="remarque" id="remarque_id" placeholder="Si vous avez une remarque...">
 						</div>
 
 						<div>
-							<button id="end" class="waves-effect waves-light btn grey darken-3" type="submit">Finaliser</button>
+							<button class="waves-effect waves-light btn grey darken-3" type="submit">Finaliser</button>
 						</div>
 					</form>
 				</div>
