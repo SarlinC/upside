@@ -30,6 +30,7 @@ form.addEventListener("submit", function() {
 
 form2.addEventListener("submit", function() {
 	requeteDevis(nom.value, prenom.value, email.value, date.value, moment.value, nombreDePersonne.value, traiteur.value, boisson.value);
+	//form2.parentNode.remove(form2);
 });
 
 

@@ -48,10 +48,10 @@ class ModelUser extends Model {
 
 		$req_prep->execute($values);
 
-		$req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
-
+            // On récupère les résultats comme précédemment
+		$req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelUser');
 		$tab_user = $req_prep->fetchAll();
-	    // Attention, si il n'y a pas de résultats, on renvoie false
+            // Attention, si il n'y a pas de résultats, on renvoie false
 		if (empty($tab_user))
 			return false;
 		return $tab_user[0];
@@ -72,7 +72,7 @@ class ModelUser extends Model {
 		$value2 = rtrim($value2, ", ");
 
 		try{
-			$sql = "INSERT INTO $Professionnel($value1) VALUES ($value2)";
+			$sql = "INSERT INTO Professionnel($value1) VALUES ($value2)";
 
 			$req_prep = Model::$pdo->prepare($sql);
 

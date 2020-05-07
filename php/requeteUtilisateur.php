@@ -1,7 +1,5 @@
 <?php
-	require_once('Model.php');
-
-	static $object = "professionnel";
+	require_once('ModelUser.php');
 
 	// récupération du contenu du champ, passé en get
 	$data = array('nom' => $_GET['nom'],

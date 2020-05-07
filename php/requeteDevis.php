@@ -1,14 +1,13 @@
 <?php
-	require_once('Model.php');
-
-	static $object = "devis";
+	require_once('ModelUser.php');
+	require_once('ModelDevis.php');
 
 	$duree = 0;
 
-	if ($_GET["moment"] = "matinee" || $_GET["moment"] = "apresmidi" || $_GET["moment"] = "soiree") {
+	if ($_GET["moment"] == "matinee" || $_GET["moment"] == "apresmidi" || $_GET["moment"] == "soiree") {
 		$duree = 4;
 	}
-	else if ($_GET["moment"] = "journee") {
+	else if ($_GET["moment"] == "journee") {
 		$duree = 8;
 	}
 	else {
@@ -20,7 +19,7 @@
 	// récupération du contenu du champ, passé en get
 	$data = array('numeroClient' => $req,
 				'duree' => $duree,
-				'date' => = $_GET['date'];
+				'date' => $_GET['date'],
 				'nombreDePersonne' => $_GET['nombreDePersonne'],
 				'traiteur' => $_GET['traiteur'],
 				'boisson' => $_GET['boisson']);

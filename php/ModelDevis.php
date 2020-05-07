@@ -53,7 +53,7 @@ class ModelDevis extends Model {
 		$value2 = rtrim($value2, ", ");
 
 		try{
-			$sql = "INSERT INTO $Devis($value1) VALUES ($value2)";
+			$sql = "INSERT INTO Devis($value1) VALUES ($value2)";
 
 			$req_prep = Model::$pdo->prepare($sql);
 
