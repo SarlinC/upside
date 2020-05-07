@@ -3,6 +3,8 @@ require_once ('Model.php');
 
 class ModelDevis extends Model {
 
+	protected static $object = "devis";
+
 	private $numeroDevis;
 	private $numeroClient;
 	private $duree;
@@ -36,35 +38,6 @@ class ModelDevis extends Model {
 			$this->traiteur = $data['traiteur'];
 			$this->boisson = $data['boisson'];
 		}
-	}
-
-	public static function saveDevis($data) {
-
-		$value1 = "";
-		$value2 = "";
-
-		foreach ($data as $key => $value) {
-			$value1 = $value1 . $key . ", ";
-			$value2 = $value2 . " :" . $key . ", ";
-		}
-
-		$value1 = rtrim($value1, ", ");
-
-		$value2 = rtrim($value2, ", ");
-
-		try{
-			$sql = "INSERT INTO Devis($value1) VALUES ($value2)";
-
-			$req_prep = Model::$pdo->prepare($sql);
-
-			$req_prep->execute($data);
-		}
-		catch(PDOException $e) {
-			if($e->getCode() == 23000) {
-				return false;
-			}
-		}
-		return true;
 	}
 }
 ?>

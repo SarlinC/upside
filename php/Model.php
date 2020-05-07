@@ -29,6 +29,38 @@ class Model {
       die();
     }
   }
+
+  public static function save($data) {
+    $table_name = ucfirst(static::$object);
+
+    $class_name = "Model" . ucfirst($table_name);
+
+    $value1 = "";
+    $value2 = "";
+
+    foreach ($data as $key => $value) {
+      $value1 = $value1 . $key . ", ";
+      $value2 = $value2 . " :" . $key . ", ";
+    }
+
+    $value1 = rtrim($value1, ", ");
+
+    $value2 = rtrim($value2, ", ");
+
+    try{
+      $sql = "INSERT INTO $table_name($value1) VALUES ($value2)";
+
+      $req_prep = Model::$pdo->prepare($sql);
+
+      $req_prep->execute($data);
+    }
+    catch(PDOException $e) {
+      if($e->getCode() == 23000) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 Model::Init();
 ?>

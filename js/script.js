@@ -19,10 +19,10 @@ let boisson = document.getElementById("boisson");
 
 form.addEventListener("submit", function() {
 	if (tel.value != "") {
-		requeteUser(nom.value, prenom.value, email.value, tel.value);
+		requeteUser1(nom.value, prenom.value, email.value, tel.value);
 	}
 	else {
-		requeteUser(nom.value, prenom.value, email.value);
+		requeteUser2(nom.value, prenom.value, email.value);
 	}
 	form.parentNode.remove(form);
 	divForm2.style.display = "block";
@@ -30,26 +30,20 @@ form.addEventListener("submit", function() {
 
 form2.addEventListener("submit", function() {
 	requeteDevis(nom.value, prenom.value, email.value, date.value, moment.value, nombreDePersonne.value, traiteur.value, boisson.value);
-	//form2.parentNode.remove(form2);
+	form2.parentNode.remove(form2);
 });
 
 
 function callback(req) {
-	//let tab = JSON.parse(req.responseText);
 	console.log(req.responseText);
-	/*let tab2 = [tab.length];
-
-	for (let i = 0; i < tab.length; i ++) {
-		tab2[i] = tab[i].name;
-	}*/
 }
 
-function requeteUser(nom, prenom, email) {
-	requeteAJAX(nom, prenom, email, callback);
+function requeteUser1(nom, prenom, email) {
+	requeteAJAX1(nom, prenom, email, callback);
 }
 
-function requeteUser(nom, prenom, email, tel) {
-	requeteAJAX(nom, prenom, email, tel, callback);
+function requeteUser2(nom, prenom, email, tel) {
+	requeteAJAX2(nom, prenom, email, tel, callback);
 }
 
 function requeteDevis(date, moment, nombreDePersonne, traiteur, boisson) {
@@ -58,9 +52,9 @@ function requeteDevis(date, moment, nombreDePersonne, traiteur, boisson) {
 
 //Requête Ajax pour la création d'un utilisateur sans téléphone
 
-function requeteAJAX(nom, prenom, email, callback) {
+function requeteAJAX1(nom, prenom, email, callback) {
 
-	let url = "php/requeteUtilisateur.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
+	let url = 'php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email;
 	let requete = new XMLHttpRequest();
 
 	requete.open("GET", url, true);
@@ -74,9 +68,9 @@ function requeteAJAX(nom, prenom, email, callback) {
 
 //Requête Ajax pour la création d'un utilisateur avec téléphone
 
-function requeteAJAX(nom, prenom, email, tel, callback) {
+function requeteAJAX2(nom, prenom, email, tel, callback) {
 
-	let url = "php/requeteUtilisateur.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email + "&tel=" + tel;
+	let url = 'php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email + '&tel=' + tel;
 	let requete = new XMLHttpRequest();
 
 	requete.open("GET", url, true);
