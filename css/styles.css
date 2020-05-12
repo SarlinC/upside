@@ -25,3 +25,8 @@ input {
 .parallax-container {
 	height: 250px;
 }
+
+#choix {
+	display: none;
+	align-content: center;
+}
