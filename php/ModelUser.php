@@ -40,7 +40,7 @@ class ModelUser extends Model {
 
 	public static function selectUser($nom, $prenom, $email) {
 
-		$sql = "SELECT numeroClient from Professionnel WHERE $nom = :nom AND $prenom = :prenom AND $email = :email";
+		$sql = "SELECT numeroClient from Professionnel WHERE nom = :nom AND prenom = :prenom AND email = :email";
 	    // Préparation de la requête
 		$req_prep = Model::$pdo->prepare($sql);
 

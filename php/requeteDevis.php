@@ -4,6 +4,8 @@
 
 	$req = ModelUser::selectUser($_GET['nom'], $_GET['prenom'], $_GET['email']);
 
+	echo json_encode($req);
+
 	// récupération du contenu du champ, passé en get
 	$data = array('numeroClient' => $req,
 				'duree' => $_GET['duree,'],

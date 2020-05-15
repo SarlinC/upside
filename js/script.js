@@ -63,6 +63,11 @@ function callback(req) {
 	console.log(req.responseText);
 }
 
+function callback2(req) {
+	console.log(req.responseText);
+	//return req.responseText;
+}
+
 function requeteUser(nom, prenom, email) {
 	requeteAJAX(nom, prenom, email, callback);
 }
@@ -72,7 +77,8 @@ function requeteUser(nom, prenom, email, tel) {
 }
 
 function requeteDevis(nom, prenom, email, duree, date, nombreDePersonne, traiteur, boisson, remarque) {
-	requeteAJAXDevis(date, moment, nombreDePersonne, traiteur, boisson, remarque, callback);
+	let user = requeteAJAXUser(nom, prenom, email);
+	requeteAJAXDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque, callback);
 }
 
 //Requête Ajax pour la création d'un utilisateur sans téléphone
@@ -109,15 +115,28 @@ function requeteAJAX(nom, prenom, email, tel, callback) {
 
 //Requête Ajax pour la création des devis.
 
-function requeteAJAXDevis(nom, prenom, email, duree, date, nombreDePersonne, traiteur, boisson, remarque, callback) {
+function requeteAJAXDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque, callback) {
 	let url = "php/requeteDevis.php?date=" + date + "&duree=" + duree + "&nombreDePersonne=" + nombreDePersonne + "&traiteur=" + traiteur +
-	"&boisson=" + boisson + "&remarque=" + remarque + "&nom=" + nom + "&prenom=" + prenom + "&email=" + email;
+	"&boisson=" + boisson + "&remarque=" + remarque + "&user=" + user;
 	let requete = new XMLHttpRequest();
 
 	requete.open("GET", url, true);
 
 	requete.addEventListener("load", function () {
 		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+function requeteAJAXUser(nom, prenom, email) {
+	let url = "php/requeteSelectUser.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
+	let requete = new XMLHttpRequest();
+
+	requete.open("GET", url, true);
+
+	requete.addEventListener("load", function () {
+		callback2(requete);
 	});
 
 	requete.send(null);
