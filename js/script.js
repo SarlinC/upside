@@ -14,11 +14,12 @@ let form2 = document.getElementById("date");
 let date = document.getElementById("date_id");
 let moment = document.getElementById("moment_id");
 let nombreDePersonne = document.getElementById("nombre_id");
-let traiteur = document.getElementsByName("traiteur");
-let boisson = document.getElementsByName("boisson");
 let remarque = document.getElementById("remarque_id");
 
+let traiteur = document.getElementsByName("traiteur");
 let t;
+
+let boisson = document.getElementsByName("boisson");
 let b;
 
 form.addEventListener("submit", function() {
@@ -63,29 +64,21 @@ function callback(req) {
 	console.log(req.responseText);
 }
 
-function callback2(req) {
-	console.log(req.responseText);
+function callback2(req, duree) {
+	requeteSaveDevis(req.responseText, duree, date.value, nombreDePersonne.value, t, b, remarque.value);
 }
 
 function requeteUser(nom, prenom, email) {
-	requeteAJAX(nom, prenom, email, callback);
+	requeteSaveUser(nom, prenom, email);
 }
 
 function requeteUser(nom, prenom, email, tel) {
-	requeteAJAX(nom, prenom, email, tel, callback);
-}
-
-function requeteUser2(nom, prenom, email) {
-	return requeteAJAXUser(nom, prenom, email);
-}
-
-function requeteDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque) {
-	requeteAJAXDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque, callback);
+	requeteSaveUser(nom, prenom, email, tel);
 }
 
 //Requête Ajax pour la création d'un utilisateur sans téléphone
 
-function requeteAJAX(nom, prenom, email, callback) {
+function requeteSaveUser(nom, prenom, email) {
 
 	let url = 'php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email;
 	let requete = new XMLHttpRequest();
@@ -101,7 +94,7 @@ function requeteAJAX(nom, prenom, email, callback) {
 
 //Requête Ajax pour la création d'un utilisateur avec téléphone
 
-function requeteAJAX(nom, prenom, email, tel, callback) {
+function requeteSaveUser(nom, prenom, email, tel) {
 
 	let url = 'php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email + '&tel=' + tel;
 	let requete = new XMLHttpRequest();
@@ -117,7 +110,7 @@ function requeteAJAX(nom, prenom, email, tel, callback) {
 
 //Requête Ajax pour la création des devis.
 
-function requeteAJAXDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque, callback) {
+function requeteSaveDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque) {
 	let url = "php/requeteDevis.php?date=" + date + "&duree=" + duree + "&nombreDePersonne=" + nombreDePersonne + "&traiteur=" + traiteur +
 	"&boisson=" + boisson + "&remarque=" + remarque + "&user=" + user;
 	let requete = new XMLHttpRequest();
@@ -131,14 +124,14 @@ function requeteAJAXDevis(user, duree, date, nombreDePersonne, traiteur, boisson
 	requete.send(null);
 }
 
-function requeteAJAXUser(nom, prenom, email) {
+function requeteSelectUser(nom, prenom, email, duree) {
 	let url = "php/requeteSelectUser.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
 	let requete = new XMLHttpRequest();
 
 	requete.open("GET", url, true);
 
 	requete.addEventListener("load", function () {
-		callback2(requete);
+		callback2(requete, duree);
 	});
 
 	requete.send(null);
@@ -159,17 +152,17 @@ function calculPrix(nbr, value) {
 document.getElementById("choix1").addEventListener("click", function() {
 	let duree = nombreDePersonne.value * 20;
 
-	requeteDevis(nom.value, prenom.value, email.value, duree, date.value, nombreDePersonne.value, t, b, remarque.value);
+	requeteSelectUser(nom.value, prenom.value, email.value, duree);
 });
 
 document.getElementById("choix2").addEventListener("click", function() {
 	let duree = nombreDePersonne.value * 30;
 
-	requeteDevis(nom.value, prenom.value, email.value, duree, date.value, nombreDePersonne.value, t, b, remarque.value);
+	requeteSelectUser(nom.value, prenom.value, email.value, duree);
 });
 
 document.getElementById("choix3").addEventListener("click", function() {
 	let duree = nombreDePersonne.value * 60;
 
-	requeteDevis(nom.value, prenom.value, email.value, duree, date.value, nombreDePersonne.value, t, b, remarque.value);
+	requeteSelectUser(nom.value, prenom.value, email.value, duree);
 });

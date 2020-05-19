@@ -6,5 +6,5 @@
 	$resultat = ModelUser::selectUser($_GET['nom'], $_GET['prenom'], $_GET['email']);
 
 	// affichage en format JSON du résultat précédent
-	echo json_encode($resultat);
+	echo json_encode(intval($resultat->get("numeroClient")));
 ?>

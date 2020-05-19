@@ -3,12 +3,12 @@
 
 	// récupération du contenu du champ, passé en get
 	$data = array('numeroClient' => $_GET['user'],
-				'duree' => $_GET['duree'],
-				'date' => $_GET['date'],
-				'nombreDePersonne' => $_GET['nombreDePersonne'],
-				'traiteur' => $_GET['traiteur'],
-				'boisson' => $_GET['boisson'],
-				'remarque' => $_GET['remarque']);
+				'Duree' => $_GET['duree'],
+				'Date' => $_GET['date'],
+				'NombreDePersonne' => $_GET['nombreDePersonne'],
+				'Traiteur' => $_GET['traiteur'],
+				'Bar' => $_GET['boisson'],
+				'Remarque' => $_GET['remarque']);
 
 
 	// lancement de la requête SQL avec selectByName et

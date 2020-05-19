@@ -40,7 +40,7 @@ class ModelUser extends Model {
 
 	public static function selectUser($nom, $prenom, $email) {
 
-		$sql = "SELECT numeroClient from Professionnel WHERE nom = :nom AND prenom = :prenom AND email = :email";
+		$sql = "SELECT numeroClient FROM Professionnel WHERE nom = :nom AND prenom = :prenom AND email = :email";
 	    // Préparation de la requête
 		$req_prep = Model::$pdo->prepare($sql);
 
@@ -50,10 +50,11 @@ class ModelUser extends Model {
 
 		$req_prep->execute($values);
 
-            // On récupère les résultats comme précédemment
+        // On récupère les résultats comme précédemment
 		$req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelUser');
 		$tab_user = $req_prep->fetchAll();
-            // Attention, si il n'y a pas de résultats, on renvoie false
+        
+        // Attention, si il n'y a pas de résultats, on renvoie false
 		if (empty($tab_user))
 			return false;
 		return $tab_user[0];
