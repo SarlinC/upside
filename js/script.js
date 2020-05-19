@@ -65,7 +65,6 @@ function callback(req) {
 
 function callback2(req) {
 	console.log(req.responseText);
-	//return req.responseText;
 }
 
 function requeteUser(nom, prenom, email) {
@@ -76,8 +75,11 @@ function requeteUser(nom, prenom, email, tel) {
 	requeteAJAX(nom, prenom, email, tel, callback);
 }
 
-function requeteDevis(nom, prenom, email, duree, date, nombreDePersonne, traiteur, boisson, remarque) {
-	let user = requeteAJAXUser(nom, prenom, email);
+function requeteUser2(nom, prenom, email) {
+	return requeteAJAXUser(nom, prenom, email);
+}
+
+function requeteDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque) {
 	requeteAJAXDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque, callback);
 }
 

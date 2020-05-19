@@ -46,7 +46,7 @@ class ModelUser extends Model {
 
 		$values = array("nom" => $nom,
 			"prenom" => $prenom,
-			"eamil" => $email);
+			"email" => $email);
 
 		$req_prep->execute($values);
 

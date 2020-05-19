@@ -1,14 +1,9 @@
 <?php
-	require_once('ModelUser.php');
 	require_once('ModelDevis.php');
 
-	$req = ModelUser::selectUser($_GET['nom'], $_GET['prenom'], $_GET['email']);
-
-	echo json_encode($req);
-
 	// récupération du contenu du champ, passé en get
-	$data = array('numeroClient' => $req,
-				'duree' => $_GET['duree,'],
+	$data = array('numeroClient' => $_GET['user'],
+				'duree' => $_GET['duree'],
 				'date' => $_GET['date'],
 				'nombreDePersonne' => $_GET['nombreDePersonne'],
 				'traiteur' => $_GET['traiteur'],
@@ -18,7 +13,7 @@
 
 	// lancement de la requête SQL avec selectByName et
 	// récupération du résultat de la requête SQL
-	$resultat = ModelDevis::saveDevis($data);
+	$resultat = ModelDevis::save($data);
 
 	// affichage en format JSON du résultat précédent
 	echo json_encode($resultat);
