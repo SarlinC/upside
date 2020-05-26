@@ -1,26 +1,10 @@
-let divForm2 = document.getElementById("secondForm");
-divForm2.style.display = "none";
-
+//Partie 1er Formulaire
 let form = document.getElementById("form");
 
 let nom = document.getElementById("nom_id");
 let prenom = document.getElementById("prenom_id");
 let email = document.getElementById("email_id");
 let tel = document.getElementById("tel_id");
-
-
-let form2 = document.getElementById("date");
-
-let date = document.getElementById("date_id");
-let moment = document.getElementById("moment_id");
-let nombreDePersonne = document.getElementById("nombre_id");
-let remarque = document.getElementById("remarque_id");
-
-let traiteur = document.getElementsByName("traiteur");
-let t;
-
-let boisson = document.getElementsByName("boisson");
-let b;
 
 form.addEventListener("submit", function() {
 	if (tel.value != "") {
@@ -32,41 +16,6 @@ form.addEventListener("submit", function() {
 	form.parentNode.remove(form);
 	divForm2.style.display = "block";
 });
-
-form2.addEventListener("submit", function() {
-	document.getElementById("choix").style.display = "flex";
-
-	if (traiteur[0].checked) {
-		t = 1;
-	}
-	else {
-		t = 0;
-	}
-
-	if (boisson[0].checked) {
-		b = 1;
-	}
-	else {
-		b = 0;
-	}
-
-	form2.parentNode.remove(form2);
-
-	document.getElementById("formule1").innerHTML = calculPrix(nombreDePersonne.value, 30) + " €";
-
-	document.getElementById("formule2").innerHTML = calculPrix(nombreDePersonne.value, 18) + " €";
-
-	document.getElementById("formule3").innerHTML = calculPrix(nombreDePersonne.value, 9) + " €";
-});
-
-
-function callback(req) {
-	console.log(req.responseText);
-}
-
-function callback2(req, duree) {
-	requeteSaveDevis(req.responseText, duree, date.value, nombreDePersonne.value, t, b, remarque.value);
-}
 
 function requeteUser(nom, prenom, email) {
 	requeteSaveUser(nom, prenom, email);
@@ -108,6 +57,106 @@ function requeteSaveUser(nom, prenom, email, tel) {
 	requete.send(null);
 }
 
+//Partie 2nd Formulaire
+
+let divForm2 = document.getElementById("secondForm");
+divForm2.style.display = "none";
+
+let form2 = document.getElementById("date");
+
+let date = document.getElementById("date_id");
+let moment = document.getElementById("moment_id");
+let nombreDePersonne = document.getElementById("nombre_id");
+let remarque = document.getElementById("remarque_id");
+
+let traiteur = document.getElementsByName("traiteur");
+let t;
+
+let boisson = document.getElementsByName("boisson");
+let b;
+
+let popup = document.getElementById("nombre_id");
+
+popup.addEventListener("change", function() {
+	if (popup.value >= 30) {
+		alert("En choisissant cette option, nous vous privatisons le parc.");
+	}
+});
+
+form2.addEventListener("submit", function() {
+	document.getElementById("dernierForm").style.display = "flex";
+
+	if (traiteur[0].checked) {
+		t = 1;
+	}
+	else {
+		t = 0;
+	}
+
+	if (boisson[0].checked) {
+		b = 1;
+	}
+	else {
+		b = 0;
+	}
+
+	if (b == 1) {
+		forfaitBoisson.style.display = "flex";
+
+		b2[0].setAttribute("required", "");
+		b2[1].setAttribute("required", "");
+		b2[2].setAttribute("required", "");	
+	}
+
+	form2.parentNode.remove(form2);
+});
+
+//Parie du dernier formulaire
+
+let form3 = document.getElementById("dernierForm");
+
+let forfaitBoisson = document.getElementById("drink");
+forfaitBoisson.style.display = "none";
+
+let prix = 0;
+
+let b2 = document.getElementsByName("boisson");
+let activite = document.getElementsByName("wait");
+
+form3.addEventListener("submit", function() {
+	document.getElementById("choix").style.display = "flex";
+
+	if (b2[0].checked) {
+		prix = prix + 3 * nombreDePersonne.value;
+	}
+	else if (b2[1].checked) {
+		prix = prix + 5 * nombreDePersonne.value;
+	}
+	else if (b2[2].checked) {
+		prix = prix + 7 * nombreDePersonne.value;
+	}
+
+	if (activite[0].checked) {
+		prix = prix + 5 * nombreDePersonne.value;
+	}
+	else if (activite[1].checked) {
+		prix = prix + 10 * nombreDePersonne.value;
+	}
+	else if (activite[2].checked) {
+		prix = prix + 15 * nombreDePersonne.value;
+	}
+
+	form3.parentNode.remove(form3);
+
+	document.getElementById("formule1").innerHTML = calculPrix(nombreDePersonne.value, 30) * 1 + prix + " €";
+
+	document.getElementById("formule2").innerHTML = calculPrix(nombreDePersonne.value, 18) * 1 + prix + " €";
+
+	document.getElementById("formule3").innerHTML = calculPrix(nombreDePersonne.value, 9) * 1 + prix + " €";
+});
+
+//Partie choix d'un prix
+
 //Requête Ajax pour la création des devis.
 
 function requeteSaveDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque) {
@@ -137,13 +186,9 @@ function requeteSelectUser(nom, prenom, email, duree) {
 	requete.send(null);
 }
 
-let popup = document.getElementById("nombre_id");
-
-popup.addEventListener("change", function() {
-	if (popup.value >= 30) {
-		alert("En choisissant cette option, nous vous privatisons le parc.");
-	}
-});
+function callback2(req, duree) {
+	requeteSaveDevis(req.responseText, duree, date.value, nombreDePersonne.value, t, b, remarque.value);
+}
 
 function calculPrix(nbr, value) {
 	return nbr / value * 9 * 30;
@@ -166,3 +211,9 @@ document.getElementById("choix3").addEventListener("click", function() {
 
 	requeteSelectUser(nom.value, prenom.value, email.value, duree);
 });
+
+//Partie générale
+
+function callback(req) {
+	console.log(req.responseText);
+}

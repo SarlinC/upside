@@ -150,6 +150,55 @@
 						</div>
 					</form>
 				</div>
+
+
+				<div id="dernierForm">
+					<form id="more" action="" method="">
+						<div>
+							<label for="wait">Voulez vous des activités d'attente (simulation) ?</label>
+							<p>
+								<label>
+									<input class="with-gap" name="wait" type="radio" value="1" required>
+									<span>1 par personne</span>
+								</label>
+								<label>
+									<input class="with-gap" name="wait" type="radio" value="2" required>
+									<span>2 par personne</span>
+								</label>
+								<label>
+									<input class="with-gap" name="wait" type="radio" value="3" required>
+									<span>3 par personne</span>
+								</label>
+								<label>
+									<input class="with-gap" name="wait" type="radio" value="0" required>
+									<span>Non</span>
+								</label>
+							</p>
+						</div>
+
+						<div id="drink">
+							<label for="boisson">Combien de boisson voulez vous ?</label>
+							<p>
+								<label>
+									<input class="with-gap" name="boisson" type="radio" value="1">
+									<span>1 par personne</span>
+								</label>
+								<label>
+									<input class="with-gap" name="boisson" type="radio" value="2">
+									<span>2 par personnes</span>
+								</label>
+								<label>
+									<input class="with-gap" name="boisson" type="radio" value="3">
+									<span>3 par personnes</span>
+								</label>
+							</p>
+						</div>
+
+						<div>
+							<button class="waves-effect waves-light btn grey darken-3" type="submit">Continuer</button>
+						</div>
+					</form>
+				</div>
 			</div>
 
 			<div id="choix" class="container">
@@ -157,17 +206,6 @@
 					<h3 class="white-text">Formule 1 :</h3>
 					<h4 class="white-text">20 minutes par personnes</h4>
 					<h4 id="formule1" class="white-text"></h4>
-					<label for="wait">Voulez vous des activités d'attente ?</label>
-					<p>
-						<label>
-							<input class="with-gap" name="wait" type="radio" value="1" required>
-							<span>Oui</span>
-						</label>
-						<label>
-							<input class="with-gap" name="wait" type="radio" value="0" required>
-							<span>Non</span>
-						</label>
-					</p>
 					<button id="choix1" class="waves-effect waves-light btn grey darken-3">Choisir</button>
 				</fieldset>
 				<fieldset>

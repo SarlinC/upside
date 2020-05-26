@@ -2,12 +2,12 @@
 	require_once('ModelUser.php');
 
 	// récupération du contenu du champ, passé en get
-	$data = array('nom' => $_GET['nom'],
-				'prenom' => $_GET['prenom'],
-				'email' => $_GET['email']);
+	$data = array('Nom' => $_GET['nom'],
+				'Prenom' => $_GET['prenom'],
+				'Email' => $_GET['email']);
 	
 	if (isset($_GET['tel'])) {
-		$data['tel'] = $_GET['tel'];
+		$data['Telephone'] = $_GET['tel'];
 	}
 
 
