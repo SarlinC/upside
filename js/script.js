@@ -101,7 +101,7 @@ form2.addEventListener("submit", function() {
 	}
 
 	if (b == 1) {
-		forfaitBoisson.style.display = "flex";
+		forfaitBoisson.style.display = "block";
 
 		b2[0].setAttribute("required", "");
 		b2[1].setAttribute("required", "");
@@ -211,6 +211,10 @@ document.getElementById("choix3").addEventListener("click", function() {
 
 	requeteSelectUser(nom.value, prenom.value, email.value, duree);
 });
+
+//Partie affichage du devis
+
+document.getElementById("tableau").style.display = "none";
 
 //Partie générale
 
