@@ -26,11 +26,31 @@ input {
 	height: 250px;
 }
 
+p {
+	color: white;
+}
+
 #choix {
 	display: none;
 	align-content: center;
 }
 
-#dernierForm {
-	display: none;
+#prix {
+	color: white;
+}
+
+.datepicker-date-display {
+	background-color: #212121;
+}
+
+.datepicker-table td.is-selected {
+    background-color: #212121;
+}
+
+.datepicker-cancel {
+	color: #212121;
+}
+
+.datepicker-done {
+	color: #212121;
 }

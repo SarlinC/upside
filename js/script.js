@@ -15,6 +15,7 @@ form.addEventListener("submit", function() {
 	}
 	form.parentNode.remove(form);
 	divForm2.style.display = "block";
+	prix.style.display = "flex";
 });
 
 function requeteUser(nom, prenom, email) {
@@ -62,6 +63,10 @@ function requeteSaveUser(nom, prenom, email, tel) {
 let divForm2 = document.getElementById("secondForm");
 divForm2.style.display = "none";
 
+document.getElementById("traiteur").style.display = "none";
+document.getElementById("boisson").style.display = "none";
+document.getElementById("wait").style.display = "none";
+
 let form2 = document.getElementById("date");
 
 let date = document.getElementById("date_id");
@@ -69,11 +74,125 @@ let moment = document.getElementById("moment_id");
 let nombreDePersonne = document.getElementById("nombre_id");
 let remarque = document.getElementById("remarque_id");
 
-let traiteur = document.getElementsByName("traiteur");
-let t;
+let prix = document.getElementById("prix");
+prix.style.display = "none";
 
+let traiteur = document.getElementsByName("traiteur");
 let boisson = document.getElementsByName("boisson");
-let b;
+let wait = document.getElementsByName("wait");
+
+let traiteur2 = document.getElementsByName("traiteur2");
+let boisson2 = document.getElementsByName("boisson2");
+let wait2 = document.getElementsByName("wait2");
+
+let pTraiteur = 0;
+let pBoisson = 0;
+let pWait = 0;
+let pTotal = 0;
+
+traiteur[0].addEventListener("click", function() {
+	document.getElementById("traiteur").style.display = "block";
+});
+
+traiteur[1].addEventListener("click", function() {
+	document.getElementById("traiteur").style.display = "none";
+	if (pTotal >= 0) {
+		for (let i = 0; i < 3; i ++) {
+			if (traiteur2[i].checked) {
+				pTraiteur = 0;
+				pTotal = pTotal - (traiteur2[i].value * nombreDePersonne.value);
+				prix.innerHTML = "Coût : " + pTotal + " €";
+				traiteur2[i].checked = false;
+			}
+		}
+	}
+	else {
+		prix.innerHTML = "";
+	}
+});
+
+boisson[0].addEventListener("click", function() {
+	document.getElementById("boisson").style.display = "block";
+});
+
+boisson[1].addEventListener("click", function() {
+	document.getElementById("boisson").style.display = "none";
+	if (pTotal >= 0) {
+		for (let i = 0; i < 3; i ++) {
+			if (boisson2[i].checked) {
+				pBoisson = 0;
+				pTotal = pTotal - (boisson2[i].value * nombreDePersonne.value);
+				prix.innerHTML = "Coût : " + pTotal + " €";
+				boisson2[i].checked = false;
+			}
+		}
+	}
+	else {
+		prix.innerHTML = "";
+	}
+});
+
+wait[0].addEventListener("click", function() {
+	document.getElementById("wait").style.display = "block";
+});
+
+wait[1].addEventListener("click", function() {
+	document.getElementById("wait").style.display = "none";
+	if (pTotal >= 0) {
+		for (let i = 0; i < 3; i ++) {
+			if (wait2[i].checked) {
+				pWait = 0;
+				pTotal = pTotal - (wait2[i].value * nombreDePersonne.value);
+				prix.innerHTML = "Coût : " + pTotal + " €";
+				wait2[i].checked = false;
+			}
+		}
+	}
+	else {
+		prix.innerHTML = "";
+	}
+});
+
+for (let i = 0; i < 3; i ++) {
+	traiteur2[i].addEventListener("click", function() {
+		if (nombreDePersonne.value == 0) {
+			alert("Veuillez sélectionnez un nombre de participants !");
+		}
+		else {
+			if (traiteur2[i].checked) {
+				pTraiteur = traiteur2[i].value * nombreDePersonne.value;
+			}
+			pTotal = pTraiteur + pBoisson + pWait;
+			prix.innerHTML = "Coût : " + pTotal + " €";
+		}
+	});
+
+	boisson2[i].addEventListener("click", function() {
+		if (nombreDePersonne.value == 0) {
+			alert("Veuillez sélectionnez un nombre de participants !");
+		}
+		else {
+			if (boisson2[i].checked) {
+				pBoisson = boisson2[i].value * nombreDePersonne.value;
+			}
+			pTotal = pTraiteur + pBoisson + pWait;
+			prix.innerHTML = "Coût : " + pTotal + " €";
+		}
+	});
+
+	wait2[i].addEventListener("click", function() {
+		if (nombreDePersonne.value == 0) {
+			alert("Veuillez sélectionnez un nombre de participants !");
+		}
+		else {
+			if (wait2[i].checked) {
+				pWait = wait2[i].value * nombreDePersonne.value;
+			}
+			pTotal = pTraiteur + pBoisson + pWait;
+			prix.innerHTML = "Coût : " + pTotal + " €";
+		}
+	});
+}
 
 let popup = document.getElementById("nombre_id");
 
@@ -84,75 +203,15 @@ popup.addEventListener("change", function() {
 });
 
 form2.addEventListener("submit", function() {
-	document.getElementById("dernierForm").style.display = "flex";
-
-	if (traiteur[0].checked) {
-		t = 1;
-	}
-	else {
-		t = 0;
-	}
-
-	if (boisson[0].checked) {
-		b = 1;
-	}
-	else {
-		b = 0;
-	}
-
-	if (b == 1) {
-		forfaitBoisson.style.display = "block";
-
-		b2[0].setAttribute("required", "");
-		b2[1].setAttribute("required", "");
-		b2[2].setAttribute("required", "");	
-	}
-
-	form2.parentNode.remove(form2);
-});
-
-//Parie du dernier formulaire
-
-let form3 = document.getElementById("dernierForm");
-
-let forfaitBoisson = document.getElementById("drink");
-forfaitBoisson.style.display = "none";
-
-let prix = 0;
-
-let b2 = document.getElementsByName("boisson");
-let activite = document.getElementsByName("wait");
-
-form3.addEventListener("submit", function() {
 	document.getElementById("choix").style.display = "flex";
 
-	if (b2[0].checked) {
-		prix = prix + 3 * nombreDePersonne.value;
-	}
-	else if (b2[1].checked) {
-		prix = prix + 5 * nombreDePersonne.value;
-	}
-	else if (b2[2].checked) {
-		prix = prix + 7 * nombreDePersonne.value;
-	}
+	form2.parentNode.remove(form2);
 
-	if (activite[0].checked) {
-		prix = prix + 5 * nombreDePersonne.value;
-	}
-	else if (activite[1].checked) {
-		prix = prix + 10 * nombreDePersonne.value;
-	}
-	else if (activite[2].checked) {
-		prix = prix + 15 * nombreDePersonne.value;
-	}
+	document.getElementById("formule1").innerHTML = calculPrix(nombreDePersonne.value, 30) + " €";
 
-	form3.parentNode.remove(form3);
+	document.getElementById("formule2").innerHTML = calculPrix(nombreDePersonne.value, 18) + " €";
 
-	document.getElementById("formule1").innerHTML = calculPrix(nombreDePersonne.value, 30) * 1 + prix + " €";
-
-	document.getElementById("formule2").innerHTML = calculPrix(nombreDePersonne.value, 18) * 1 + prix + " €";
-
-	document.getElementById("formule3").innerHTML = calculPrix(nombreDePersonne.value, 9) * 1 + prix + " €";
+	document.getElementById("formule3").innerHTML = calculPrix(nombreDePersonne.value, 9) + " €";
 });
 
 //Partie choix d'un prix
@@ -191,23 +250,26 @@ function callback2(req, duree) {
 }
 
 function calculPrix(nbr, value) {
-	return nbr / value * 9 * 30;
+	return nbr / value * 13 * 30;
 }
 
 document.getElementById("choix1").addEventListener("click", function() {
 	let duree = nombreDePersonne.value * 20;
+	let price = document.getElementById("formule1").innerHTML;
 
 	requeteSelectUser(nom.value, prenom.value, email.value, duree);
 });
 
 document.getElementById("choix2").addEventListener("click", function() {
 	let duree = nombreDePersonne.value * 30;
+	let price = document.getElementById("formule2").innerHTML;
 
 	requeteSelectUser(nom.value, prenom.value, email.value, duree);
 });
 
 document.getElementById("choix3").addEventListener("click", function() {
 	let duree = nombreDePersonne.value * 60;
+	let price = document.getElementById("formule3").innerHTML;
 
 	requeteSelectUser(nom.value, prenom.value, email.value, duree);
 });

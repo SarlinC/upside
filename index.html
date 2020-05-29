@@ -79,7 +79,7 @@
 					<form id="date" action="" method="">
 						<div>
 							<label for="date_id">Sélectionnez la date souhaité:<span>*</span></label>
-							<input type="date" name="date" id="date_id" required>
+							<input type="text" class="datepicker" name="date" id="date_id" required>
 						</div>
 
 						<div>
@@ -115,15 +115,35 @@
 						<div>
 							<label for="traiteur">Forfait traiteur ?<span> * </span></label>
 							<p>
-								<label>
+								<label id="bouttonTraiteurOui">
 									<input class="with-gap" name="traiteur" type="radio" value="1" required>
 									<span>Oui</span>
 								</label>
-								<label>
+								<label id="bouttonTraiteurNon">
 									<input class="with-gap" name="traiteur" type="radio" value="0" required>
 									<span>Non</span>
 								</label>
 							</p>
+
+							<div id="traiteur">
+
+								<p>
+									Il existe plusieurs formule pour le traiteur :
+								</p>
+
+								<label>
+									<input class="with-gap" name="traiteur2" type="radio" value="15" required>
+									<span>Formule à 15 € par personne</span>
+								</label>
+								<label>
+									<input class="with-gap" name="traiteur2" type="radio" value="20" required>
+									<span>Formule à 20 € par personne</span>
+								</label>
+								<label>
+									<input class="with-gap" name="traiteur2" type="radio" value="30" required>
+									<span>Formule à 30 € par personne</span>
+								</label>
+							</div>
 						</div>
 
 						<div>
@@ -138,6 +158,60 @@
 									<span>Non</span>
 								</label>
 							</p>
+
+							<div id="boisson">
+
+								<p>
+									Il existe plusieurs formule pour les boissons :
+								</p>
+
+								<label>
+									<input class="with-gap" name="boisson2" type="radio" value="3" required>
+									<span>Formule à 3 € par personne, qui permet d'avoir une boisson par personne</span>
+								</label>
+								<label>
+									<input class="with-gap" name="boisson2" type="radio" value="5" required>
+									<span>Formule à 5 € par personne, qui permet d'avoir deux boisson par personne</span>
+								</label>
+								<label>
+									<input class="with-gap" name="boisson2" type="radio" value="10" required>
+									<span>Formule à 10 € par personne, qui permet d'avoir trois boisson par personne</span>
+								</label>
+							</div>
+						</div>
+
+						<div>
+							<label for="wait">Voulez vous des activitées d'attente (simulations) ?<span> * </span></label>
+							<p>
+								<label>
+									<input class="with-gap" name="wait" type="radio" value="1" required>
+									<span>Oui</span>
+								</label>
+								<label>
+									<input class="with-gap" name="wait" type="radio" value="0" required>
+									<span>Non</span>
+								</label>
+							</p>
+							
+							<div id="wait">
+
+								<p>
+									Il existe plusieurs formule pour les activitées d'attente :
+								</p>
+
+								<label>
+									<input class="with-gap" name="wait2" type="radio" value="5" required>
+									<span>Formule à 5 € par personne, qui permet de faire une simulation par personne</span>
+								</label>
+								<label>
+									<input class="with-gap" name="wait2" type="radio" value="10" required>
+									<span>Formule à 10 € par personne, qui permet de faire deux simulation par personne</span>
+								</label>
+								<label>
+									<input class="with-gap" name="wait2" type="radio" value="15" required>
+									<span>Formule à 15 € par personne, qui permet de faire trois simulation par personne</span>
+								</label>
+							</div>
 						</div>
 
 						<div>
@@ -147,55 +221,6 @@
 
 						<div>
 							<button class="waves-effect waves-light btn grey darken-3" type="submit">Finaliser</button>
-						</div>
-					</form>
-				</div>
-
-
-				<div id="dernierForm">
-					<form id="more" action="" method="">
-						<div>
-							<label for="wait">Voulez vous des activités d'attente (simulation) ?</label>
-							<p>
-								<label>
-									<input class="with-gap" name="wait" type="radio" value="1" required>
-									<span>1 par personne</span>
-								</label>
-								<label>
-									<input class="with-gap" name="wait" type="radio" value="2" required>
-									<span>2 par personne</span>
-								</label>
-								<label>
-									<input class="with-gap" name="wait" type="radio" value="3" required>
-									<span>3 par personne</span>
-								</label>
-								<label>
-									<input class="with-gap" name="wait" type="radio" value="0" required>
-									<span>Non</span>
-								</label>
-							</p>
-						</div>
-
-						<div id="drink">
-							<label for="boisson">Combien de boisson voulez vous ?</label>
-							<p>
-								<label>
-									<input class="with-gap" name="boisson" type="radio" value="1">
-									<span>1 par personne</span>
-								</label>
-								<label>
-									<input class="with-gap" name="boisson" type="radio" value="2">
-									<span>2 par personnes</span>
-								</label>
-								<label>
-									<input class="with-gap" name="boisson" type="radio" value="3">
-									<span>3 par personnes</span>
-								</label>
-							</p>
-						</div>
-
-						<div>
-							<button class="waves-effect waves-light btn grey darken-3" type="submit">Continuer</button>
 						</div>
 					</form>
 				</div>
@@ -222,7 +247,7 @@
 				</fieldset>
 			</div>
 
-			<div id="tableau" class="white-text grey darken-3">
+			<div id="tableau" class="white-text grey darken-3 container">
 				<table>
 					<tr>
 						<td>
@@ -317,6 +342,10 @@
 					</tr>
 				</table>
 			</div>
+
+			<div id="prix" class="fixed-action-btn white-text">
+				
+			</div>
 		</div>
 
 		<div class="parallax-container">
@@ -345,6 +374,16 @@
 		$(document).ready(function(){
 			$('select').formSelect();
 		});
+
+		//prix flottant
+		$(document).ready(function(){
+			$('.fixed-action-btn').floatingActionButton();
+		});
+
+		//date picker
+		$(document).ready(function(){
+    		$('.datepicker').datepicker();
+  		});
 	</script>
 </body>
 </html>
