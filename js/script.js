@@ -90,12 +90,28 @@ let pBoisson = 0;
 let pWait = 0;
 let pTotal = 0;
 
+let t;
+let b;
+
+let prixUtraiteur = 0;
+let prixTtraiteur = 0;
+
+let prixUboisson = 0;
+let prixTboisson = 0;
+
+let prixUwait = 0;
+let prixTwait = 0;
+
 traiteur[0].addEventListener("click", function() {
 	document.getElementById("traiteur").style.display = "block";
+	document.getElementById("tarifTraiteur").innerHTML = "Forfait traiteur";
+	t = 1;
 });
 
 traiteur[1].addEventListener("click", function() {
 	document.getElementById("traiteur").style.display = "none";
+	document.getElementById("tarifTraiteur").innerHTML = "";
+	t = 0;
 	if (pTotal >= 0) {
 		for (let i = 0; i < 3; i ++) {
 			if (traiteur2[i].checked) {
@@ -113,10 +129,14 @@ traiteur[1].addEventListener("click", function() {
 
 boisson[0].addEventListener("click", function() {
 	document.getElementById("boisson").style.display = "block";
+	document.getElementById("tarifBar").innerHTML = "Forfait BAR";
+	b = 1;
 });
 
 boisson[1].addEventListener("click", function() {
 	document.getElementById("boisson").style.display = "none";
+	document.getElementById("tarifBar").innerHTML = "";
+	b = 0;
 	if (pTotal >= 0) {
 		for (let i = 0; i < 3; i ++) {
 			if (boisson2[i].checked) {
@@ -134,10 +154,12 @@ boisson[1].addEventListener("click", function() {
 
 wait[0].addEventListener("click", function() {
 	document.getElementById("wait").style.display = "block";
+	document.getElementById("tarifWait").innerHTML = "Forfait simulateur";
 });
 
 wait[1].addEventListener("click", function() {
 	document.getElementById("wait").style.display = "none";
+	document.getElementById("tarifWait").innerHTML = "";
 	if (pTotal >= 0) {
 		for (let i = 0; i < 3; i ++) {
 			if (wait2[i].checked) {
@@ -164,6 +186,25 @@ for (let i = 0; i < 3; i ++) {
 			}
 			pTotal = pTraiteur + pBoisson + pWait;
 			prix.innerHTML = "Coût : " + pTotal + " €";
+
+			if (traiteur2[0].checked) {
+				document.getElementById("nombre").innerHTML = "entrée/plat";
+				document.getElementById("prixUtraiteur").innerHTML = "15 €";
+				prixUtraiteur = 15;
+			}
+			if (traiteur2[1].checked) {
+				document.getElementById("nombre").innerHTML = "plat/dessert";
+				document.getElementById("prixUtraiteur").innerHTML = "20 €";
+				prixUtraiteur = 20;
+			}
+			if (traiteur2[2].checked) {
+				document.getElementById("nombre").innerHTML = "entrée/plat/dessert";
+				document.getElementById("prixUtraiteur").innerHTML = "30 €";
+				prixUtraiteur = 30;
+			}
+
+			document.getElementById("prixTtraiteur").innerHTML = pTraiteur + " €";
+			prixTtraiteur = pTraiteur;
 		}
 	});
 
@@ -177,6 +218,25 @@ for (let i = 0; i < 3; i ++) {
 			}
 			pTotal = pTraiteur + pBoisson + pWait;
 			prix.innerHTML = "Coût : " + pTotal + " €";
+
+			if (boisson2[0].checked) {
+				document.getElementById("nombreDeBoisson").innerHTML = "1";
+				document.getElementById("prixUboisson").innerHTML = "3 €";
+				prixUboisson = 3;
+			}
+			if (boisson2[1].checked) {
+				document.getElementById("nombreDeBoisson").innerHTML = "2";
+				document.getElementById("prixUboisson").innerHTML = "5 €";
+				prixUboisson = 5;
+			}
+			if (boisson2[2].checked) {
+				document.getElementById("nombreDeBoisson").innerHTML = "3";
+				document.getElementById("prixUboisson").innerHTML = "10 €";
+				prixUboisson = 10;
+			}
+
+			document.getElementById("prixTboisson").innerHTML = pBoisson + " €";
+			prixTboisson = pBoisson;
 		}
 	});
 
@@ -190,6 +250,25 @@ for (let i = 0; i < 3; i ++) {
 			}
 			pTotal = pTraiteur + pBoisson + pWait;
 			prix.innerHTML = "Coût : " + pTotal + " €";
+
+			if (wait2[0].checked) {
+				document.getElementById("nombreDeWait").innerHTML = "1";
+				document.getElementById("prixUwait").innerHTML = "5 €";
+				prixUwait = 5;
+			}
+			if (wait2[1].checked) {
+				document.getElementById("nombreDeWait").innerHTML = "2";
+				document.getElementById("prixUwait").innerHTML = "10 €";
+				prixUwait = 10;
+			}
+			if (wait2[2].checked) {
+				document.getElementById("nombreDeWait").innerHTML = "3";
+				document.getElementById("prixUwait").innerHTML = "15 €";
+				prixUwait = 15;
+			}
+
+			document.getElementById("prixTwait").innerHTML = pWait + " €";
+			prixTwait = pWait;
 		}
 	});
 }
@@ -207,20 +286,25 @@ form2.addEventListener("submit", function() {
 
 	form2.parentNode.remove(form2);
 
-	document.getElementById("formule1").innerHTML = calculPrix(nombreDePersonne.value, 30) + " €";
+	prix.style.display = "none";
 
-	document.getElementById("formule2").innerHTML = calculPrix(nombreDePersonne.value, 18) + " €";
+	document.getElementById("formule1").innerHTML = calculPrix(nombreDePersonne.value, 30) + pTotal + " €";
 
-	document.getElementById("formule3").innerHTML = calculPrix(nombreDePersonne.value, 9) + " €";
+	document.getElementById("formule2").innerHTML = calculPrix(nombreDePersonne.value, 18) + pTotal + " €";
+
+	document.getElementById("formule3").innerHTML = calculPrix(nombreDePersonne.value, 9) + pTotal + " €";
 });
 
 //Partie choix d'un prix
 
 //Requête Ajax pour la création des devis.
 
-function requeteSaveDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque) {
+function requeteSaveDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque, prixUpersonne, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne,
+	prixTtraiteur, prixTboisson, prixTwait, prixT) {
 	let url = "php/requeteDevis.php?date=" + date + "&duree=" + duree + "&nombreDePersonne=" + nombreDePersonne + "&traiteur=" + traiteur +
-	"&boisson=" + boisson + "&remarque=" + remarque + "&user=" + user;
+	"&boisson=" + boisson + "&remarque=" + remarque + "&user=" + user + "&prixUpersonne=" + prixUpersonne + "&&prixUtraiteur=" + prixUtraiteur +
+	"&prixUboisson=" + prixUboisson + "&prixUwait=" + prixUwait + "&prixTpersonne=" + prixTpersonne + "&prixTtraiteur=" + prixTtraiteur +
+	"&prixTboisson=" + prixTboisson + "&prixTwait=" + prixTwait + "&prixT=" + prixT;
 	let requete = new XMLHttpRequest();
 
 	requete.open("GET", url, true);
@@ -232,47 +316,191 @@ function requeteSaveDevis(user, duree, date, nombreDePersonne, traiteur, boisson
 	requete.send(null);
 }
 
-function requeteSelectUser(nom, prenom, email, duree) {
+function requeteSelectUser(nom, prenom, email, duree, prixUpersonne) {
 	let url = "php/requeteSelectUser.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
 	let requete = new XMLHttpRequest();
 
 	requete.open("GET", url, true);
 
 	requete.addEventListener("load", function () {
-		callback2(requete, duree);
+		callback2(requete, duree, prixUpersonne);
 	});
 
 	requete.send(null);
 }
 
-function callback2(req, duree) {
-	requeteSaveDevis(req.responseText, duree, date.value, nombreDePersonne.value, t, b, remarque.value);
+function callback2(req, duree, prixUpersonne) {
+	let prixTpersonne = prixUpersonne * nombreDePersonne.value;
+
+	requeteSaveDevis(req.responseText, duree, date.value, nombreDePersonne.value, t, b, remarque.value,
+	prixUpersonne, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur, prixTboisson, prixTwait, prixTotal);
 }
 
 function calculPrix(nbr, value) {
-	return nbr / value * 13 * 30;
+	return Math.floor(nbr / value * 13 * 30);
 }
 
-document.getElementById("choix1").addEventListener("click", function() {
-	let duree = nombreDePersonne.value * 20;
-	let price = document.getElementById("formule1").innerHTML;
+let prixTotal = 0;
 
-	requeteSelectUser(nom.value, prenom.value, email.value, duree);
+document.getElementById("choix1").addEventListener("click", function() {
+	let duree = nombreDePersonne.value * 20 / 60;
+	let prixU = prixUpersonne(calculPrix(nombreDePersonne.value, 30));
+	
+	afficherTab();
+	private();
+	time(duree);
+	personnes();
+	document.getElementById("prixTpersonne").innerHTML = calculPrix(nombreDePersonne.value, 30) + " €";
+	document.getElementById("prixUpersonne").innerHTML = prixU + " €";
+
+	//calcul du prix TTC
+	if (pTraiteur != 0 && pBoisson != 0 && pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02;
+	}
+	else if (pTraiteur != 0 && pBoisson != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02;
+	}
+	else if (pTraiteur != 0 && pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pWait * 1.02;
+	}
+	else if (pBoisson != 0 && pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pBoisson * 1.02 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pBoisson * 1.02 + pWait * 1.02
+	}
+	else if (pTraiteur != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01);
+		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01;
+	}
+	else if (pBoisson != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pBoisson * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pBoisson * 1.02;
+	}
+	else if (pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pWait * 1.02;
+	}
+	
+	document.getElementById("choix").parentNode.remove(document.getElementById("choix"));
+
+	requeteSelectUser(nom.value, prenom.value, email.value, duree, prixU);
 });
 
 document.getElementById("choix2").addEventListener("click", function() {
-	let duree = nombreDePersonne.value * 30;
-	let price = document.getElementById("formule2").innerHTML;
+	let duree = nombreDePersonne.value * 30 / 60;
+	let prixU = prixUpersonne(calculPrix(nombreDePersonne.value, 18));
+	
+	afficherTab();
+	private();
+	time(duree);
+	personnes();
+	document.getElementById("prixTpersonne").innerHTML = calculPrix(nombreDePersonne.value, 18) + " €";
+	document.getElementById("prixUpersonne").innerHTML = prixU + " €";
+	
+	//calcul du prix TTC
+	if (pTraiteur != 0 && pBoisson != 0 && pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02;
+	}
+	else if (pTraiteur != 0 && pBoisson != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02;
+	}
+	else if (pTraiteur != 0 && pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pWait * 1.02;
+	}
+	else if (pBoisson != 0 && pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pBoisson * 1.02 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pBoisson * 1.02 + pWait * 1.02
+	}
+	else if (pTraiteur != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01);
+		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01;
+	}
+	else if (pBoisson != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pBoisson * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pBoisson * 1.02;
+	}
+	else if (pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pWait * 1.02;
+	}
+	
+	document.getElementById("choix").parentNode.remove(document.getElementById("choix"));
 
-	requeteSelectUser(nom.value, prenom.value, email.value, duree);
+	requeteSelectUser(nom.value, prenom.value, email.value, duree, prixU);
 });
 
 document.getElementById("choix3").addEventListener("click", function() {
-	let duree = nombreDePersonne.value * 60;
-	let price = document.getElementById("formule3").innerHTML;
+	let duree = nombreDePersonne.value * 60 / 60;
+	let prixU = prixUpersonne(calculPrix(nombreDePersonne.value, 9));
 
-	requeteSelectUser(nom.value, prenom.value, email.value, duree);
+	afficherTab();
+	private();
+	time(duree);
+	personnes();
+	document.getElementById("prixTpersonne").innerHTML = calculPrix(nombreDePersonne.value, 9) + " €";
+	document.getElementById("prixUpersonne").innerHTML = prixU + " €";
+	
+	//calcul du prix TTC
+	if (pTraiteur != 0 && pBoisson != 0 && pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02;
+	}
+	else if (pTraiteur != 0 && pBoisson != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02;
+	}
+	else if (pTraiteur != 0 && pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pWait * 1.02;
+	}
+	else if (pBoisson != 0 && pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pBoisson * 1.02 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pBoisson * 1.02 + pWait * 1.02
+	}
+	else if (pTraiteur != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01);
+		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01;
+	}
+	else if (pBoisson != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pBoisson * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pBoisson * 1.02;
+	}
+	else if (pWait != 0) {
+		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pWait * 1.02);
+		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pWait * 1.02;
+	}
+
+	document.getElementById("choix").parentNode.remove(document.getElementById("choix"));
+
+	requeteSelectUser(nom.value, prenom.value, email.value, duree, prixU);
 });
+
+function afficherTab() {
+	document.getElementById("tableau").style.display = "flex";
+}
+
+function private() {
+	if (nombreDePersonne.value >= 30) {
+		document.getElementById("private").innerHTML = "Privatisation du parc Upside";
+	}
+}
+
+function time(duree) {
+	document.getElementById("duree").innerHTML = duree;
+}
+
+function personnes() {
+	document.getElementById("nombre").innerHTML = nombreDePersonne.value;
+}
+
+function prixUpersonne(prix) {
+	return prix / nombreDePersonne.value;
+}
 
 //Partie affichage du devis
 

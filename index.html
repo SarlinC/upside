@@ -66,7 +66,7 @@
 
 						<div>
 							<label for="tel_id">Entrez votre numéro de Téléphone: </label>
-							<input type="number" name="tel" id="tel_id" placeholder="Ex: 06 XX XX XX XX">
+							<input class="validate" type="tel" name="tel" id="tel_id" pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}" placeholder="Ex: 06 XX XX XX XX">
 						</div>
 
 						<div>
@@ -79,7 +79,7 @@
 					<form id="date" action="" method="">
 						<div>
 							<label for="date_id">Sélectionnez la date souhaité:<span>*</span></label>
-							<input type="text" class="datepicker" name="date" id="date_id" required>
+							<input type="date" name="date" id="date_id" required>
 						</div>
 
 						<div>
@@ -98,17 +98,16 @@
 							<label for="nombre_id">Sélectionnez le nombre de personne:<span> * </span> </label>
 							<select class="browser-default grey darken-4 white-text" id="nombre_id" required>
 								<option value="" disabled selected>--choisissez une option--</option>
-								<option value="1">1-5 personnes</option>
-								<option value="5">5-10 personnes</option>
-								<option value="10">10-15 personnes</option>
-								<option value="15">15-20 personnes</option>
-								<option value="20">20-25 personnes</option>
-								<option value="25">25-30 personnes</option>
-								<option value="30">30-35 personnes</option>
-								<option value="35">35-40 personnes</option>
-								<option value="40">40-45 personnes</option>
-								<option value="45">45-50 personnes</option>
-								<option value="50">50+ personnes</option>
+								<option value="10">5-10 personnes</option>
+								<option value="15">10-15 personnes</option>
+								<option value="20">15-20 personnes</option>
+								<option value="25">20-25 personnes</option>
+								<option value="30">25-30 personnes</option>
+								<option value="35">30-35 personnes</option>
+								<option value="40">35-40 personnes</option>
+								<option value="45">40-45 personnes</option>
+								<option value="50">45-50 personnes</option>
+								<option value="55">50+ personnes</option>
 							</select>
 						</div>
 
@@ -132,16 +131,16 @@
 								</p>
 
 								<label>
-									<input class="with-gap" name="traiteur2" type="radio" value="15" required>
-									<span>Formule à 15 € par personne</span>
+									<input class="with-gap" name="traiteur2" type="radio" value="15">
+									<span>Formule à 15 € par personne, entrée/plat</span>
 								</label>
 								<label>
-									<input class="with-gap" name="traiteur2" type="radio" value="20" required>
-									<span>Formule à 20 € par personne</span>
+									<input class="with-gap" name="traiteur2" type="radio" value="20">
+									<span>Formule à 20 € par personne, plat/dessert</span>
 								</label>
 								<label>
-									<input class="with-gap" name="traiteur2" type="radio" value="30" required>
-									<span>Formule à 30 € par personne</span>
+									<input class="with-gap" name="traiteur2" type="radio" value="30">
+									<span>Formule à 30 € par personne, entrée/plat/dessert</span>
 								</label>
 							</div>
 						</div>
@@ -166,15 +165,15 @@
 								</p>
 
 								<label>
-									<input class="with-gap" name="boisson2" type="radio" value="3" required>
+									<input class="with-gap" name="boisson2" type="radio" value="3">
 									<span>Formule à 3 € par personne, qui permet d'avoir une boisson par personne</span>
 								</label>
 								<label>
-									<input class="with-gap" name="boisson2" type="radio" value="5" required>
+									<input class="with-gap" name="boisson2" type="radio" value="5">
 									<span>Formule à 5 € par personne, qui permet d'avoir deux boisson par personne</span>
 								</label>
 								<label>
-									<input class="with-gap" name="boisson2" type="radio" value="10" required>
+									<input class="with-gap" name="boisson2" type="radio" value="10">
 									<span>Formule à 10 € par personne, qui permet d'avoir trois boisson par personne</span>
 								</label>
 							</div>
@@ -200,15 +199,15 @@
 								</p>
 
 								<label>
-									<input class="with-gap" name="wait2" type="radio" value="5" required>
+									<input class="with-gap" name="wait2" type="radio" value="5">
 									<span>Formule à 5 € par personne, qui permet de faire une simulation par personne</span>
 								</label>
 								<label>
-									<input class="with-gap" name="wait2" type="radio" value="10" required>
+									<input class="with-gap" name="wait2" type="radio" value="10">
 									<span>Formule à 10 € par personne, qui permet de faire deux simulation par personne</span>
 								</label>
 								<label>
-									<input class="with-gap" name="wait2" type="radio" value="15" required>
+									<input class="with-gap" name="wait2" type="radio" value="15">
 									<span>Formule à 15 € par personne, qui permet de faire trois simulation par personne</span>
 								</label>
 							</div>
@@ -226,25 +225,27 @@
 				</div>
 			</div>
 
-			<div id="choix" class="container">
-				<fieldset>
-					<h3 class="white-text">Formule 1 :</h3>
-					<h4 class="white-text">20 minutes par personnes</h4>
-					<h4 id="formule1" class="white-text"></h4>
-					<button id="choix1" class="waves-effect waves-light btn grey darken-3">Choisir</button>
-				</fieldset>
-				<fieldset>
-					<h3 class="white-text">Formule 2 :</h3>
-					<h4 class="white-text">30 minutes par personnes</h4>
-					<h4 id="formule2" class="white-text"></h4>
-					<button id="choix2" class="waves-effect waves-light btn grey darken-3">Choisir</button>
-				</fieldset>
-				<fieldset>
-					<h3 class="white-text">Formule 3 :</h3>
-					<h4 class="white-text">60 minutes par personnes</h4>
-					<h4 id="formule3" class="white-text"></h4>
-					<button id="choix3" class="waves-effect waves-light btn grey darken-3">Choisir</button>
-				</fieldset>
+			<div>
+				<div id="choix" class="container">
+					<fieldset>
+						<h3 class="white-text">Formule 1 :</h3>
+						<h4 class="white-text">20 minutes par personnes</h4>
+						<h4 id="formule1" class="white-text"></h4>
+						<button id="choix1" class="waves-effect waves-light btn grey darken-3">Choisir</button>
+					</fieldset>
+					<fieldset>
+						<h3 class="white-text">Formule 2 :</h3>
+						<h4 class="white-text">30 minutes par personnes</h4>
+						<h4 id="formule2" class="white-text"></h4>
+						<button id="choix2" class="waves-effect waves-light btn grey darken-3">Choisir</button>
+					</fieldset>
+					<fieldset>
+						<h3 class="white-text">Formule 3 :</h3>
+						<h4 class="white-text">60 minutes par personnes</h4>
+						<h4 id="formule3" class="white-text"></h4>
+						<button id="choix3" class="waves-effect waves-light btn grey darken-3">Choisir</button>
+					</fieldset>
+				</div>
 			</div>
 
 			<div id="tableau" class="white-text grey darken-3 container">
@@ -283,17 +284,17 @@
 						</td>
 
 						<td>
-							minutes
+							heures
 						</td>
 
 						<td>
 							20
 						</td>
 
-						<td>
+						<td id="prixUpersonne">
 						</td>
 
-						<td>
+						<td id="prixTpersonne">
 						</td>
 					</tr>
 
@@ -312,10 +313,10 @@
 							10
 						</td>
 
-						<td>
+						<td id="prixUtraiteur">
 						</td>
 
-						<td>
+						<td id="prixTtraiteur">
 						</td>
 					</tr>
 
@@ -334,18 +335,42 @@
 							20
 						</td>
 
-						<td>
+						<td id="prixUboisson">
+						</td>
+
+						<td id="prixTboisson">
+						</td>
+					</tr>
+
+					<tr>
+						<td id="tarifWait">
+						</td>
+
+						<td id="nombreDeWait">
 						</td>
 
 						<td>
+							activité d'attente
+						</td>
+
+						<td>
+							20
+						</td>
+
+						<td id="prixUwait">
+						</td>
+
+						<td id="prixTwait">
 						</td>
 					</tr>
 				</table>
+				<h4 id="prixTotal">
+				</h4>
 			</div>
 
-			<div id="prix" class="fixed-action-btn white-text">
+			<h4 id="prix" class="fixed-action-btn white-text">
 				
-			</div>
+			</h4>
 		</div>
 
 		<div class="parallax-container">
@@ -382,8 +407,8 @@
 
 		//date picker
 		$(document).ready(function(){
-    		$('.datepicker').datepicker();
-  		});
+			$('.datepicker').datepicker();
+		});
 	</script>
 </body>
 </html>
