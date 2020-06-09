@@ -65,7 +65,6 @@ divForm2.style.display = "none";
 
 document.getElementById("traiteur").style.display = "none";
 document.getElementById("boisson").style.display = "none";
-document.getElementById("wait").style.display = "none";
 
 let form2 = document.getElementById("date");
 
@@ -79,15 +78,12 @@ prix.style.display = "none";
 
 let traiteur = document.getElementsByName("traiteur");
 let boisson = document.getElementsByName("boisson");
-let wait = document.getElementsByName("wait");
 
 let traiteur2 = document.getElementsByName("traiteur2");
 let boisson2 = document.getElementsByName("boisson2");
-let wait2 = document.getElementsByName("wait2");
 
 let pTraiteur = 0;
 let pBoisson = 0;
-let pWait = 0;
 let pTotal = 0;
 
 let t;
@@ -98,9 +94,6 @@ let prixTtraiteur = 0;
 
 let prixUboisson = 0;
 let prixTboisson = 0;
-
-let prixUwait = 0;
-let prixTwait = 0;
 
 traiteur[0].addEventListener("click", function() {
 	document.getElementById("traiteur").style.display = "block";
@@ -152,29 +145,6 @@ boisson[1].addEventListener("click", function() {
 	}
 });
 
-wait[0].addEventListener("click", function() {
-	document.getElementById("wait").style.display = "block";
-	document.getElementById("tarifWait").innerHTML = "Forfait simulateur";
-});
-
-wait[1].addEventListener("click", function() {
-	document.getElementById("wait").style.display = "none";
-	document.getElementById("tarifWait").innerHTML = "";
-	if (pTotal >= 0) {
-		for (let i = 0; i < 3; i ++) {
-			if (wait2[i].checked) {
-				pWait = 0;
-				pTotal = pTotal - (wait2[i].value * nombreDePersonne.value);
-				prix.innerHTML = "Coût : " + pTotal + " €";
-				wait2[i].checked = false;
-			}
-		}
-	}
-	else {
-		prix.innerHTML = "";
-	}
-});
-
 for (let i = 0; i < 3; i ++) {
 	traiteur2[i].addEventListener("click", function() {
 		if (nombreDePersonne.value == 0) {
@@ -184,7 +154,7 @@ for (let i = 0; i < 3; i ++) {
 			if (traiteur2[i].checked) {
 				pTraiteur = traiteur2[i].value * nombreDePersonne.value;
 			}
-			pTotal = pTraiteur + pBoisson + pWait;
+			pTotal = pTraiteur + pBoisson;
 			prix.innerHTML = "Coût : " + pTotal + " €";
 
 			if (traiteur2[0].checked) {
@@ -216,7 +186,7 @@ for (let i = 0; i < 3; i ++) {
 			if (boisson2[i].checked) {
 				pBoisson = boisson2[i].value * nombreDePersonne.value;
 			}
-			pTotal = pTraiteur + pBoisson + pWait;
+			pTotal = pTraiteur + pBoisson;
 			prix.innerHTML = "Coût : " + pTotal + " €";
 
 			if (boisson2[0].checked) {
@@ -239,47 +209,7 @@ for (let i = 0; i < 3; i ++) {
 			prixTboisson = pBoisson;
 		}
 	});
-
-	wait2[i].addEventListener("click", function() {
-		if (nombreDePersonne.value == 0) {
-			alert("Veuillez sélectionnez un nombre de participants !");
-		}
-		else {
-			if (wait2[i].checked) {
-				pWait = wait2[i].value * nombreDePersonne.value;
-			}
-			pTotal = pTraiteur + pBoisson + pWait;
-			prix.innerHTML = "Coût : " + pTotal + " €";
-
-			if (wait2[0].checked) {
-				document.getElementById("nombreDeWait").innerHTML = "1";
-				document.getElementById("prixUwait").innerHTML = "5 €";
-				prixUwait = 5;
-			}
-			if (wait2[1].checked) {
-				document.getElementById("nombreDeWait").innerHTML = "2";
-				document.getElementById("prixUwait").innerHTML = "10 €";
-				prixUwait = 10;
-			}
-			if (wait2[2].checked) {
-				document.getElementById("nombreDeWait").innerHTML = "3";
-				document.getElementById("prixUwait").innerHTML = "15 €";
-				prixUwait = 15;
-			}
-
-			document.getElementById("prixTwait").innerHTML = pWait + " €";
-			prixTwait = pWait;
-		}
-	});
 }
-
-let popup = document.getElementById("nombre_id");
-
-popup.addEventListener("change", function() {
-	if (popup.value >= 30) {
-		alert("En choisissant cette option, nous vous privatisons le parc.");
-	}
-});
 
 form2.addEventListener("submit", function() {
 	document.getElementById("choix").style.display = "flex";
@@ -287,24 +217,15 @@ form2.addEventListener("submit", function() {
 	form2.parentNode.remove(form2);
 
 	prix.style.display = "none";
-
-	document.getElementById("formule1").innerHTML = calculPrix(nombreDePersonne.value, 30) + pTotal + " €";
-
-	document.getElementById("formule2").innerHTML = calculPrix(nombreDePersonne.value, 18) + pTotal + " €";
-
-	document.getElementById("formule3").innerHTML = calculPrix(nombreDePersonne.value, 9) + pTotal + " €";
 });
 
 //Partie choix d'un prix
 
 //Requête Ajax pour la création des devis.
 
-function requeteSaveDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque, prixUpersonne, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne,
-	prixTtraiteur, prixTboisson, prixTwait, prixT) {
+function requeteSaveDevis(user, duree, date, nombreDePersonne, traiteur, boisson, remarque) {
 	let url = "php/requeteDevis.php?date=" + date + "&duree=" + duree + "&nombreDePersonne=" + nombreDePersonne + "&traiteur=" + traiteur +
-	"&boisson=" + boisson + "&remarque=" + remarque + "&user=" + user + "&prixUpersonne=" + prixUpersonne + "&&prixUtraiteur=" + prixUtraiteur +
-	"&prixUboisson=" + prixUboisson + "&prixUwait=" + prixUwait + "&prixTpersonne=" + prixTpersonne + "&prixTtraiteur=" + prixTtraiteur +
-	"&prixTboisson=" + prixTboisson + "&prixTwait=" + prixTwait + "&prixT=" + prixT;
+	"&boisson=" + boisson + "&remarque=" + remarque + "&user=" + user;
 	let requete = new XMLHttpRequest();
 
 	requete.open("GET", url, true);
@@ -316,14 +237,14 @@ function requeteSaveDevis(user, duree, date, nombreDePersonne, traiteur, boisson
 	requete.send(null);
 }
 
-function requeteSelectUser(nom, prenom, email, duree, prixUpersonne) {
+function requeteSelectUser(nom, prenom, email) {
 	let url = "php/requeteSelectUser.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
 	let requete = new XMLHttpRequest();
 
 	requete.open("GET", url, true);
 
 	requete.addEventListener("load", function () {
-		callback2(requete, duree, prixUpersonne);
+		callback2(requete);
 	});
 
 	requete.send(null);
@@ -332,153 +253,24 @@ function requeteSelectUser(nom, prenom, email, duree, prixUpersonne) {
 function callback2(req, duree, prixUpersonne) {
 	let prixTpersonne = prixUpersonne * nombreDePersonne.value;
 
-	requeteSaveDevis(req.responseText, duree, date.value, nombreDePersonne.value, t, b, remarque.value,
-	prixUpersonne, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur, prixTboisson, prixTwait, prixTotal);
+	requeteSaveDevis(req.responseText, duree.value, date.value, nombreDePersonne.value, t, b, remarque.value);
 }
 
-function calculPrix(nbr, value) {
-	return Math.floor(nbr / value * 13 * 30);
+let dureePers;
+
+function calculPrix(prixBase) {
+	let coeff = ((duree.value * 13) / nombreDePersonne.value) / 100;
+	if (coeff <= 1) {
+		dureePers = 30;
+	}
+	else if (coeff > 1 || coeff < 1.5) {
+		dureePers = 60;
+	}
+	else if (coeff >= 1.5 || coeff < 2) {
+		dureePers = 60;
+
+	}
 }
-
-let prixTotal = 0;
-
-document.getElementById("choix1").addEventListener("click", function() {
-	let duree = nombreDePersonne.value * 20 / 60;
-	let prixU = prixUpersonne(calculPrix(nombreDePersonne.value, 30));
-	
-	afficherTab();
-	private();
-	time(duree);
-	personnes();
-	document.getElementById("prixTpersonne").innerHTML = calculPrix(nombreDePersonne.value, 30) + " €";
-	document.getElementById("prixUpersonne").innerHTML = prixU + " €";
-
-	//calcul du prix TTC
-	if (pTraiteur != 0 && pBoisson != 0 && pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02;
-	}
-	else if (pTraiteur != 0 && pBoisson != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02;
-	}
-	else if (pTraiteur != 0 && pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01 + pWait * 1.02;
-	}
-	else if (pBoisson != 0 && pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pBoisson * 1.02 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pBoisson * 1.02 + pWait * 1.02
-	}
-	else if (pTraiteur != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01);
-		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pTraiteur * 1.01;
-	}
-	else if (pBoisson != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pBoisson * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pBoisson * 1.02;
-	}
-	else if (pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 30) * 1.02 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 30) * 1.02 + pWait * 1.02;
-	}
-	
-	document.getElementById("choix").parentNode.remove(document.getElementById("choix"));
-
-	requeteSelectUser(nom.value, prenom.value, email.value, duree, prixU);
-});
-
-document.getElementById("choix2").addEventListener("click", function() {
-	let duree = nombreDePersonne.value * 30 / 60;
-	let prixU = prixUpersonne(calculPrix(nombreDePersonne.value, 18));
-	
-	afficherTab();
-	private();
-	time(duree);
-	personnes();
-	document.getElementById("prixTpersonne").innerHTML = calculPrix(nombreDePersonne.value, 18) + " €";
-	document.getElementById("prixUpersonne").innerHTML = prixU + " €";
-	
-	//calcul du prix TTC
-	if (pTraiteur != 0 && pBoisson != 0 && pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02;
-	}
-	else if (pTraiteur != 0 && pBoisson != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02;
-	}
-	else if (pTraiteur != 0 && pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01 + pWait * 1.02;
-	}
-	else if (pBoisson != 0 && pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pBoisson * 1.02 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pBoisson * 1.02 + pWait * 1.02
-	}
-	else if (pTraiteur != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01);
-		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pTraiteur * 1.01;
-	}
-	else if (pBoisson != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pBoisson * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pBoisson * 1.02;
-	}
-	else if (pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 18) * 1.02 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 18) * 1.02 + pWait * 1.02;
-	}
-	
-	document.getElementById("choix").parentNode.remove(document.getElementById("choix"));
-
-	requeteSelectUser(nom.value, prenom.value, email.value, duree, prixU);
-});
-
-document.getElementById("choix3").addEventListener("click", function() {
-	let duree = nombreDePersonne.value * 60 / 60;
-	let prixU = prixUpersonne(calculPrix(nombreDePersonne.value, 9));
-
-	afficherTab();
-	private();
-	time(duree);
-	personnes();
-	document.getElementById("prixTpersonne").innerHTML = calculPrix(nombreDePersonne.value, 9) + " €";
-	document.getElementById("prixUpersonne").innerHTML = prixU + " €";
-	
-	//calcul du prix TTC
-	if (pTraiteur != 0 && pBoisson != 0 && pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02 + pWait * 1.02;
-	}
-	else if (pTraiteur != 0 && pBoisson != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pBoisson * 1.02;
-	}
-	else if (pTraiteur != 0 && pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01 + pWait * 1.02;
-	}
-	else if (pBoisson != 0 && pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pBoisson * 1.02 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pBoisson * 1.02 + pWait * 1.02
-	}
-	else if (pTraiteur != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01);
-		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pTraiteur * 1.01;
-	}
-	else if (pBoisson != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pBoisson * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pBoisson * 1.02;
-	}
-	else if (pWait != 0) {
-		document.getElementById("prixTotal").innerHTML = "Prix TTC : " + (calculPrix(nombreDePersonne.value, 9) * 1.02 + pWait * 1.02);
-		prixTotal = calculPrix(nombreDePersonne.value, 9) * 1.02 + pWait * 1.02;
-	}
-
-	document.getElementById("choix").parentNode.remove(document.getElementById("choix"));
-
-	requeteSelectUser(nom.value, prenom.value, email.value, duree, prixU);
-});
 
 function afficherTab() {
 	document.getElementById("tableau").style.display = "flex";
@@ -490,18 +282,6 @@ function private() {
 	}
 }
 
-function time(duree) {
-	document.getElementById("duree").innerHTML = duree;
-}
-
-function personnes() {
-	document.getElementById("nombre").innerHTML = nombreDePersonne.value;
-}
-
-function prixUpersonne(prix) {
-	return prix / nombreDePersonne.value;
-}
-
 //Partie affichage du devis
 
 document.getElementById("tableau").style.display = "none";
@@ -511,3 +291,96 @@ document.getElementById("tableau").style.display = "none";
 function callback(req) {
 	console.log(req.responseText);
 }
+
+let reunion = document.getElementsByName("reunion");
+let meeting = document.getElementsByName("meeting");
+let nombreReunion = document.getElementById("nombreReunion");
+
+document.getElementById("meeting").style.display = "none";
+
+nombreReunion.style.display = "none";
+
+reunion[0].addEventListener("click", function () {
+	document.getElementById("meeting").style.display = "block";
+});
+
+reunion[1].addEventListener("click", function() {
+	document.getElementById("meeting").style.display = "none";
+	for (let i = 0; i != 2; i ++) {
+		meeting[i].checked = false;
+	}
+	nombreReunion.style.display = "none";
+});
+
+meeting[0].addEventListener("click", function() {
+	nombreReunion.style.display = "flex";
+	nombreReunion.setAttribute("max", "25");
+});
+
+meeting[1].addEventListener("click", function() {
+	nombreReunion.style.display = "flex";
+	nombreReunion.setAttribute("max", "60");
+});
+
+let maDate;
+
+let jour;
+let mois;
+let annee;
+
+date.addEventListener("change", function() {
+	jour = date.value.slice(0,2);
+	mois = date.value.slice(3,5);
+	annee = date.value.slice(6,10);
+
+	maDate = new Date(annee, mois - 1, jour);
+
+	let prixBase = 0;
+
+	if (maDate.getDay() == 5 || maDate.getDay() == 6) {
+		if (moment.value == "matinee") {
+			prixBase = 25;
+		}
+		else {
+			prixBase = 30;
+		}
+	}
+	else {
+		if (moment.value == "matinee" || moment.value == "apresmidi" || moment.value == "journee") {
+			prixBase = 20;
+		}
+		else {
+			prixBase = 25;
+		}
+	}
+
+	moment.addEventListener("change", function() {
+		if (maDate.getDay() == 5 || maDate.getDay() == 6 && nombreDePersonne.value >= 20) {
+			if (moment.value == "journee" || moment.value == "soiree") {
+				document.getElementById("cd-popup").setAttribute("class", "is-visible");
+			}
+		}
+		else {
+			if (moment.value == "soiree" && nombreDePersonne.value >= 20) {
+				document.getElementById("cd-popup").setAttribute("class", "is-visible");
+			}
+		}
+	});
+});
+
+let popup = document.getElementById("nombre_id");
+
+popup.addEventListener("change", function() {
+	if (nombreDePersonne.value >= 20) {
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+	}
+});
+
+document.getElementById("ok").addEventListener("click", removeClass);
+document.getElementById("annuler").addEventListener("click", removeClass);
+
+function removeClass() {
+	document.getElementById("cd-popup").removeAttribute("class", "is-visible");
+}
+
+let duree = document.getElementById("duree_id");

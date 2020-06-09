@@ -42,6 +42,17 @@
 			<div class="parallax"><img src="src/background1.PNG" alt="background 1"></div>
 		</div>
 
+		<div id="cd-popup" role="alert">
+			<div class="cd-popup-container">
+				<h4>Upside vous informe :</h4>
+				<p>En choisissant cette option, nous vous privatiserons le parc.</p>
+				<ul class="cd-buttons">
+					<li><a id="ok" href="#!">OK</a></li>
+					<li><a id="annuler" href="#!">ANNULE</a></li>
+				</ul>
+			</div>
+		</div>
+
 		<!--formulaire-->
 
 		<div class="section grey darken-4">
@@ -66,7 +77,7 @@
 
 						<div>
 							<label for="tel_id">Entrez votre numéro de Téléphone: </label>
-							<input class="validate" type="tel" name="tel" id="tel_id" pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}" placeholder="Ex: 06 XX XX XX XX">
+							<input class="validate" type="tel" name="tel" id="tel_id" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" placeholder="Ex: 06 XX XX XX XX">
 						</div>
 
 						<div>
@@ -79,7 +90,7 @@
 					<form id="date" action="" method="">
 						<div>
 							<label for="date_id">Sélectionnez la date souhaité:<span>*</span></label>
-							<input type="date" name="date" id="date_id" required>
+							<input type="text" class="datepicker" name="date" id="date_id" required>
 						</div>
 
 						<div>
@@ -96,18 +107,29 @@
 
 						<div>
 							<label for="nombre_id">Sélectionnez le nombre de personne:<span> * </span> </label>
-							<select class="browser-default grey darken-4 white-text" id="nombre_id" required>
+							<input type="number" name="nombre" id="nombre_id" placeholder="10" min="5" required>
+						</div>
+
+						<div>
+							<label for="duree_id">Quelle durée de jeu voulez vous ? <span>*</span></label>
+							<select class="browser-default grey darken-4 white-text" id="duree_id" required>
 								<option value="" disabled selected>--choisissez une option--</option>
-								<option value="10">5-10 personnes</option>
-								<option value="15">10-15 personnes</option>
-								<option value="20">15-20 personnes</option>
-								<option value="25">20-25 personnes</option>
-								<option value="30">25-30 personnes</option>
-								<option value="35">30-35 personnes</option>
-								<option value="40">35-40 personnes</option>
-								<option value="45">40-45 personnes</option>
-								<option value="50">45-50 personnes</option>
-								<option value="55">50+ personnes</option>
+								<option value="30">30 minutes</option>
+								<option value="60">1 heure</option>
+								<option value="90">1 heure 30 minutes</option>
+								<option value="120">2 heures</option>
+								<option value="150">2 heures 30 minutes</option>
+								<option value="180">3 heures</option>
+								<option value="210">3 heures 30 minutes</option>
+								<option value="240">4 heures</option>
+								<option value="270">4 heures 30 minutes</option>
+								<option value="300">5 heures</option>
+								<option value="330">5 heures 30 minutes</option>
+								<option value="360">6 heures</option>
+								<option value="390">6 heures 30 minutes</option>
+								<option value="420">7 heures</option>
+								<option value="450">7 heures 30 minutes</option>
+								<option value="480">8 heures</option>
 							</select>
 						</div>
 
@@ -179,38 +201,39 @@
 							</div>
 						</div>
 
-						<div>
-							<label for="wait">Voulez vous des activitées d'attente (simulations) ?<span> * </span></label>
+						<div id="reunion">
+							<label for="reunion">Aurez vous besoin d'une salle de réunion ? ?<span> * </span></label>
 							<p>
 								<label>
-									<input class="with-gap" name="wait" type="radio" value="1" required>
+									<input class="with-gap" name="reunion" type="radio" value="1" required>
 									<span>Oui</span>
 								</label>
 								<label>
-									<input class="with-gap" name="wait" type="radio" value="0" required>
+									<input class="with-gap" name="reunion" type="radio" value="0" required>
 									<span>Non</span>
 								</label>
 							</p>
-							
-							<div id="wait">
+						</div>
 
-								<p>
-									Il existe plusieurs formule pour les activitées d'attente :
-								</p>
+						<div id="meeting">
+							<label for="meeting">Format réunion ou format plénière ?<span> * </span></label>
+							<p>
+								<label>
+									<input class="with-gap" name="meeting" type="radio" value="1" required>
+									<span>Réunion</span>
+								</label>
+								<label>
+									<input class="with-gap" name="meeting" type="radio" value="0" required>
+									<span>Plénière</span>
+								</label>
+							</p>
+						</div>
 
-								<label>
-									<input class="with-gap" name="wait2" type="radio" value="5">
-									<span>Formule à 5 € par personne, qui permet de faire une simulation par personne</span>
-								</label>
-								<label>
-									<input class="with-gap" name="wait2" type="radio" value="10">
-									<span>Formule à 10 € par personne, qui permet de faire deux simulation par personne</span>
-								</label>
-								<label>
-									<input class="with-gap" name="wait2" type="radio" value="15">
-									<span>Formule à 15 € par personne, qui permet de faire trois simulation par personne</span>
-								</label>
-							</div>
+						<div id="nombreReunion">
+							<label>
+								<input class="with-gap" name="nombreReunion" type="number">
+								<span>Combien de personne voudrez vous en réunion ?</span>
+							</label>
 						</div>
 
 						<div>
@@ -221,175 +244,131 @@
 						<div>
 							<button class="waves-effect waves-light btn grey darken-3" type="submit">Finaliser</button>
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
+		</div>
 
-			<div>
-				<div id="choix" class="container">
-					<fieldset>
-						<h3 class="white-text">Formule 1 :</h3>
-						<h4 class="white-text">20 minutes par personnes</h4>
-						<h4 id="formule1" class="white-text"></h4>
-						<button id="choix1" class="waves-effect waves-light btn grey darken-3">Choisir</button>
-					</fieldset>
-					<fieldset>
-						<h3 class="white-text">Formule 2 :</h3>
-						<h4 class="white-text">30 minutes par personnes</h4>
-						<h4 id="formule2" class="white-text"></h4>
-						<button id="choix2" class="waves-effect waves-light btn grey darken-3">Choisir</button>
-					</fieldset>
-					<fieldset>
-						<h3 class="white-text">Formule 3 :</h3>
-						<h4 class="white-text">60 minutes par personnes</h4>
-						<h4 id="formule3" class="white-text"></h4>
-						<button id="choix3" class="waves-effect waves-light btn grey darken-3">Choisir</button>
-					</fieldset>
-				</div>
-			</div>
+		<div id="tableau" class="white-text grey darken-3 container">
+			<table>
+				<tr>
+					<td>
+						Désignation
+					</td>
 
-			<div id="tableau" class="white-text grey darken-3 container">
-				<table>
-					<tr>
-						<td>
-							Désignation
-						</td>
+					<td>
+						Quantité
+					</td>
 
-						<td>
-							Quantité
-						</td>
+					<td>
+						Unité
+					</td>
 
-						<td>
-							Unité
-						</td>
+					<td>
+						TVA
+					</td>
 
-						<td>
-							TVA
-						</td>
+					<td>
+						PU vente
+					</td>
 
-						<td>
-							PU vente
-						</td>
+					<td>
+						Montant HT
+					</td>
+				</tr>
 
-						<td>
-							Montant HT
-						</td>
-					</tr>
+				<tr>
+					<td id="private">
+					</td>
 
-					<tr>
-						<td id="private">
-						</td>
+					<td id="duree">
+					</td>
 
-						<td id="duree">
-						</td>
+					<td>
+						heures
+					</td>
 
-						<td>
-							heures
-						</td>
+					<td>
+						20
+					</td>
 
-						<td>
-							20
-						</td>
+					<td id="prixUpersonne">
+					</td>
 
-						<td id="prixUpersonne">
-						</td>
+					<td id="prixTpersonne">
+					</td>
+				</tr>
 
-						<td id="prixTpersonne">
-						</td>
-					</tr>
+				<tr>
+					<td id="tarifTraiteur">
+					</td>
 
-					<tr>
-						<td id="tarifTraiteur">
-						</td>
-						
-						<td id="nombre">
-						</td>
+					<td id="nombre">
+					</td>
 
-						<td>
-							personnes
-						</td>
+					<td>
+						personnes
+					</td>
 
-						<td>
-							10
-						</td>
+					<td>
+						10
+					</td>
 
-						<td id="prixUtraiteur">
-						</td>
+					<td id="prixUtraiteur">
+					</td>
 
-						<td id="prixTtraiteur">
-						</td>
-					</tr>
+					<td id="prixTtraiteur">
+					</td>
+				</tr>
 
-					<tr>
-						<td id="tarifBar">
-						</td>
+				<tr>
+					<td id="tarifBar">
+					</td>
 
-						<td id="nombreDeBoisson">
-						</td>
+					<td id="nombreDeBoisson">
+					</td>
 
-						<td>
-							forfait
-						</td>
+					<td>
+						forfait
+					</td>
 
-						<td>
-							20
-						</td>
+					<td>
+						20
+					</td>
 
-						<td id="prixUboisson">
-						</td>
+					<td id="prixUboisson">
+					</td>
 
-						<td id="prixTboisson">
-						</td>
-					</tr>
-
-					<tr>
-						<td id="tarifWait">
-						</td>
-
-						<td id="nombreDeWait">
-						</td>
-
-						<td>
-							activité d'attente
-						</td>
-
-						<td>
-							20
-						</td>
-
-						<td id="prixUwait">
-						</td>
-
-						<td id="prixTwait">
-						</td>
-					</tr>
-				</table>
-				<h4 id="prixTotal">
-				</h4>
-			</div>
-
-			<h4 id="prix" class="fixed-action-btn white-text">
-				
+					<td id="prixTboisson">
+					</td>
+				</tr>
+			</table>
+			<h4 id="prixTotal">
 			</h4>
 		</div>
 
-		<div class="parallax-container">
-			<div class="parallax"><img src="src/background2.PNG" alt="background 2"></div>
-		</div>
+		<h4 id="prix" class="fixed-action-btn white-text">
 
-	</main>
+		</h4>
+	</div>
 
-	<!--Pied de page-->
+	<div class="parallax-container">
+		<div class="parallax"><img src="src/background2.PNG" alt="background 2"></div>
+	</div>
 
-	<footer class="page-footer grey darken-4">
-		<div>
-			<img src="src/logo2.PNG" alt="logo_upside_2">
-		</div>
-		<div>
-			© 2020 All right reserves to Upside
-		</div>
-	</footer>
-	<script>
+</main>
+
+<!--Pied de page-->
+
+<footer class="page-footer grey darken-4">
+	<div>
+		<img src="src/logo2.PNG" alt="logo_upside_2">
+	</div>
+	<div>
+		© 2020 All right reserves to Upside
+	</div>
+</footer>
+<script>
 		//parallax
 		$(document).ready(function(){
 			$('.parallax').parallax();
@@ -407,7 +386,25 @@
 
 		//date picker
 		$(document).ready(function(){
-			$('.datepicker').datepicker();
+			$('.datepicker').datepicker({
+				format: "dd/mm/yyyy",
+				i18n : {
+					months : ["Janvier", "Fervrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"],
+					monthsShort : ["Jan", "Fev", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec"],
+					weekdays : ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+					weekdaysShort : ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
+					weekdaysAbbrev : ["L", "M", "Me", "J", "V", "S", "D"]
+				}
+			});
+		});
+
+		$(document).ready(function(){
+			//close popup when clicking the esc keyboard button
+			$(document).keyup(function(event){
+				if(event.which=='27'){
+					$('#cd-popup').removeClass('is-visible');
+				}
+			});
 		});
 	</script>
 </body>
