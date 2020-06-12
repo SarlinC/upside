@@ -10,8 +10,22 @@ class ModelDevis extends Model {
 	private $duree;
 	private $date;
 	private $nombreDePersonne;
-	private $traiteur;
-	private $boisson;
+	private $dureeParPersonne;
+	private $moment;
+	private $remarque;
+	private $typeSeminaire;
+	private $nombreDePersonneEnSeminaire;
+	private $prixSeminaire;
+	private $prixUpersonne;
+	private $prixUtraiteur;
+	private $prixUboisson;
+	private $prixUwait;
+	private $prixTpersonne;
+	private $prixTtraiteur;
+	private $prixTboisson;
+	private $prixTwait;
+	private $prixT;
+	private $coeff;
 
 		//getter générique
 	public function get($nom_attribut){
@@ -29,14 +43,14 @@ class ModelDevis extends Model {
 	    // alors il prend la valeur par défaut, NULL dans notre cas
 	public function __construct($data = NULL) {
 		if (!is_null($data['numeroClient']) && !is_null($data['duree']) && !is_null($data['date']) && !is_null($data['nombreDePersonne'])
-			&& !is_null($data['traiteur']) && !is_null($data['boisson'])) {
+			&& !is_null($data['dureeParPersonne']) && !is_null($data['moment'])) {
 	        
 			$this->numeroClient = $data['numeroClient'];
 			$this->duree = $data['duree'];
 			$this->date = $data['date'];
 			$this->nombreDePersonne = $data['nombreDePersonne'];
-			$this->traiteur = $data['traiteur'];
-			$this->boisson = $data['boisson'];
+			$this->dureeParPersonne = $data['dureeParPersonne'];
+			$this->moment = $data['moment'];
 		}
 	}
 }

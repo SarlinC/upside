@@ -4,11 +4,15 @@
 	// récupération du contenu du champ, passé en get
 	$data = array('numeroClient' => $_GET['user'],
 				'Duree' => $_GET['duree'],
+				'DureeParPersonne' => $_GET['dureePers'],
 				'Date' => $_GET['date'],
+				'Moment' => $_GET['moment'],
 				'NombreDePersonne' => $_GET['nombreDePersonne'],
-				'Traiteur' => $_GET['traiteur'],
-				'Bar' => $_GET['boisson'],
 				'Remarque' => $_GET['remarque'],
+				'TypeSeminaire' => $_GET['typeSeminaire'],
+				'NombreDePersonneEnSeminaire' => $_GET['nombreReunion'],
+				'DureeSeminaire' => $_GET['dureeSem'],
+				'PrixSeminaire' => $_GET['prixSeminaire'],
 				'PrixUPersonne' => $_GET['prixUpersonne'],
 				'PrixUTraiteur' => $_GET['prixUtraiteur'],
 				'PrixUBoisson' => $_GET['prixUboisson'],
@@ -17,7 +21,8 @@
 				'PrixTTraiteur' => $_GET['prixTtraiteur'],
 				'PrixTBoisson' => $_GET['prixTboisson'],
 				'PrixTWait' => $_GET['prixTwait'],
-				'PrixT' => $_GET['prixT']);
+				'PrixT' => $_GET['prixT'],
+				'Coeff' => $_GET['coeff']);
 
 
 	// lancement de la requête SQL avec selectByName et
