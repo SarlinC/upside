@@ -433,42 +433,13 @@ seminaire2[0].addEventListener("click", function() {
 	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
 });
 
-seminaire2[1].addEventListener("click", function() {
-	temps.style.display = "none";
-
-	for (let i = 0; i != 2; i ++) {
-		temps2[i].checked = false;
-	}
-
-	prixSeminaire = 150;
-	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
-});
-
 nombreReunion2[0].addEventListener("change", function() {
 	if (parseInt(nombreReunion2[0].value) > parseInt(nombreDePersonne.value)) {
 		document.getElementById("alert").innerHTML = "Veuillez sélectionner un bon nombre de participants au séminaire !"
 		document.getElementById("cd-popup").setAttribute("class", "is-visible");
 	}
-	else { 
-		if (parseInt(nombreReunion2[0].value) > 25 && parseInt(nombreReunion2[0].value) <= 60) {
-			document.getElementById("alert").innerHTML = "Pour une telle capacité, nous vous recommandons le format plénière !"
-			document.getElementById("cd-popup").setAttribute("class", "is-visible");
-
-			seminaire.style.display = "block";
-			temps.style.display = "none";
-
-			for (let i = 0; i != 2; i ++) {
-				temps2[i].checked = false;
-			}
-
-			seminaire2[0].setAttribute("disabled", "");
-			seminaire2[1].checked = "true";
-			seminaire2[1].setAttribute("disabled", "");
-
-			prixSeminaire = 150;
-			prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
-		}
-		else if (parseInt(nombreReunion2[0].value) > 60) {
+	else {
+		if (parseInt(nombreReunion2[0].value) > 60) {
 			document.getElementById("alert").innerHTML = "La capacité maximale est de 60 personnes, merci de nous contacter pour un évènement sur-mesure !"
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 		}
@@ -477,11 +448,53 @@ nombreReunion2[0].addEventListener("change", function() {
 			temps.style.display = "none";
 
 			seminaire2[0].removeAttribute("disabled", "");
-			seminaire2[1].checked = "false";
+			seminaire2[1].checked = false;
 			seminaire2[1].removeAttribute("disabled", "");
+		}
+		else if (parseInt(nombreReunion2[0].value) > 25 && parseInt(nombreReunion2[0].value) <= 60) {
+			if (parseInt(nombreReunion2[0].value) > 30) {
+				document.getElementById("alert").innerHTML = "Pour une telle capacité, nous vous recommandons le format plénière !"
+				document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+				seminaire2[0].setAttribute("disabled", "");
+				seminaire2[1].checked = true;
+				seminaire2[1].setAttribute("disabled", "");
+
+				affichePasTemps();
+			}
+
+			if (parseInt(nombreReunion2[0].value) <= 30) {
+				seminaire2[1].addEventListener("click", afficheTemps);
+
+				seminaire2[0].removeAttribute("disabled", "");
+				seminaire2[1].checked = false;
+				seminaire2[1].removeAttribute("disabled", "");
+			}
+
+			seminaire.style.display = "block";
+			temps.style.display = "none";
+
+			for (let i = 0; i != 2; i ++) {
+				temps2[i].checked = false;
+			}
 		}
 	}
 });
+
+function afficheTemps() {
+	temps.style.display = "block";
+}
+
+function affichePasTemps() {
+	temps.style.display = "none";
+
+	for (let i = 0; i != 2; i ++) {
+		temps2[i].checked = false;
+	}
+
+	prixSeminaire = 150;
+	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
+}
 
 temps2[0].addEventListener("click", function() {
 	prixSeminaire = 100;
