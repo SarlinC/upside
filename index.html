@@ -2,11 +2,19 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<title>Devis automatique</title>
 
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Font Monserrat -->
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
 
 	<!-- CSS and Script perso-->
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
@@ -21,7 +29,7 @@
 		<!--navbar-->
 
 		<nav>
-			<div class="nav-wrapper">
+			<div>
 				<img id="logo" src="src/logo.png" alt="logo_upside">
 				<ul id="nav-mobile" class="right hide-on-med-and-down">
 					<li><a href="index.html">Accueil</a></li>
@@ -44,430 +52,695 @@
 		<!--formulaire-->
 
 		<div class="section">
-			<div class="content">
-				<div>
-					<form id="form" action="" method="">
-						<div>
-							<label for="nom_id">Entrez votre Nom:<span> *</span></label>
-							<input type="text" name="nom" id="nom_id" placeholder="Ex: Dupont" required>
-						</div>
+			<div class="sidebarTel">
+				<p>
+					<i id="arrow_up" class="material-icons">keyboard_arrow_up</i>
+				</p>
 
-						<div>
-							<label for="prenom_id">Entrez votre Prénom:<span> *</span></label>
-							<input type="text" name="prenom" id="prenom_id" placeholder="Ex: Jean" required>
-						</div>
+				<p>
+					<B id="prixTel"></B>
+				</p>
 
-						<div>
-							<label for="email_id">Entrez votre Email:<span> *</span></label>
-							<input type="email" name="email" id="email_id" placeholder="Ex: jean.dupont@gmail.com" required>
-						</div>
-
-						<div>
-							<label for="tel_id">Entrez votre numéro de Téléphone: </label>
-							<input type="tel" name="tel" id="tel_id" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" placeholder="Ex: 06 XX XX XX XX">
-						</div>
-
-						<div>
-							<button class="btn" type="submit" name="action">Continuer</button>
-						</div>
-					</form>
+				<div id="spec">
+					<p>
+						<i class="material-icons">calendar_today</i> : <B id="dateTel"></B>
+					</p>
+					<p>
+						<i class="material-icons">person</i> : <B id="nombrePersonneTel"></B>
+					</p>
+					<p>
+						<i class="material-icons">brightness_6</i> : <B id="momentTel"></B>
+					</p>
 				</div>
+			</div>
+			<div class="content">
+				<form id="form" onsubmit="removeForm(); return false;" method="POST">
+					<div>
+						<label for="prenom_id">Entrez votre Prénom:<span> *</span></label>
+						<input type="text" name="prenom" id="prenom_id" placeholder="Ex: Jean" required>
+					</div>
 
-				<div>
-					<div id="secondForm">
-						<form id="date" action="" method="">
+					<div>
+						<label for="nom_id">Entrez votre Nom:<span> *</span></label>
+						<input type="text" name="nom" id="nom_id" placeholder="Ex: Dupont" required>
+					</div>
 
-							<ul class="collapsible expandable">
-								<li>
-									<div class="collapsible-header">Veuillez sélectionner une date, un moment et un nombre de personnes participants :</div>
-									<div class="collapsible-body">
-										<div>
-											<label for="date_id">Sélectionnez la date souhaité:<span>*</span></label>
-											<input type="text" class="datepicker" name="date" id="date_id" required>
-										</div>
+					<div>
+						<label for="email_id">Entrez votre Email:<span> *</span></label>
+						<input type="email" name="email" id="email_id" placeholder="Ex: jean.dupont@gmail.com" required>
+					</div>
 
-										<div>
-											<label for="moment_id">Sélectionnez le moment voulu:<span>*</span></label>
-											<select class="browser-default" id="moment_id" required>
-												<option value="" disabled selected>--choisissez une option--</option>
-												<option value="matinee">Matinée</option>
-												<option value="apresmidi">Après-midi</option>
-												<option value="soiree">Soirée</option>
-												<option value="journee">Journée entière</option>
-												<option value="journee&soiree">Journée et soirée</option>
-											</select>
-										</div>
+					<div>
+						<label for="tel_id">Entrez votre numéro de Téléphone: </label>
+						<input type="tel" name="tel" id="tel_id" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" placeholder="Ex: 06 XX XX XX XX">
+					</div>
 
-										<div>
-											<label for="nombre_id">Sélectionnez le nombre de personne:<span> * </span> </label>
-											<input type="number" name="nombre" id="nombre_id" placeholder="10" min="5" max="111" required>
-										</div>
+					<div>
+						<button class="btn" type="submit" name="action">Continuer</button>
+					</div>
+				</form>
 
-										<div>
-											<label for="duree_id">Quelle serais la durée de l'évènement ? <span>*</span></label>
-											<select class="browser-default" id="duree_id" required>
-												<option value="" disabled selected>--choisissez une option--</option>
-												<option value="30" name="duree">30 minutes</option>
-												<option value="60" name="duree">1 heure</option>
-												<option value="90" name="duree">1 heure 30 minutes</option>
-												<option value="120" name="duree">2 heures</option>
-												<option value="150" name="duree">2 heures 30 minutes</option>
-												<option value="180" name="duree">3 heures</option>
-												<option value="210" name="duree">3 heures 30 minutes</option>
-												<option value="240" name="duree">4 heures</option>
-												<option value="270" name="duree">4 heures 30 minutes</option>
-												<option value="300" name="duree">5 heures</option>
-												<option value="330" name="duree">5 heures 30 minutes</option>
-												<option value="360" name="duree">6 heures</option>
-												<option value="390" name="duree">6 heures 30 minutes</option>
-												<option value="420" name="duree">7 heures</option>
-												<option value="450" name="duree">7 heures 30 minutes</option>
-												<option value="480" name="duree">8 heures</option>
-											</select>
-										</div>
+				<form id="formTel" onsubmit="removeFormTel(); return false;" method="POST">
+					<div class="divspe">
+						<label for="prenom_tel_id">Prénom:</label>
+						<input type="text" name="prenom" id="prenom_tel_id" placeholder="Ex: Jean" required>
+					</div>
+
+					<div class="divspe">
+						<label for="nom_tel_id">Nom:</label>
+						<input type="text" name="nom" id="nom_tel_id" placeholder="Ex: Dupont" required>
+					</div>
+
+					<div class="divspe">
+						<label for="email_tel_id"><i class="material-icons">email</i></label>
+						<input type="email" name="email" id="email_tel_id" placeholder="Ex: jean.dupont@gmail.com" required>
+					</div>
+
+					<div class="divspe">
+						<label for="tel_tel_id"><i class="material-icons">phone</i></label>
+						<input type="tel" name="tel" id="tel_tel_id" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" placeholder="Ex: 06 XX XX XX XX">
+					</div>
+
+					<div class="boutton">
+						<button class="btn" type="submit" name="action">Continuer</button>
+					</div>
+				</form>
+
+				<div id="secondForm">
+					<form id="date" onsubmit="removeForm2(); return false;" method="POST">
+
+						<ul class="collapsible expandable">
+							<li>
+								<div class="collapsible-header">Veuillez sélectionner une date, un moment et un nombre de personnes participants :</div>
+								<div class="collapsible-body">
+									<div>
+										<label for="date_id">Indiquez la date souhaité:<span>*</span></label>
+										<input type="text" class="datepicker" name="date" id="date_id" required>
 									</div>
-								</li>
-								<li>
-									<div class="collapsible-header">Choisissez les forfaits qui vous conviennent :</div>
-									<div class="collapsible-body">
-										<label for="traiteur">Forfait traiteur ?<span> * </span></label>
+
+									<div>
+										<label for="moment_id">Sélectionnez le moment voulu:<span>*</span></label>
+										<select class="browser-default" id="moment_id" required>
+											<option value="" disabled selected>--choisissez une option--</option>
+											<option value="matinee">Matinée</option>
+											<option value="apresmidi">Après-midi</option>
+											<option value="soiree">Soirée</option>
+											<option value="journee">Journée entière</option>
+											<option value="journee&soiree">Journée et soirée</option>
+										</select>
+									</div>
+
+									<div>
+										<label for="nombre_id">Sélectionnez le nombre de personne:<span> * </span> </label>
+										<input type="number" name="nombre" id="nombre_id" placeholder="Combien de participants voulez vous ?" min="5" max="111" required>
+									</div>
+
+									<div>
+										<label for="duree_id">Quelle serais la durée de l'évènement ? <span>*</span></label>
+										<select class="browser-default" id="duree_id" required>
+											<option value="" disabled selected>--choisissez une option--</option>
+											<option value="30">30 minutes</option>
+											<option value="60">1 heure</option>
+											<option value="90">1 heure 30 minutes</option>
+											<option value="120">2 heures</option>
+											<option value="150">2 heures 30 minutes</option>
+											<option value="180">3 heures</option>
+											<option value="210">3 heures 30 minutes</option>
+											<option value="240">4 heures</option>
+											<option value="270">4 heures 30 minutes</option>
+											<option value="300">5 heures</option>
+											<option value="330">5 heures 30 minutes</option>
+											<option value="360">6 heures</option>
+											<option value="390">6 heures 30 minutes</option>
+											<option value="420">7 heures</option>
+											<option value="450">7 heures 30 minutes</option>
+											<option value="480">8 heures</option>
+											<option value="480">8 heures et plus</option>
+										</select>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header">Choisissez les forfaits qui vous conviennent :</div>
+								<div class="collapsible-body">
+									<label>Forfait traiteur ?<span> * </span></label>
+									<p>
+										<label>
+											<input class="with-gap" name="traiteur" type="radio" value="1" required>
+											<span>Oui</span>
+										</label>
+										<label>
+											<input class="with-gap" name="traiteur" type="radio" value="0" required>
+											<span>Non</span>
+										</label>
+									</p>
+
+									<div id="traiteur">
+
 										<p>
-											<label id="bouttonTraiteurOui">
-												<input class="with-gap" name="traiteur" type="radio" value="1" required>
+											Il existe plusieurs formule pour le traiteur :
+										</p>
+
+										<label>
+											<input class="with-gap" name="traiteur2" type="radio" value="15">
+											<span>Formule à 15 € par personne, entrée/plat</span>
+										</label>
+										<label>
+											<input class="with-gap" name="traiteur2" type="radio" value="20">
+											<span>Formule à 20 € par personne, plat/dessert</span>
+										</label>
+										<label>
+											<input class="with-gap" name="traiteur2" type="radio" value="30">
+											<span>Formule à 30 € par personne, entrée/plat/dessert</span>
+										</label>
+									</div>
+
+									<div>
+										<label>Forfait bar ?<span> * </span></label>
+										<p>
+											<label>
+												<input class="with-gap" name="boisson" type="radio" value="1" required>
 												<span>Oui</span>
 											</label>
-											<label id="bouttonTraiteurNon">
-												<input class="with-gap" name="traiteur" type="radio" value="0" required>
+											<label>
+												<input class="with-gap" name="boisson" type="radio" value="0" required>
 												<span>Non</span>
 											</label>
 										</p>
 
-										<div id="traiteur">
+										<div id="boisson">
 
 											<p>
-												Il existe plusieurs formule pour le traiteur :
+												Il existe plusieurs formule pour les boissons :
 											</p>
 
 											<label>
-												<input class="with-gap" name="traiteur2" type="radio" value="15">
-												<span>Formule à 15 € par personne, entrée/plat</span>
+												<input class="with-gap" name="boisson2" type="radio" value="3">
+												<span>Formule à 3 € par personne : 1 conso/personne (bières en pression, vins, sodas, jus de fruits,...)</span>
 											</label>
 											<label>
-												<input class="with-gap" name="traiteur2" type="radio" value="20">
-												<span>Formule à 20 € par personne, plat/dessert</span>
+												<input class="with-gap" name="boisson2" type="radio" value="5.5">
+												<span>Formule à 5,50 € par personne : 2 conso/personne (bières en pression, vins, sodas, jus de fruits,...)</span>
 											</label>
 											<label>
-												<input class="with-gap" name="traiteur2" type="radio" value="30">
-												<span>Formule à 30 € par personne, entrée/plat/dessert</span>
+												<input class="with-gap" name="boisson2" type="radio" value="7.5">
+												<span>Formule à 7,50 € par personne : 3 conso/personne (bières en pression, vins, sodas, jus de fruits,...)</span>
+											</label>
+										</div>
+									</div>
+
+									<div id="attente">
+										<label>Forfait d'activitée d'attente (simulateur) ?<span> * </span></label>
+										<p>
+											<label>
+												<input class="with-gap" name="wait" type="radio" value="1" required>
+												<span>Oui</span>
+											</label>
+											<label>
+												<input class="with-gap" name="wait" type="radio" value="0" required>
+												<span>Non</span>
+											</label>
+										</p>
+
+										<div id="wait">
+
+											<p>
+												Il existe plusieurs formule pour les simuateurs :
+											</p>
+
+											<label>
+												<input class="with-gap" name="wait2" type="radio" value="5">
+												<span>Formule à 5 € par personne, qui permet d'avoir une simulation par personne</span>
+											</label>
+											<label>
+												<input class="with-gap" name="wait2" type="radio" value="10">
+												<span>Formule à 10 € par personne, qui permet d'avoir deux simulations par personne</span>
+											</label>
+											<label>
+												<input class="with-gap" name="wait2" type="radio" value="15">
+												<span>Formule à 15 € par personne, qui permet d'avoir trois simulations par personne</span>
+											</label>
+										</div>
+									</div>
+
+									<div id="reunion">
+										<label>Aurez vous besoin d'une salle de réunion ?</label>
+										<label>
+											<input class="with-gap" name="reunion" type="radio" value="0" checked required>
+											<span>Non</span>
+										</label>
+
+										<div>
+											<label>
+												<input class="with-gap" name="reunion" type="radio" value="1" required>
+												<span>Oui, format réunion (2 à 25 personnes)</span>
+											</label>
+											<label class="nombreReunion">
+												<input name="nombreReunion" placeholder="_ _" type="number" min="2" max="25">
+											</label>
+										</div>
+
+										<div id="tempsReunion">
+											<label>
+												<input class="with-gap" name="tempsReunion" type="radio" value="0">
+												<span>Une demi journée ?</span>
+											</label>
+											<label>
+												<input class="with-gap" name="tempsReunion" type="radio" value="1">
+												<span>Une journée entière ?</span>
 											</label>
 										</div>
 
 										<div>
-											<label for="bar">Forfait bar ?<span> * </span></label>
-											<p>
-												<label>
-													<input class="with-gap" name="boisson" type="radio" value="1" required>
-													<span>Oui</span>
-												</label>
-												<label>
-													<input class="with-gap" name="boisson" type="radio" value="0" required>
-													<span>Non</span>
-												</label>
-											</p>
-
-											<div id="boisson">
-
-												<p>
-													Il existe plusieurs formule pour les boissons :
-												</p>
-
-												<label>
-													<input class="with-gap" name="boisson2" type="radio" value="3">
-													<span>Formule à 3 € par personne, qui permet d'avoir une boisson par personne</span>
-												</label>
-												<label>
-													<input class="with-gap" name="boisson2" type="radio" value="5.5">
-													<span>Formule à 5,50 € par personne, qui permet d'avoir deux boissons par personne</span>
-												</label>
-												<label>
-													<input class="with-gap" name="boisson2" type="radio" value="7.50">
-													<span>Formule à 7,50 € par personne, qui permet d'avoir trois boissons par personne</span>
-												</label>
-											</div>
+											<label>
+												<input class="with-gap" name="reunion" type="radio" value="2" required>
+												<span>Oui, format plénière (2 à 60 personnes)</span>
+											</label>
+											<label class="nombreReunion">
+												<input name="nombrePleniere" placeholder="_ _" type="number" min="2" max="60">
+											</label>
 										</div>
 
-										<div id="attente">
-											<label for="wait">Forfait d'activitée d'attente (simulateur) ?<span> * </span></label>
-											<p>
-												<label>
-													<input class="with-gap" name="wait" type="radio" value="1" required>
-													<span>Oui</span>
-												</label>
-												<label>
-													<input class="with-gap" name="wait" type="radio" value="0" required>
-													<span>Non</span>
-												</label>
-											</p>
-
-											<div id="wait">
-
-												<p>
-													Il existe plusieurs formule pour les simuateurs :
-												</p>
-
-												<label>
-													<input class="with-gap" name="wait2" type="radio" value="5">
-													<span>Formule à 5 € par personne, qui permet d'avoir une simulation par personne</span>
-												</label>
-												<label>
-													<input class="with-gap" name="wait2" type="radio" value="10">
-													<span>Formule à 10 € par personne, qui permet d'avoir deux simulations par personne</span>
-												</label>
-												<label>
-													<input class="with-gap" name="wait2" type="radio" value="15">
-													<span>Formule à 15 € par personne, qui permet d'avoir trois simulations par personne</span>
-												</label>
-											</div>
-										</div>
-
-										<div class="divspe">
-											<div id="reunion">
-												<label for="reunion">Aurez vous besoin d'une salle de réunion ?</label>
-												<p>
-													<label>
-														<input class="with-gap" name="reunion" type="radio" value="1">
-														<span>Oui</span>
-													</label>
-													<label>
-														<input class="with-gap" name="reunion" type="radio" value="0">
-														<span>Non</span>
-													</label>
-												</p>
-											</div>
-
-											<div id="nombreReunion">
-												<label>
-													<input name="nombreReunion" type="number" min="2">
-													<span>Combien de personne voudrez vous en séminaire ?</span>
-												</label>
-											</div>
-										</div>
-
-										<div class="divspe">
-											<div id="seminaire">
-												<label for="seminaire">Format réunion ou format plénière ?</label>
-												<p>
-													<label>
-														<input class="with-gap" name="seminaire" type="radio" value="1">
-														<span>Réunion</span>
-													</label>
-													<label>
-														<input class="with-gap" name="seminaire" type="radio" value="0">
-														<span>Plénière</span>
-													</label>
-												</p>
-											</div>
-
-											<div id="temps">
-												<label for="temps">Voulez vous la salle pour : </label>
-												<p>
-													<label>
-														<input class="with-gap" name="temps" type="radio" value="1">
-														<span>Une demi journée ?</span>
-													</label>
-													<label>
-														<input class="with-gap" name="temps" type="radio" value="0">
-														<span>Une journée entière ?</span>
-													</label>
-												</p>
-											</div>
+										<div id="tempsPleniere">
+											<label>
+												<input class="with-gap" name="tempsPleniere" type="radio" value="0">
+												<span>Une demi journée ?</span>
+											</label>
+											<label>
+												<input class="with-gap" name="tempsPleniere" type="radio" value="1">
+												<span>Une journée entière ?</span>
+											</label>
 										</div>
 									</div>
-								</li>
-							</ul>
+								</div>
+							</li>
+						</ul>
 
-							<div>
-								<label for="remarque_id">Remarques : </label>
-								<input type="text" name="remarque" id="remarque_id" placeholder="Avez vous une remarque ?">
-							</div>
+						<div>
+							<label for="remarque_id">Remarques : </label>
+							<input type="text" name="remarque" id="remarque_id" placeholder="Avez vous une remarque ?">
+						</div>
 
-							<div>
-								<button class="btn" type="submit">Finaliser</button>
-							</div>
-						</form>
-					</div>
+						<div>
+							<button class="btn" type="submit">Finaliser</button>
+						</div>
+					</form>
+				</div>
+
+				<div id="secondFormTel">
+					<form id="formTel2" onsubmit="removeFormTel2(); return false;" method="POST">
+
+						<ul class="collapsible expandable">
+							<li>
+								<div class="collapsible-header">
+									<i class="material-icons">event</i>
+								</div>
+								<div class="collapsible-body">
+									<div class="divspe">
+										<label for="date_tel_id"><i class="material-icons">calendar_today</i></label>
+										<input type="text" class="datepicker" placeholder="Insérez une date" name="date" id="date_tel_id" required>
+									</div>
+
+									<div class="divspe">
+										<label for="moment_tel_id"><i class="material-icons">brightness_6</i></label>
+										<select class="browser-default" id="moment_tel_id" required>
+											<option value="" disabled selected>--choisissez une option--</option>
+											<option value="matinee">Matinée</option>
+											<option value="apresmidi">Après-midi</option>
+											<option value="soiree">Soirée</option>
+											<option value="journee">Journée entière</option>
+											<option value="journee&soiree">Journée et soirée</option>
+										</select>
+									</div>
+
+									<div class="divspe">
+										<label for="nombre_tel_id"><i class="material-icons">person</i></label>
+										<input type="number" name="nombre" id="nombre_tel_id" placeholder="Insérez un nombre de participants" min="5" max="111" required>
+									</div>
+
+									<div class="divspe">
+										<label for="duree_tel_id"><i class="material-icons">av_timer</i></label>
+										<select class="browser-default" id="duree_tel_id" required>
+											<option value="" disabled selected>--choisissez une option--</option>
+											<option value="30">30 minutes</option>
+											<option value="60">1 heure</option>
+											<option value="90">1 heure 30 minutes</option>
+											<option value="120">2 heures</option>
+											<option value="150">2 heures 30 minutes</option>
+											<option value="180">3 heures</option>
+											<option value="210">3 heures 30 minutes</option>
+											<option value="240">4 heures</option>
+											<option value="270">4 heures 30 minutes</option>
+											<option value="300">5 heures</option>
+											<option value="330">5 heures 30 minutes</option>
+											<option value="360">6 heures</option>
+											<option value="390">6 heures 30 minutes</option>
+											<option value="420">7 heures</option>
+											<option value="450">7 heures 30 minutes</option>
+											<option value="480">8 heures</option>
+											<option value="480">8 heures et plus</option>
+										</select>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header"><i class="material-icons">add_shopping_cart</i></div>
+								<div class="collapsible-body">
+									<p class="divspe">
+										<label><i class="material-icons">restaurant</i></label>
+										<label>
+											<input class="with-gap" name="traiteurTel" type="radio" value="1" required>
+											<span>Oui</span>
+										</label>
+										<label>
+											<input class="with-gap" name="traiteurTel" type="radio" value="0" required>
+											<span>Non</span>
+										</label>
+									</p>
+
+									<div id="traiteurTel">
+
+										<p>
+											Il existe 3 formules traiteur :
+										</p>
+
+										<label>
+											<input class="with-gap" name="traiteurTel2" type="radio" value="15">
+											<span>entrée/plat : 15 €/personne</span>
+										</label>
+										<label>
+											<input class="with-gap" name="traiteurTel2" type="radio" value="20">
+											<span>plat/dessert : 20 €/personne</span>
+										</label>
+										<label>
+											<input class="with-gap" name="traiteurTel2" type="radio" value="30">
+											<span>entrée/plat/dessert : 30 €/personne</span>
+										</label>
+									</div>
+
+									<div>
+										<p class="divspe">
+											<label><i class="material-icons">local_bar</i></label>
+											<label>
+												<input class="with-gap" name="boissonTel" type="radio" value="1" required>
+												<span>Oui</span>
+											</label>
+											<label>
+												<input class="with-gap" name="boissonTel" type="radio" value="0" required>
+												<span>Non</span>
+											</label>
+										</p>
+
+										<div id="boissonTel">
+
+											<p>
+												Il existe différentes conso au bar (bières en pression, du vin, des sodas, du jus de fruits, ...) :
+											</p>
+
+											<label>
+												<input class="with-gap" name="boissonTel2" type="radio" value="3">
+												<span>1 conso : 3 €/personne</span>
+											</label>
+											<label>
+												<input class="with-gap" name="boissonTel2" type="radio" value="5.5">
+												<span>2 conso : 5,50 €/personne</span>
+											</label>
+											<label>
+												<input class="with-gap" name="boissonTel2" type="radio" value="7.5">
+												<span>3 conso : 7,50 €/personne</span>
+											</label>
+										</div>
+									</div>
+
+									<div id="attenteTel">
+										<p class="divspe">
+											<label><i class="material-icons">flash_on</i></label>
+											<label>
+												<input class="with-gap" name="waitTel" type="radio" value="1" required>
+												<span>Oui</span>
+											</label>
+											<label>
+												<input class="with-gap" name="waitTel" type="radio" value="0" required>
+												<span>Non</span>
+											</label>
+										</p>
+
+										<div id="waitTel">
+
+											<p>
+												Il existe 3 formules simulateurs :
+											</p>
+
+											<label>
+												<input class="with-gap" name="waitTel2" type="radio" value="5">
+												<span>1 simu : 5 €/personne</span>
+											</label>
+											<label>
+												<input class="with-gap" name="waitTel2" type="radio" value="10">
+												<span>2 simu : 10 €/personne</span>
+											</label>
+											<label>
+												<input class="with-gap" name="waitTel2" type="radio" value="15">
+												<span>3 simu : 15 €/personne</span>
+											</label>
+										</div>
+									</div>
+
+									<div id="reunionTel">
+										<label><i class="material-icons">work</i>Séminaire</label>
+										<label>
+											<input class="with-gap" name="reunionTel" type="radio" value="0" checked required>
+											<span>Non</span>
+										</label>
+
+										<div class="divspe">
+											<label>
+												<input class="with-gap" name="reunionTel" type="radio" value="1" required>
+												<span>Réunion (2 à 25 personnes)</span>
+											</label>
+											<label class="nombreReunion">
+												<input name="nombreReunionTel" placeholder="_ _" type="number" min="2" max="25">
+											</label>
+										</div>
+
+										<div id="tempsReunionTel" class="divspe">
+											<label>
+												<input class="with-gap" name="tempsReunionTel" type="radio" value="0">
+												<span>1/2 journée ?</span>
+											</label>
+											<label>
+												<input class="with-gap" name="tempsReunionTel" type="radio" value="1">
+												<span>1 journée ?</span>
+											</label>
+										</div>
+
+										<div class="divspe">
+											<label>
+												<input class="with-gap" name="reunionTel" type="radio" value="2" required>
+												<span>Plénière (2 à 60 personnes)</span>
+											</label>
+											<label class="nombreReunion">
+												<input name="nombrePleniereTel" placeholder="_ _" type="number" min="2" max="60">
+											</label>
+										</div>
+
+										<div id="tempsPleniereTel" class="divspe">
+											<label>
+												<input class="with-gap" name="tempsPleniereTel" type="radio" value="0">
+												<span>1/2 journée ?</span>
+											</label>
+											<label>
+												<input class="with-gap" name="tempsPleniereTel" type="radio" value="1">
+												<span>1 journée ?</span>
+											</label>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+
+						<div>
+							<label for="remarque_tel_id">Remarques : </label>
+							<input type="text" name="remarque" id="remarque_tel_id" placeholder="Avez vous une remarque ?">
+						</div>
+
+						<div class="boutton">
+							<button class="btn" type="submit">Finaliser</button>
+						</div>
+					</form>
 				</div>
 
 				<div id="tableau">
 					<table>
-						<tr>
-							<td>
-								Désignation
-							</td>
+						<thead>
+							<tr>
+								<td>
+									Désignation
+								</td>
 
-							<td>
-								Quantité
-							</td>
+								<td>
+									Quantité
+								</td>
 
-							<td>
-								Unité
-							</td>
+								<td>
+									Unité
+								</td>
 
-							<td>
-								TVA
-							</td>
+								<td>
+									TVA
+								</td>
 
-							<td>
-								PU vente
-							</td>
+								<td>
+									PU vente
+								</td>
 
-							<td>
-								Montant HT
-							</td>
-						</tr>
+								<td>
+									Montant HT
+								</td>
+							</tr>
+						</thead>
 
-						<tr>
-							<td id="private">
-							</td>
+						<tbody>
+							<tr>
+								<td id="private">
+									Durée de l'évènement
+								</td>
 
-							<td id="duree">
-							</td>
+								<td id="duree">
+								</td>
 
-							<td>
-								minutes
-							</td>
+								<td>
+									minutes
+								</td>
 
-							<td>
-								X
-							</td>
+								<td>
+								</td>
 
-							<td>
-								X
-							</td>
+								<td>
+								</td>
 
-							<td>
-								X
-							</td>
-						</tr>
+								<td>
+								</td>
+							</tr>
 
-						<tr>
-							<td>
-								X
-							</td>
+							<tr>
+								<td id="forfaitPersonne">
+									Nombre De personne
+								</td>
 
-							<td id="nombrePersonne">
-							</td>
+								<td id="nombrePersonne">
+								</td>
 
-							<td>
-								personnes
-							</td>
+								<td>
+									personnes
+								</td>
 
-							<td>
-								20
-							</td>
+								<td>
+									20
+								</td>
 
-							<td id="prixUpersonne">
-							</td>
+								<td id="prixUpersonne">
+								</td>
 
-							<td id="prixTpersonne">
-							</td>
-						</tr>
+								<td id="prixTpersonne">
+								</td>
+							</tr>
 
-						<tr id="tr">
-							<td id="tarifTraiteur">
-							</td>
+							<tr id="tr">
+								<td id="tarifTraiteur">
+								</td>
 
-							<td id="menu">
-							</td>
+								<td id="menu">
+								</td>
 
-							<td>
-								personnes
-							</td>
+								<td>
+									personnes
+								</td>
 
-							<td>
-								10
-							</td>
+								<td>
+									10
+								</td>
 
-							<td id="prixUtraiteur">
-							</td>
+								<td id="prixUtraiteur">
+								</td>
 
-							<td id="prixTtraiteur">
-							</td>
-						</tr>
+								<td id="prixTtraiteur">
+								</td>
+							</tr>
 
-						<tr id="bar">
-							<td id="tarifBar">
-							</td>
+							<tr id="bar">
+								<td id="tarifBar">
+								</td>
 
-							<td id="nombreDeBoisson">
-							</td>
+								<td id="nombreDeBoisson">
+								</td>
 
-							<td>
-								Bar
-							</td>
+								<td>
+									Bar
+								</td>
 
-							<td>
-								20
-							</td>
+								<td>
+									20
+								</td>
 
-							<td id="prixUboisson">
-							</td>
+								<td id="prixUboisson">
+								</td>
 
-							<td id="prixTboisson">
-							</td>
-						</tr>
+								<td id="prixTboisson">
+								</td>
+							</tr>
 
-						<tr id="simulateur">
-							<td id="tarifWait">
-							</td>
+							<tr id="simulateur">
+								<td id="tarifWait">
+								</td>
 
-							<td id="nombreWait">
-							</td>
+								<td id="nombreWait">
+								</td>
 
-							<td>
-								Simulateur
-							</td>
+								<td>
+									Simulateur
+								</td>
 
-							<td>
-								10
-							</td>
+								<td>
+									10
+								</td>
 
-							<td id="prixUwait">
-							</td>
+								<td id="prixUwait">
+								</td>
 
-							<td id="prixTwait">
-							</td>
-						</tr>
+								<td id="prixTwait">
+								</td>
+							</tr>
 
-						<tr id="seminaire2">
-							<td id="formatSem">
-							</td>
+							<tr id="seminaire2">
+								<td id="formatSem">
+								</td>
 
-							<td id="nombreSem">
-							</td>
+								<td id="nombreSem">
+								</td>
 
-							<td>
-								Seminaire
-							</td>
+								<td>
+									Seminaire
+								</td>
 
-							<td>
-								20
-							</td>
+								<td>
+									20
+								</td>
 
-							<td>
-								X
-							</td>
+								<td>
+								</td>
 
-							<td id="prixSem">
-							</td>
-						</tr>
+								<td id="prixSem">
+								</td>
+							</tr>
+						</tbody>
 					</table>
 				</div>
 			</div>
 
 			<div class="sidebar">
 				<p>
-					Pour votre événement du <B id="date2"></B>, <br> <B id="moment2"></B>, <br> pour <B id="nbrPersonne"></B> personnes, pour une durée de jeu de <B id="duree2"></B><br> le tarif est de : <B id="prix"></B>
+					Pour votre événement du <B id="date2"></B>, <B id="moment2"></B>,<br>pour <B id="nbrPersonne"></B> personnes,<br>pour une durée de jeu de <B id="duree2"></B><br>le tarif est de : <B id="prix"></B>
 				</p>
 			</div>
 
@@ -493,10 +766,10 @@
 
 	<footer class="page-footer">
 		<div>
-			<img src="src/logo2.PNG" alt="logo_upside_2">
+			<img id="logo2" src="src/logo2.PNG" alt="logo_upside_2">
 		</div>
 		<div>
-			© 2020 All right reserves to Upside
+			© 2020 All right reserved to Upside
 		</div>
 	</footer>
 	<script>

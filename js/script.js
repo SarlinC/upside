@@ -1,71 +1,35 @@
 //Partie 1er Formulaire
-let form = document.getElementById("form");
+let form = document.getElementById('form');
 
-let nom = document.getElementById("nom_id");
-let prenom = document.getElementById("prenom_id");
-let email = document.getElementById("email_id");
-let tel = document.getElementById("tel_id");
+let nom = document.getElementById('nom_id');
+let prenom = document.getElementById('prenom_id');
+let email = document.getElementById('email_id');
+let tel = document.getElementById('tel_id');
 
-form.addEventListener("submit", function() {
-	if (tel.value != "") {
-		requeteUser(nom.value, prenom.value, email.value, tel.value);
+function removeForm () {
+	if (rgpd == true) {
+		if (tel.value != "") {
+			requeteUser(nom.value, prenom.value, email.value, tel.value);
+		}
+		else {
+			requeteUser(nom.value, prenom.value, email.value);
+		}
 	}
-	else {
-		requeteUser(nom.value, prenom.value, email.value);
-	}
-	form.parentNode.remove(form);
-	divForm2.style.display = "block";
-	prix.style.display = "flex";
-});
 
-function requeteUser(nom, prenom, email) {
-	requeteSaveUser(nom, prenom, email);
-}
-
-function requeteUser(nom, prenom, email, tel) {
-	requeteSaveUser(nom, prenom, email, tel);
-}
-
-//Requête Ajax pour la création d'un utilisateur sans téléphone
-
-function requeteSaveUser(nom, prenom, email) {
-
-	let url = 'php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email;
-	let requete = new XMLHttpRequest();
-
-	requete.open("GET", url, true);
-
-	requete.addEventListener("load", function () {
-		callback(requete);
-	});
-
-	requete.send(null);
-}
-
-//Requête Ajax pour la création d'un utilisateur avec téléphone
-
-function requeteSaveUser(nom, prenom, email, tel) {
-
-	let url = 'php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email + '&tel=' + tel;
-	let requete = new XMLHttpRequest();
-
-	requete.open("GET", url, true);
-
-	requete.addEventListener("load", function () {
-		callback(requete);
-	});
-
-	requete.send(null);
+	form.remove(form);
+	
+	divForm2.style.display = 'block';
+	prix.style.display = 'flex';
 }
 
 //Partie 2nd Formulaire
 
-let divForm2 = document.getElementById("secondForm");
-divForm2.style.display = "none";
+let divForm2 = document.getElementById('secondForm');
+divForm2.style.display = 'none';
 
-document.getElementById("traiteur").style.display = "none";
-document.getElementById("boisson").style.display = "none";
-document.getElementById("wait").style.display = "none";
+document.getElementById("traiteur").style.display = 'none';
+document.getElementById("boisson").style.display = 'none';
+document.getElementById("wait").style.display = 'none';
 
 let form2 = document.getElementById("date");
 
@@ -173,21 +137,26 @@ for (let i = 0; i < 3; i ++) {
 			pTotal = pTraiteur + pBoisson + pWait;
 			prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
 
+			let menu = "";
+
 			if (traiteur2[0].checked) {
-				document.getElementById("menu").innerHTML = "entrée/plat";
+				menu = "entrée/plat";
 				document.getElementById("prixUtraiteur").innerHTML = "15 €";
 				prixUtraiteur = 15;
 			}
 			if (traiteur2[1].checked) {
-				document.getElementById("menu").innerHTML = "plat/dessert";
+				menu = "plat/dessert";
 				document.getElementById("prixUtraiteur").innerHTML = "20 €";
 				prixUtraiteur = 20;
 			}
 			if (traiteur2[2].checked) {
-				document.getElementById("menu").innerHTML = "entrée/plat/dessert";
+				menu = "entrée/plat/dessert"
 				document.getElementById("prixUtraiteur").innerHTML = "30 €";
 				prixUtraiteur = 30;
 			}
+
+			document.getElementById("tarifTraiteur").innerHTML = "Forfait traiteur<br>" + menu;
+			document.getElementById("menu").innerHTML = nombreDePersonne.value;
 
 			document.getElementById("prixTtraiteur").innerHTML = pTraiteur + " €";
 		}
@@ -205,21 +174,26 @@ for (let i = 0; i < 3; i ++) {
 			pTotal = pTraiteur + pBoisson + pWait;
 			prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
 
+			let verre = "";
+
 			if (boisson2[0].checked) {
-				document.getElementById("nombreDeBoisson").innerHTML = "1";
+				verre = "1 boisson";
 				document.getElementById("prixUboisson").innerHTML = "3 €";
 				prixUboisson = 3;
 			}
 			if (boisson2[1].checked) {
-				document.getElementById("nombreDeBoisson").innerHTML = "2";
+				verre = "2 boissons";
 				document.getElementById("prixUboisson").innerHTML = "5,50 €";
 				prixUboisson = 5.5;
 			}
 			if (boisson2[2].checked) {
-				document.getElementById("nombreDeBoisson").innerHTML = "3";
+				verre = "3 boissons";
 				document.getElementById("prixUboisson").innerHTML = "7,50 €";
 				prixUboisson = 7.5;
 			}
+
+			document.getElementById("tarifBar").innerHTML = "Forfait BAR<br>" + verre;
+			document.getElementById("nombreDeBoisson").innerHTML = nombreDePersonne.value;
 
 			document.getElementById("prixTboisson").innerHTML = pBoisson + " €";
 		}
@@ -237,276 +211,33 @@ for (let i = 0; i < 3; i ++) {
 			pTotal = pTraiteur + pBoisson + pWait;
 			prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
 
+			let simu = "";
+
 			if (wait2[0].checked) {
-				document.getElementById("nombreWait").innerHTML = "1";
+				simu = "1 simulation";
 				document.getElementById("prixUwait").innerHTML = "5 €";
 				prixUwait = 5;
 			}
 			if (wait2[1].checked) {
-				document.getElementById("nombreWait").innerHTML = "2";
+				simu = "2 simulations";
 				document.getElementById("prixUwait").innerHTML = "10 €";
 				prixUwait = 10;
 			}
 			if (wait2[2].checked) {
-				document.getElementById("nombreWait").innerHTML = "3";
+				simu = "3 simulations";
 				document.getElementById("prixUwait").innerHTML = "15 €";
 				prixUwait = 15;
 			}
+
+			document.getElementById("tarifWait").innerHTML = "Forfait simulateur<br>" + simu;
+			document.getElementById("nombreWait").innerHTML = nombreDePersonne.value;
 
 			document.getElementById("prixTwait").innerHTML = pWait + " €";
 		}
 	});
 }
 
-form2.addEventListener("submit", function() {
-	completeDevis();
-
-	document.getElementById("tableau").style.display = "flex";
-
-	requeteSelectUser(nom.value, prenom.value, email.value);
-
-	form2.parentNode.remove(form2);
-});
-
-function completeDevis() {
-	document.getElementsByClassName("sidebar")[0].style.display = "none";
-
-	document.getElementById("duree").innerHTML = duree.value;
-
-	document.getElementById("nombrePersonne").innerHTML = nombreDePersonne.value;
-	document.getElementById("prixUpersonne").innerHTML = prixBase + " €";
-	document.getElementById("prixTpersonne").innerHTML = prixBase * nombreDePersonne.value + " €";
-
-	let typeSeminaire;
-
-	if (seminaire2[0].checked) {
-		typeSeminaire = "Reunion";
-	}
-	else {
-		typeSeminaire = "Plénière";
-	}
-
-	if (seminaire2[0].checked) {
-		let dureeSem;
-
-		if (temps2[0].checked) {
-			dureeSem = "1/2 journee";
-		}
-		else {
-			dureeSem = "1 journee";
-		}
-		document.getElementById("nombreSem").innerHTML = nombreReunion2[0].value + " personnes"
-		+ "<br>" + dureeSem;
-	}
-	else {
-		document.getElementById("nombreSem").innerHTML = nombreReunion2[0].value + " personnes";
-	}
-
-	document.getElementById("formatSem").innerHTML = typeSeminaire;
-	
-	document.getElementById("prixSem").innerHTML = prixSeminaire + " €";
-}
-
-//Requête Ajax pour la création des devis.
-
-function requeteSaveDevis(user, duree, dureePers, date, moment, nombreDePersonne, remarque, typeSeminaire, nombreReunion, prixSeminaire, prixUpersonne
-	, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur, prixTboisson, prixTwait, prixT, coeff) {
-	let url = "php/requeteDevis.php?date=" + date + "&duree=" + duree + "&dureePers=" + dureePers + "&nombreDePersonne=" + nombreDePersonne
-	+ "&remarque=" + remarque + "&user=" + user + "&typeSeminaire=" + typeSeminaire + "&nombreReunion=" + nombreReunion + "&dureeSem=" + dureeSem
-	+ "&prixSeminaire=" + prixSeminaire + "&prixUpersonne=" + prixUpersonne + "&prixUtraiteur=" + prixUtraiteur + "&prixUboisson=" + prixUboisson
-	+ "&prixUwait=" + prixUwait + "&prixTpersonne=" + prixTpersonne + "&prixTtraiteur=" + prixTtraiteur + "&prixTboisson=" + prixTboisson
-	+ "&prixTwait=" + prixTwait + "&prixT=" + prixT + "&coeff=" + coeff;
-
-	let requete = new XMLHttpRequest();
-
-	requete.open("GET", url, true);
-
-	requete.addEventListener("load", function () {
-		callback(requete);
-	});
-
-	requete.send(null);
-}
-
-function requeteSelectUser(nom, prenom, email) {
-	let url = "php/requeteSelectUser.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
-	let requete = new XMLHttpRequest();
-
-	requete.open("GET", url, true);
-
-	requete.addEventListener("load", function () {
-		callback2(requete);
-	});
-
-	requete.send(null);
-}
-
-function callback2(req) {
-	let prixTpersonne = prixBase * nombreDePersonne.value;
-	let prixTtraiteur = pTraiteur * nombreDePersonne.value;
-	let prixTboisson = pBoisson * nombreDePersonne.value;
-	let prixTwait = pWait * nombreDePersonne.value;
-	let prixT = prixTpersonne + prixTtraiteur + prixTboisson + prixTwait;
-	
-	let typeSeminaire;
-
-	if (seminaire2[0].checked) {
-		typeSeminaire = "reunion";
-	}
-	else {
-		typeSeminaire = "plénière";
-	}
-
-	let dureeSem;
-
-	if (temps2[0].checked) {
-		dureeSem = "1/2 journee";
-	}
-	else {
-		dureeSem = "1 journee";
-	}
-
-	requeteSaveDevis(req.responseText, duree.value, dureePers, date.value, moment.value, nombreDePersonne.value, remarque.value,
-		typeSeminaire, nombreReunion2[0].value, dureeSem, prixSeminaire, prixUpersonne, pTraiteur, pBoisson, pWait, prixTpersonne, prixTtraiteur,
-		prixTboisson, prixTwait, prixT, coeff);
-}
-
-function calculPrix(prixBase) {
-	return (duree.value/60) * 13 * prixBase;
-}
-
-//Partie affichage du devis
-
-document.getElementById("tableau").style.display = "none";
-
-//Partie générale
-
-function callback(req) {
-	console.log(req.responseText);
-}
-
-//Séminaire
-
-let reunion = document.getElementById("reunion");
-let seminaire = document.getElementById("seminaire");
-let nombreReunion = document.getElementById("nombreReunion");
-let temps = document.getElementById("temps");
-
-let reunion2 = document.getElementsByName("reunion");
-let seminaire2 = document.getElementsByName("seminaire");
-let nombreReunion2 = document.getElementsByName("nombreReunion");
-let temps2 = document.getElementsByName("temps");
-
-seminaire.style.display = "none";
-nombreReunion.style.display = "none";
-temps.style.display = "none";
-
-let prixSeminaire = 0;
-
-reunion2[0].addEventListener("click", function() {
-	document.getElementById("seminaire2").style.display = "visible";
-	nombreReunion.style.display = "block";
-});
-
-reunion2[1].addEventListener("click", function() {
-	document.getElementById("seminaire2").style.display = "none";
-
-	seminaire.style.display = "none";
-	nombreReunion.style.display = "none";
-	temps.style.display = "none";
-
-	for (let i = 0; i != 2; i ++) {
-		seminaire2[i].checked = false;
-		temps2[i].checked = false;
-	}
-
-	nombreReunion2[0].value = "";
-
-	prixSeminaire = 0;
-	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
-});
-
-seminaire2[0].addEventListener("click", function() {
-	temps.style.display = "block";
-
-	prixSeminaire = 0;
-	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
-});
-
-nombreReunion2[0].addEventListener("change", function() {
-	if (parseInt(nombreReunion2[0].value) > parseInt(nombreDePersonne.value)) {
-		document.getElementById("alert").innerHTML = "Veuillez sélectionner un bon nombre de participants au séminaire !"
-		document.getElementById("cd-popup").setAttribute("class", "is-visible");
-	}
-	else {
-		if (parseInt(nombreReunion2[0].value) > 60) {
-			document.getElementById("alert").innerHTML = "La capacité maximale est de 60 personnes, merci de nous contacter pour un évènement sur-mesure !"
-			document.getElementById("cd-popup").setAttribute("class", "is-visible");
-		}
-		else if (parseInt(nombreReunion2[0].value) <= 25) {
-			seminaire.style.display = "block";
-			temps.style.display = "none";
-
-			seminaire2[0].removeAttribute("disabled", "");
-			seminaire2[1].checked = false;
-			seminaire2[1].removeAttribute("disabled", "");
-		}
-		else if (parseInt(nombreReunion2[0].value) > 25 && parseInt(nombreReunion2[0].value) <= 60) {
-			if (parseInt(nombreReunion2[0].value) > 30) {
-				document.getElementById("alert").innerHTML = "Pour une telle capacité, nous vous recommandons le format plénière !"
-				document.getElementById("cd-popup").setAttribute("class", "is-visible");
-
-				seminaire2[0].setAttribute("disabled", "");
-				seminaire2[1].checked = true;
-				seminaire2[1].setAttribute("disabled", "");
-
-				affichePasTemps();
-			}
-
-			if (parseInt(nombreReunion2[0].value) <= 30) {
-				seminaire2[1].addEventListener("click", afficheTemps);
-
-				seminaire2[0].removeAttribute("disabled", "");
-				seminaire2[1].checked = false;
-				seminaire2[1].removeAttribute("disabled", "");
-			}
-
-			seminaire.style.display = "block";
-			temps.style.display = "none";
-
-			for (let i = 0; i != 2; i ++) {
-				temps2[i].checked = false;
-			}
-		}
-	}
-});
-
-function afficheTemps() {
-	temps.style.display = "block";
-}
-
-function affichePasTemps() {
-	temps.style.display = "none";
-
-	for (let i = 0; i != 2; i ++) {
-		temps2[i].checked = false;
-	}
-
-	prixSeminaire = 150;
-	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
-}
-
-temps2[0].addEventListener("click", function() {
-	prixSeminaire = 100;
-	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
-});
-
-temps2[1].addEventListener("click", function() {
-	prixSeminaire = 150;
-	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
-});
-
-//Date
+//Gestion moment pc
 
 let maDate;
 
@@ -524,18 +255,22 @@ date.addEventListener("change", function() {
 	maDate = new Date(annee, mois - 1, jour);
 
 	moment.addEventListener("change", function() {
-		if (maDate.getDay() == 5 || maDate.getDay() == 6 && parseInt(nombreDePersonne.value >= 20)) {
+		if (maDate.getDay() == 5 || maDate.getDay() == 6 && parseInt(nombreDePersonne.value >= 30)) {
 			if (moment.value == "journee" || moment.value == "soiree") {
+				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 			}
 		}
 		else {
-			if (moment.value == "soiree" && parseInt(nombreDePersonne.value >= 20)) {
+			if (moment.value == "soiree" && parseInt(nombreDePersonne.value >= 30)) {
+				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 			}
 		}
 	});
 });
+
+let tabDuree = document.getElementById("duree_id");
 
 moment.addEventListener("change", function(){
 	if (date.value != "") {
@@ -556,9 +291,48 @@ moment.addEventListener("change", function(){
 			}
 		}
 	}
-});
 
-document.getElementsByClassName("sidebar")[0].style.display = "none";
+	if (moment.value == "matinee" || moment.value == "apresmidi") {
+		for (let i = 0; i < tabDuree.length; i ++) {
+			if (parseInt(tabDuree[i].value) > 240) {
+				tabDuree[i].setAttribute("disabled", "");
+			}
+			else {
+				tabDuree[i].removeAttribute("disabled", "");
+			}
+		}
+	}
+	else if (moment.value == "soiree") {
+		for (let i = 0; i < tabDuree.length; i ++) {
+			if (parseInt(tabDuree[i].value) > 300) {
+				tabDuree[i].setAttribute("disabled", "");
+			}
+			else {
+				tabDuree[i].removeAttribute("disabled", "");
+			}
+		}
+	}
+	else if (moment.value == "journee") {
+		for (let i = 0; i < tabDuree.length; i ++) {
+			if (i == tabDuree.length - 1) {
+				tabDuree[tabDuree.length - 1].setAttribute("disabled", "");
+			}
+			else {
+				tabDuree[i].removeAttribute("disabled", "");
+			}
+		}
+	}
+	else {
+		for (let i = 0; i < tabDuree.length; i ++) {
+			if (i != tabDuree.length - 1) {
+				tabDuree[i].setAttribute("disabled", "");
+			}
+			else {
+				tabDuree[i].removeAttribute("disabled", "");
+			}
+		}
+	}
+});
 
 let tabMoment = {"matinee" : "en matinée", "apresmidi" : "en après-midi", "soiree" : "en soirée", "journee" : "en journée", "journee&soiree" : "de 9h à 23h"};
 let coeff = 0;
@@ -582,18 +356,18 @@ duree.addEventListener("change", function() {
 			document.getElementById("alert").innerHTML = "Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
-			for (let i = 0; i < document.getElementsByName("duree").length; i ++) {
-				if (((document.getElementsByName("duree")[i].value * 13) / nombreDePersonne.value) / 60 < 0.5) {
-					document.getElementsByName("duree")[i].setAttribute("disabled", "");
+			for (let i = 0; i < tabDuree.length; i ++) {
+				if (((tabDuree[i].value * 13) / nombreDePersonne.value) / 60 < 0.5) {
+					tabDuree[i].setAttribute("disabled", "");
 				}
 			}
 		}
 		else if (coeff >= 0.5 && coeff <= 1) {
 			dureePers = 30;
 
-			for (let i = 0; i < document.getElementsByName("duree").length; i ++) {
-				if (((document.getElementsByName("duree")[i].value * 13) / nombreDePersonne.value) / 60 >= 0.5) {
-					document.getElementsByName("duree")[i].removeAttribute("disabled", "");
+			for (let i = 0; i < tabDuree.length; i ++) {
+				if (((tabDuree[i].value * 13) / nombreDePersonne.value) / 60 >= 0.5) {
+					tabDuree[i].removeAttribute("disabled", "");
 				}
 			}
 		}
@@ -608,12 +382,6 @@ duree.addEventListener("change", function() {
 				document.getElementById("simulateur").style.display = "none";
 
 				wait[1].checked = true;
-			}
-
-			for (let i = 0; i < document.getElementsByName("duree").length; i ++) {
-				if (((document.getElementsByName("duree")[i].value * 13) / nombreDePersonne.value) / 60 >= 0.5) {
-					document.getElementsByName("duree")[i].removeAttribute("disabled", "");
-				}
 			}
 		}
 
@@ -665,25 +433,25 @@ nombreDePersonne.addEventListener("change", function() {
 			document.getElementById("alert").innerHTML = "Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
-			for (let i = 0; i < document.getElementsByName("duree").length; i ++) {
-				if (((document.getElementsByName("duree")[i].value * 13) / nombreDePersonne.value) / 60 < 0.5) {
-					document.getElementsByName("duree")[i].setAttribute("disabled", "");
+			for (let i = 0; i < tabDuree.length; i ++) {
+				if (((tabDuree[i].value * 13) / nombreDePersonne.value) / 60 < 0.5) {
+					tabDuree[i].setAttribute("disabled", "");
 				}
 			}
 		}
 		else if (coeff >= 0.5 && coeff <= 1) {
 			dureePers = 30;
 
-			for (let i = 0; i < document.getElementsByName("duree").length; i ++) {
-				if (((document.getElementsByName("duree")[i].value * 13) / nombreDePersonne.value) / 60 >= 0.5) {
-					document.getElementsByName("duree")[i].removeAttribute("disabled", "");
+			for (let i = 0; i < tabDuree.length; i ++) {
+				if (((tabDuree[i].value * 13) / nombreDePersonne.value) / 60 >= 0.5) {
+					tabDuree[i].removeAttribute("disabled", "");
 				}
 			}
 		}
 		else {
 			dureePers = 60;
 
-			if (coeff >= 1.5 && coeff <= 2) {
+			if (coeff > 1.3) {
 				document.getElementById("alert").innerHTML = "En choisissant ces options, les activitées d'attente vous sont offertes !";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
@@ -692,17 +460,220 @@ nombreDePersonne.addEventListener("change", function() {
 
 				wait[1].checked = true;
 			}
-
-			for (let i = 0; i < document.getElementsByName("duree").length; i ++) {
-				if (((document.getElementsByName("duree")[i].value * 13) / nombreDePersonne.value) / 60 >= 0.5) {
-					document.getElementsByName("duree")[i].removeAttribute("disabled", "");
-				}
-			}
 		}
 
 		document.getElementById("duree2").innerHTML = dureePers + " minutes par personne";
 	}
 });
+
+//Séminaire
+
+let reunion = document.getElementById("reunion");
+let tempsReunion = document.getElementById("tempsReunion");
+let tempsPleniere = document.getElementById("tempsPleniere");
+
+let reunion2 = document.getElementsByName("reunion");
+let nombreReunion = document.getElementsByName("nombreReunion");
+let nombrePleniere = document.getElementsByName("nombrePleniere");
+let tempsReunion2 = document.getElementsByName("tempsReunion");
+let tempsPleniere2 = document.getElementsByName("tempsPleniere");
+
+tempsReunion.style.display = "none";
+tempsPleniere.style.display = "none";
+
+let prixSeminaire = 0;
+let nombrePersonneReunion = nombreReunion[0].value;
+
+let typeSeminaire;
+let dureeSem;
+
+reunion2[0].addEventListener("click", function() {
+	document.getElementById("seminaire2").style.display = "none";
+	tempsReunion.style.display = "none";
+	tempsPleniere.style.display = "none";
+
+	typeSeminaire = "";
+	dureeSem = "";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsReunion2[i].checked = false;
+		tempsPleniere2[i].checked = false;
+		tempsReunion2[i].removeAttribute("required", "");
+		tempsPleniere2[i].removeAttribute("required", "");
+	}
+
+	nombreReunion[0].value = "";
+	nombrePleniere[0].value = "";
+
+	prixSeminaire = 0;
+	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+reunion2[1].addEventListener("click", function() {
+	document.getElementById("seminaire2").style.display = "table-row";
+	tempsReunion.style.display = "inline-block";
+	tempsPleniere.style.display = "none";
+
+	typeSeminaire = "reunion";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsPleniere2[i].checked = false;
+		tempsReunion2[i].setAttribute("required", "");
+		tempsPleniere2[i].removeAttribute("required", "");
+	}
+
+	nombrePleniere[0].value = "";
+});
+
+reunion2[2].addEventListener("click", function() {
+	document.getElementById("seminaire2").style.display = "table-row";
+	tempsPleniere.style.display = "inline-block";
+	tempsReunion.style.display = "none";
+
+	typeSeminaire = "plénière";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsReunion2[i].checked = false;
+		tempsReunion2[i].removeAttribute("required", "");
+		tempsPleniere2[i].setAttribute("required", "");
+	}
+
+	nombreReunion[0].value = "";
+});
+
+nombreReunion[0].addEventListener("click", function() {
+	tempsReunion.style.display = "inline-block";
+	tempsPleniere.style.display = "none";
+
+	reunion2[1].checked = true;
+	reunion2[2].checked = false;
+
+	typeSeminaire = "réunion";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsPleniere2[i].checked = false;
+		tempsReunion2[i].setAttribute("required", "");
+		tempsPleniere2[i].removeAttribute("required", "");
+	}
+
+	nombrePleniere[0].value = "";
+});
+
+nombreReunion[0].addEventListener("change", function() {
+	if (nombreReunion[0].value > 25 || nombreReunion[0].value < 2) {
+		document.getElementById("alert").innerHTML = "Pour ce format, nous n'acceptons que de 2 à 25 participants, veuillez réinsérer une bonne valeur.";
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+		nombreReunion[0].value = "";
+	}
+});
+
+nombrePleniere[0].addEventListener("click", function() {
+	tempsReunion.style.display = "none";
+	tempsPleniere.style.display = "inline-block";
+
+	reunion2[2].checked = true;
+	reunion2[1].checked = false;
+
+	typeSeminaire = "plénière";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsReunion2[i].checked = false;
+		tempsReunion2[i].removeAttribute("required", "");
+		tempsPleniere2[i].setAttribute("required", "");
+	}
+
+	nombreReunion[0].value = "";
+});
+
+nombrePleniere[0].addEventListener("change", function() {
+	if (nombrePleniere[0].value > 60 || nombrePleniere[0].value < 2) {
+		document.getElementById("alert").innerHTML = "Pour ce format, nous n'acceptons que de 2 à 60 participants, veuillez réinsérer une bonne valeur.";
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+		nombrePleniere[0].value = "";
+	}
+});
+
+tempsReunion2[0].addEventListener("click", function() {
+	dureeSem = "1/2 journee";
+	prixSeminaire = 100;
+	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+tempsReunion2[1].addEventListener("click", function() {
+	dureeSem = "1 journee";
+	prixSeminaire = 150;
+	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+tempsPleniere2[0].addEventListener("click", function() {
+	dureeSem = "1/2 journee";
+	prixSeminaire = 100;
+	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+tempsPleniere2[1].addEventListener("click", function() {
+	dureeSem = "1 journee";
+	prixSeminaire = 150;
+	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+function removeForm2() {
+	completeDevis();
+
+	document.getElementById("tableau").style.display = "flex";
+
+	if (rgpd == true) {
+		requeteSelectUser(nom.value, prenom.value, email.value, tel.value, duree.value, moment.value, nombreDePersonne.value, remarque.value,
+			typeSeminaire, nombrePersonneReunion, dureeSem);
+	}	
+
+	form2.remove(form2);
+}
+
+function completeDevis() {
+	let prixTpersonne = prixBase * nombreDePersonne.value;
+	let prixTtraiteur = prixUtraiteur * nombreDePersonne.value;
+	let prixTboisson = prixUboisson * nombreDePersonne.value;
+	let prixTwait = prixUwait * nombreDePersonne.value;
+
+	let prixT = prixTpersonne + prixTtraiteur + prixTboisson + prixTwait;
+	let prixTVA = prixTpersonne * (20/100) + prixTtraiteur * (20/100) + prixTboisson * (20/100) + prixTwait * (20/100);
+	let prixTTC = prixT + prixTVA;
+
+	document.getElementsByClassName("sidebar")[0].innerHTML = '<div><p>Prix HT : ' + prixT + '€</p><p>TVA : ' + prixTVA + ' €</p><p>Prix TTC : ' + prixTTC + ' €</p>'
+	+ '<button id="contact" class="btn" type="submit">Être rappelé</button></div>';
+
+	document.getElementById("contact").addEventListener("click", function() {
+		document.getElementById("alert").innerHTML = "Notre équipe à bien reçu votre demande.<br>Vous serez recontacté sous peu.<br>Merci !"
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+		mail(nom.value, prenom.value);
+	});
+
+	let dureeEnHeure = (Math.trunc(duree.value / 60)) + "h" + (duree.value % 60);
+
+	document.getElementById("duree").innerHTML = dureeEnHeure;
+
+	document.getElementById("nombrePersonne").innerHTML = nombreDePersonne.value;
+	document.getElementById("prixUpersonne").innerHTML = prixBase + " €";
+	document.getElementById("prixTpersonne").innerHTML = prixBase * nombreDePersonne.value + " €";
+
+	if (typeSeminaire == "reunion") {
+		document.getElementById("nombreSem").innerHTML = nombreReunion[0].value + " personnes"
+		+ "<br>" + dureeSem;
+	}
+	else {
+		document.getElementById("nombreSem").innerHTML = nombrePleniere[0].value + " personnes" + dureeSem;
+	}
+
+	document.getElementById("formatSem").innerHTML = typeSeminaire;
+	
+	document.getElementById("prixSem").innerHTML = prixSeminaire + " €";
+}
+
+/* Popup */
 
 let popup = document.getElementById("nombre_id");
 
@@ -713,17 +684,17 @@ popup.addEventListener("change", function() {
 	}
 	else {
 		if (duree.value != "" && nombreDePersonne.value != "") {
-			if (coeff < 0.5 && nombreDePersonne.value >= 20) {
+			if (coeff < 0.5 && nombreDePersonne.value >= 30) {
 				document.getElementById("alert").innerHTML =
-				"A partir d'une vingtaine de personne, nous vous privatisons le parc." +
+				"A partir de trente personnes, le parc upside est privatiser." +
 				"<br><br>Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
+				
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
-
 				document.getElementById("private").innerHTML = "Privatisation";
 			}
 		}
-		else if (nombreDePersonne.value >= 20) {
-			document.getElementById("alert").innerHTML = "A partir d'une vingtaine de personne, nous vous privatisons le parc.";
+		else if (nombreDePersonne.value >= 30) {
+			document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 			document.getElementById("private").innerHTML = "Privatisation";
@@ -731,11 +702,891 @@ popup.addEventListener("change", function() {
 	}
 });
 
+/* Premier formulaire téléphone */
+
+let formTel = document.getElementById('formTel');
+
+let nomTel = document.getElementById('nom_tel_id');
+let prenomTel = document.getElementById('prenom_tel_id');
+let emailTel = document.getElementById('email_tel_id');
+let telTel = document.getElementById('tel_tel_id');
+
+function removeFormTel () {
+	if (rgpd == true) {
+		if (tel.value != "") {
+			requeteUser(nomTel.value, prenomTel.value, emailTel.value, telTel.value);
+		}
+		else {
+			requeteUser(nomTel.value, prenomTel.value, emailTel.value);
+		}
+	}
+
+	formTel.remove(formTel);
+	
+	formTel2.style.display = 'block';
+	prix.style.display = 'flex';
+}
+
+/* Second formualire téléphone */
+
+let formTel2 = document.getElementById('secondFormTel');
+formTel2.style.display = 'none';
+
+document.getElementById("traiteurTel").style.display = 'none';
+document.getElementById("boissonTel").style.display = 'none';
+document.getElementById("waitTel").style.display = 'none';
+
+let form2Tel = document.getElementById("formTel2");
+
+let dateTel = document.getElementById("date_tel_id");
+let momentTel = document.getElementById("moment_tel_id");
+let nombreDePersonneTel = document.getElementById("nombre_tel_id");
+let remarqueTel = document.getElementById("remarque_tel_id");
+let dureeTel = document.getElementById("duree_tel_id");
+
+let traiteurTel = document.getElementsByName("traiteurTel");
+let boissonTel = document.getElementsByName("boissonTel");
+let waitTel = document.getElementsByName("waitTel");
+
+let traiteurTel2 = document.getElementsByName("traiteurTel2");
+let boissonTel2 = document.getElementsByName("boissonTel2");
+let waitTel2 = document.getElementsByName("waitTel2");
+
+traiteurTel[0].addEventListener("click", function() {
+	document.getElementById("traiteurTel").style.display = "block";
+	document.getElementById("tarifTraiteur").innerHTML = '<i class="material-icons">restaurant</i>';
+	document.getElementById("tr").style.display = "visible";
+});
+
+traiteurTel[1].addEventListener("click", function() {
+	document.getElementById("traiteurTel").style.display = "none";
+	document.getElementById("tarifTraiteur").innerHTML = "";
+	document.getElementById("tr").style.display = "none";
+
+	for (let i = 0; i < 3; i ++) {
+		if (traiteurTel2[i].checked) {
+			pTraiteur = 0;
+			pTotal = pTotal - (traiteurTel2[i].value * nombreDePersonneTel.value);
+			traiteurTel2[i].checked = false;
+		}
+	}
+	document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+boissonTel[0].addEventListener("click", function() {
+	document.getElementById("boissonTel").style.display = "block";
+	document.getElementById("tarifBar").innerHTML = '<i class="material-icons">local_bar</i>';
+	document.getElementById("bar").style.display = "visible";
+});
+
+boissonTel[1].addEventListener("click", function() {
+	document.getElementById("boissonTel").style.display = "none";
+	document.getElementById("tarifBar").innerHTML = "";
+	document.getElementById("bar").style.display = "none";
+
+	for (let i = 0; i < 3; i ++) {
+		if (boissonTel2[i].checked) {
+			pBoisson = 0;
+			pTotal = pTotal - (boissonTel2[i].value * nombreDePersonneTel.value);
+			boissonTel2[i].checked = false;
+		}
+	}
+	document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+waitTel[0].addEventListener("click", function() {
+	document.getElementById("waitTel").style.display = "block";
+	document.getElementById("tarifWait").innerHTML = '<i class="material-icons">flash_on</i>';
+	document.getElementById("simulateur").style.display = "visible";
+});
+
+waitTel[1].addEventListener("click", function() {
+	document.getElementById("waitTel").style.display = "none";
+	document.getElementById("tarifWait").innerHTML = "";
+	document.getElementById("simulateur").style.display = "none";
+
+	for (let i = 0; i < 3; i ++) {
+		if (waitTel2[i].checked) {
+			pWait = 0;
+			pTotal = pTotal - (waitTel2[i].value * nombreDePersonneTel.value);
+			waitTel2[i].checked = false;
+		}
+	}
+	document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+for (let i = 0; i < 3; i ++) {
+	traiteurTel2[i].addEventListener("click", function() {
+		if (nombreDePersonneTel.value == 0) {
+			document.getElementById("alert").innerHTML = "Veuillez sélectionner un nombre de participants !"
+			document.getElementById("cd-popup").setAttribute("class", "is-visible");
+		}
+		else {
+			if (traiteurTel2[i].checked) {
+				pTraiteur = traiteurTel2[i].value * nombreDePersonneTel.value;
+			}
+			pTotal = pTraiteur + pBoisson + pWait;
+			document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+
+			let menu = "";
+
+			if (traiteurTel2[0].checked) {
+				menu = "entrée/plat";
+				document.getElementById("prixUtraiteur").innerHTML = "15 €";
+				prixUtraiteur = 15;
+			}
+			if (traiteurTel2[1].checked) {
+				menu = "plat/dessert";
+				document.getElementById("prixUtraiteur").innerHTML = "20 €";
+				prixUtraiteur = 20;
+			}
+			if (traiteurTel2[2].checked) {
+				menu = "entrée/plat/dessert"
+				document.getElementById("prixUtraiteur").innerHTML = "30 €";
+				prixUtraiteur = 30;
+			}
+
+			document.getElementById("tarifTraiteur").innerHTML = '<i class="material-icons">restaurant</i><br>' + menu;
+			document.getElementById("menu").innerHTML = nombreDePersonneTel.value;
+
+			document.getElementById("prixTtraiteur").innerHTML = pTraiteur + " €";
+		}
+	});
+
+	boissonTel2[i].addEventListener("click", function() {
+		if (nombreDePersonneTel.value == 0) {
+			document.getElementById("alert").innerHTML = "Veuillez sélectionner un nombre de participants !"
+			document.getElementById("cd-popup").setAttribute("class", "is-visible");
+		}
+		else {
+			if (boissonTel2[i].checked) {
+				pBoisson = boissonTel2[i].value * nombreDePersonneTel.value;
+			}
+			pTotal = pTraiteur + pBoisson + pWait;
+			document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+
+			let verre = "";
+
+			if (boissonTel2[0].checked) {
+				verre = "1 boisson";
+				document.getElementById("prixUboisson").innerHTML = "3 €";
+				prixUboisson = 3;
+			}
+			if (boissonTel2[1].checked) {
+				verre = "2 boissons";
+				document.getElementById("prixUboisson").innerHTML = "5,50 €";
+				prixUboisson = 5.5;
+			}
+			if (boissonTel2[2].checked) {
+				verre = "3 boissons";
+				document.getElementById("prixUboisson").innerHTML = "7,50 €";
+				prixUboisson = 7.5;
+			}
+
+			document.getElementById("tarifBar").innerHTML = '<i class="material-icons">local_bar</i><br>' + verre;
+			document.getElementById("nombreDeBoisson").innerHTML = nombreDePersonneTel.value;
+
+			document.getElementById("prixTboisson").innerHTML = pBoisson + " €";
+		}
+	});
+
+	waitTel2[i].addEventListener("click", function() {
+		if (nombreDePersonneTel.value == 0) {
+			document.getElementById("alert").innerHTML = "Veuillez sélectionner un nombre de participants !"
+			document.getElementById("cd-popup").setAttribute("class", "is-visible");
+		}
+		else {
+			if (waitTel2[i].checked) {
+				pWait = waitTel2[i].value * nombreDePersonneTel.value;
+			}
+			pTotal = pTraiteur + pBoisson + pWait;
+			document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+
+			let simu = "";
+
+			if (waitTel2[0].checked) {
+				simu = "1 simulation";
+				document.getElementById("prixUwait").innerHTML = "5 €";
+				prixUwait = 5;
+			}
+			if (waitTel2[1].checked) {
+				simu = "2 simulations";
+				document.getElementById("prixUwait").innerHTML = "10 €";
+				prixUwait = 10;
+			}
+			if (waitTel2[2].checked) {
+				simu = "3 simulations";
+				document.getElementById("prixUwait").innerHTML = "15 €";
+				prixUwait = 15;
+			}
+
+			document.getElementById("tarifWait").innerHTML = '<i class="material-icons">flash_on</i><br>' + simu;
+			document.getElementById("nombreWait").innerHTML = nombreDePersonneTel.value;
+
+			document.getElementById("prixTwait").innerHTML = pWait + " €";
+		}
+	});
+}
+
+/* Gestion des moments téléphone */
+
+dateTel.addEventListener("change", function() {
+	jour = dateTel.value.slice(0,2);
+	mois = dateTel.value.slice(3,5);
+	annee = dateTel.value.slice(6,10);
+
+	maDate = new Date(annee, mois - 1, jour);
+
+	momentTel.addEventListener("change", function() {
+		if (maDate.getDay() == 5 || maDate.getDay() == 6 && parseInt(nombreDePersonneTel.value >= 30)) {
+			if (momentTel.value == "journee" || momentTel.value == "soiree") {
+				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
+				document.getElementById("cd-popup").setAttribute("class", "is-visible");
+			}
+		}
+		else {
+			if (momentTel.value == "soiree" && parseInt(nombreDePersonneTel.value >= 30)) {
+				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
+				document.getElementById("cd-popup").setAttribute("class", "is-visible");
+			}
+		}
+	});
+});
+
+let tabDureeTel = document.getElementById("duree_tel_id");
+
+momentTel.addEventListener("change", function(){
+	if (dateTel.value != "") {
+		if (maDate.getDay() == 5 || maDate.getDay() == 6) {
+			if (momentTel.value == "matinee") {
+				prixBase = 25;
+			}
+			else {
+				prixBase = 30;
+			}
+		}
+		else {
+			if (momentTel.value == "matinee" || momentTel.value == "apresmidi" || momentTel.value == "journee") {
+				prixBase = 20;
+			}
+			else {
+				prixBase = 25;
+			}
+		}
+	}
+
+	if (momentTel.value == "matinee" || momentTel.value == "apresmidi") {
+		for (let i = 0; i < tabDureeTel.length; i ++) {
+			if (parseInt(tabDureeTel[i].value) > 240) {
+				tabDureeTel[i].setAttribute("disabled", "");
+			}
+			else {
+				tabDureeTel[i].removeAttribute("disabled", "");
+			}
+		}
+	}
+	else if (momentTel.value == "soiree") {
+		for (let i = 0; i < tabDureeTel.length; i ++) {
+			if (parseInt(tabDureeTel[i].value) > 300) {
+				tabDureeTel[i].setAttribute("disabled", "");
+			}
+			else {
+				tabDureeTel[i].removeAttribute("disabled", "");
+			}
+		}
+	}
+	else if (momentTel.value == "journee") {
+		for (let i = 0; i < tabDureeTel.length; i ++) {
+			if (i == tabDureeTel.length - 1) {
+				tabDureeTel[tabDureeTel.length - 1].setAttribute("disabled", "");
+			}
+			else {
+				tabDureeTel[i].removeAttribute("disabled", "");
+			}
+		}
+	}
+	else {
+		for (let i = 0; i < tabDureeTel.length; i ++) {
+			if (i != tabDureeTel.length - 1) {
+				tabDureeTel[i].setAttribute("disabled", "");
+			}
+			else {
+				tabDureeTel[i].removeAttribute("disabled", "");
+			}
+		}
+	}
+});
+
+dureeTel.addEventListener("change", function() {
+	if (dateTel.value != "" && momentTel.value != "" && nombreDePersonneTel.value != "") {
+		document.getElementsByClassName("sidebarTel")[0].style.display = "block";
+		document.getElementById("dateTel").innerHTML = dateTel.value;
+		document.getElementById("nombrePersonneTel").innerHTML = nombreDePersonneTel.value;
+		document.getElementById("momentTel").innerHTML = momentTel.value;
+		document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+	}
+	else {
+		document.getElementById("nbrPersonne").innerHTML = "0";
+	}
+
+	if (nombreDePersonneTel.value != "") {
+		coeff = ((dureeTel.value * 13) / nombreDePersonneTel.value) / 60;
+		if (coeff < 0.5) {
+			document.getElementById("alert").innerHTML = "Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
+			document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+			for (let i = 0; i < tabDureeTel.length; i ++) {
+				if (((tabDureeTel[i].value * 13) / nombreDePersonneTel.value) / 60 < 0.5) {
+					tabDureeTel[i].setAttribute("disabled", "");
+				}
+			}
+		}
+		else if (coeff >= 0.5 && coeff <= 1) {
+			dureePers = 30;
+
+			for (let i = 0; i < tabDureeTel.length; i ++) {
+				if (((tabDureeTel[i].value * 13) / nombreDePersonneTel.value) / 60 >= 0.5) {
+					tabDureeTel[i].removeAttribute("disabled", "");
+				}
+			}
+		}
+		else {
+			dureePers = 60;
+
+			if (coeff >= 1.5 && coeff <= 2) {
+				document.getElementById("alert").innerHTML = "En choisissant ces options, les activitées d'attente vous sont offertes !";
+				document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+				document.getElementById("attenteTel").style.display = "none";
+				document.getElementById("simulateur").style.display = "none";
+
+				waitTel[1].checked = true;
+			}
+		}
+
+		document.getElementById("duree2").innerHTML = dureePers + " minutes par personne";
+	}
+});
+
+dateTel.addEventListener("change", function() {
+	if (dureeTel.value != "" && momentTel.value != "" && nombreDePersonneTel.value != "") {
+		document.getElementsByClassName("sidebarTel")[0].style.display = "block";
+		document.getElementById("dateTel").innerHTML = dateTel.value;
+		document.getElementById("nombrePersonneTel").innerHTML = nombreDePersonneTel.value;
+		document.getElementById("momentTel").innerHTML = momentTel.value;
+		document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+	}
+	else {
+		document.getElementById("nbrPersonne").innerHTML = "0";
+	}
+});
+
+momentTel.addEventListener("change", function() {
+	if (dateTel.value != "" && dureeTel.value != "" && nombreDePersonneTel.value != "") {
+		document.getElementsByClassName("sidebarTel")[0].style.display = "block";
+		document.getElementById("dateTel").innerHTML = dateTel.value;
+		document.getElementById("nombrePersonneTel").innerHTML = nombreDePersonneTel.value;
+		document.getElementById("momentTel").innerHTML = momentTel.value;
+		document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+	}
+	else {
+		document.getElementById("nbrPersonne").innerHTML = "0";
+	}
+});
+
+nombreDePersonneTel.addEventListener("change", function() {
+	if (dateTel.value != "" && momentTel.value != "" && dureeTel.value != "") {
+		document.getElementsByClassName("sidebarTel")[0].style.display = "block";
+		document.getElementById("dateTel").innerHTML = dateTel.value;
+		document.getElementById("nombrePersonneTel").innerHTML = nombreDePersonneTel.value;
+		document.getElementById("momentTel").innerHTML = momentTel.value;
+		document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+	}
+	else {
+		document.getElementById("nbrPersonne").innerHTML = "0";
+	}
+
+	if (dureeTel.value != "") {
+		coeff = ((dureeTel.value * 13) / nombreDePersonneTel.value) / 60;
+		if (coeff < 0.5) {
+			document.getElementById("alert").innerHTML = "Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
+			document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+			for (let i = 0; i < tabDureeTel.length; i ++) {
+				if (((tabDureeTel[i].value * 13) / nombreDePersonneTel.value) / 60 < 0.5) {
+					tabDureeTel[i].setAttribute("disabled", "");
+				}
+			}
+		}
+		else if (coeff >= 0.5 && coeff <= 1) {
+			dureePers = 30;
+
+			for (let i = 0; i < tabDureeTel.length; i ++) {
+				if (((tabDureeTel[i].value * 13) / nombreDePersonneTel.value) / 60 >= 0.5) {
+					tabDureeTel[i].removeAttribute("disabled", "");
+				}
+			}
+		}
+		else {
+			dureePers = 60;
+
+			if (coeff > 1.3) {
+				document.getElementById("alert").innerHTML = "En choisissant ces options, les activitées d'attente vous sont offertes !";
+				document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+				document.getElementById("attenteTel").style.display = "none";
+				document.getElementById("simulateur").style.display = "none";
+
+				waitTel[1].checked = true;
+			}
+		}
+
+		document.getElementById("duree2").innerHTML = dureePers + " minutes par personne";
+	}
+});
+
+/* Séminaire téléphone */
+
+let reunionTel = document.getElementById("reunionTel");
+let tempsReunionTel = document.getElementById("tempsReunionTel");
+let tempsPleniereTel = document.getElementById("tempsPleniereTel");
+
+let reunionTel2 = document.getElementsByName("reunionTel");
+let nombreReunionTel = document.getElementsByName("nombreReunionTel");
+let nombrePleniereTel = document.getElementsByName("nombrePleniereTel");
+let tempsReunionTel2 = document.getElementsByName("tempsReunionTel");
+let tempsPleniereTel2 = document.getElementsByName("tempsPleniereTel");
+
+tempsReunionTel.style.display = "none";
+tempsPleniereTel.style.display = "none";
+document.getElementById("seminaire2").style.display = "none";
+
+let nombrePersonneReunionTel = nombreReunionTel[0].value;
+
+reunionTel2[0].addEventListener("click", function() {
+	tempsReunionTel.style.display = "none";
+	tempsPleniereTel.style.display = "none";
+
+	typeSeminaire = "";
+	dureeSem = "";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsReunionTel2[i].checked = false;
+		tempsPleniereTel2[i].checked = false;
+		tempsReunionTel2[i].removeAttribute("required", "");
+		tempsPleniereTel2[i].removeAttribute("required", "");
+	}
+
+	nombreReunionTel[0].value = "";
+	nombrePleniereTel[0].value = "";
+
+	prixSeminaire = 0;
+	document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+reunionTel2[1].addEventListener("click", function() {
+	document.getElementById("seminaire2").style.display = "flex";
+	tempsReunionTel.style.display = "block";
+	tempsPleniereTel.style.display = "none";
+
+	typeSeminaire = "réunion";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsPleniereTel2[i].checked = false;
+		tempsReunionTel2[i].setAttribute("required", "");
+		tempsPleniereTel2[i].removeAttribute("required", "");
+	}
+
+	nombrePleniere[0].value = "";
+});
+
+reunionTel2[2].addEventListener("click", function() {
+	document.getElementById("seminaire2").style.display = "flex";
+	tempsPleniereTel.style.display = "block";
+	tempsReunionTel.style.display = "none";
+
+	typeSeminaire = "plénière";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsReunionTel2[i].checked = false;
+		tempsReunionTel2[i].removeAttribute("required", "");
+		tempsPleniereTel2[i].setAttribute("required", "");
+	}
+
+	nombreReunionTel[0].value = "";
+});
+
+nombreReunionTel[0].addEventListener("click", function() {
+	tempsReunionTel.style.display = "block";
+	tempsPleniereTel.style.display = "none";
+
+	reunionTel2[1].checked = true;
+	reunionTel2[2].checked = false;
+
+	typeSeminaire = "réunion";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsPleniereTel2[i].checked = false;
+		tempsReunionTel2[i].setAttribute("required", "");
+		tempsPleniereTel2[i].removeAttribute("required", "");
+	}
+
+	nombrePleniereTel[0].value = "";
+});
+
+nombreReunionTel[0].addEventListener("change", function() {
+	if (nombreReunionTel[0].value > 25 || nombreReunionTel[0].value < 2) {
+		document.getElementById("alert").innerHTML = "Pour ce format, nous n'acceptons que de 2 à 25 participants, veuillez réinsérer une bonne valeur.";
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+		nombreReunionTel[0].value = "";
+	}
+});
+
+nombrePleniereTel[0].addEventListener("click", function() {
+	tempsReunionTel.style.display = "none";
+	tempsPleniereTel.style.display = "block";
+
+	reunionTel2[2].checked = true;
+	reunionTel2[1].checked = false;
+
+	typeSeminaire = "plénière";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsReunionTel2[i].checked = false;
+		tempsReunionTel2[i].removeAttribute("required", "");
+		tempsPleniereTel2[i].setAttribute("required", "");
+	}
+
+	nombreReunionTel[0].value = "";
+});
+
+nombrePleniereTel[0].addEventListener("change", function() {
+	if (nombrePleniereTel[0].value > 60 || nombrePleniereTel[0].value < 2) {
+		document.getElementById("alert").innerHTML = "Pour ce format, nous n'acceptons que de 2 à 60 participants, veuillez réinsérer une bonne valeur.";
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+		nombrePleniereTel[0].value = "";
+	}
+});
+
+tempsReunionTel2[0].addEventListener("click", function() {
+	dureeSem = "1/2 journée";
+	prixSeminaire = 100;
+	document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+tempsReunionTel2[1].addEventListener("click", function() {
+	dureeSem = "1 journée";
+	prixSeminaire = 150;
+	document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+tempsPleniereTel2[0].addEventListener("click", function() {
+	dureeSem = "1/2 journée";
+	prixSeminaire = 100;
+	document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+tempsPleniereTel2[1].addEventListener("click", function() {
+	dureeSem = "1 journée";
+	prixSeminaire = 150;
+	document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
+});
+
+/* Popup téléphone */
+
+let popupTel = document.getElementById("nombre_tel_id");
+
+popupTel.addEventListener("change", function() {
+	if (nombreDePersonneTel.value > 110) {
+		document.getElementById("alert").innerHTML = "Pour une capacité de plus de 110 personnes, veuillez nous contacter pour un évènement sur-mesure !";
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+	}
+	else {
+		if (dureeTel.value != "" && nombreDePersonneTel.value != "") {
+			if (coeff < 0.5 && nombreDePersonneTel.value >= 30) {
+				document.getElementById("alert").innerHTML =
+				"A partir de trente personnes, le parc upside est privatiser." +
+				"<br><br>Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
+				
+				document.getElementById("cd-popup").setAttribute("class", "is-visible");
+				document.getElementById("private").innerHTML = '<i class="material-icons">block</i>';
+			}
+		}
+		else if (nombreDePersonneTel.value >= 30) {
+			document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
+			document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+			document.getElementById("private").innerHTML = '<i class="material-icons">block</i>';
+		}
+		else {
+			document.getElementById("private").innerHTML = '<i class="material-icons">calendar_today</i>';
+		}
+	}
+});
+
+function removeFormTel2() {
+	completeDevisTel();
+
+	document.getElementsByClassName("sidebarTel")[0].style.display = "none";
+	document.getElementsByClassName("sidebar")[0].style.display = "flex";
+
+	document.getElementById("tableau").style.display = "block";
+
+	if (rgpd == true) {
+		requeteSelectUser(nomTel.value, prenomTel.value, emailTel.value, telTel.value, dureeTel.value, momentTel.value, nombreDePersonneTel.value, remarqueTel.value,
+			typeSeminaire, nombrePersonneReunionTel, dureeSem);
+	}
+
+	form2Tel.remove(form2Tel);
+}
+
+function completeDevisTel() {
+	let prixTpersonne = prixBase * nombreDePersonneTel.value;
+	let prixTtraiteur = prixUtraiteur * nombreDePersonneTel.value;
+	let prixTboisson = prixUboisson * nombreDePersonneTel.value;
+	let prixTwait = prixUwait * nombreDePersonneTel.value;
+
+	let prixT = prixTpersonne + prixTtraiteur + prixTboisson + prixTwait;
+	let prixTVA = prixTpersonne * (20/100) + prixTtraiteur * (20/100) + prixTboisson * (20/100) + prixTwait * (20/100);
+	let prixTTC = prixT + prixTVA;
+
+	document.getElementsByClassName("sidebar")[0].innerHTML = '<div><p>Prix HT : ' + prixT + '€</p><p>TVA : ' + prixTVA + ' €</p><p>Prix TTC : ' + prixTTC + ' €</p>'
+	+ '<button id="contact" class="btn" type="submit">Être rappelé</button></div>';
+
+	document.getElementById("contact").addEventListener("click", function() {
+		document.getElementById("alert").innerHTML = "Notre équipe à bien reçu votre demande.<br>Vous serez recontacté sous peu.<br>Merci !"
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+		mail(nomTel.value, prenomTel.value);
+	});
+
+	let dureeEnHeure = (Math.trunc(dureeTel.value / 60)) + "h" + (dureeTel.value % 60);
+
+	document.getElementById("duree").innerHTML = dureeEnHeure;
+
+	document.getElementById("forfaitPersonne").innerHTML = '<i class="material-icons">person</i>';
+	document.getElementById("nombrePersonne").innerHTML = nombreDePersonneTel.value;
+	document.getElementById("prixUpersonne").innerHTML = prixBase + " €";
+	document.getElementById("prixTpersonne").innerHTML = prixBase * nombreDePersonneTel.value + " €";
+
+	if (typeSeminaire == "reunion") {
+		document.getElementById("nombreSem").innerHTML = nombreReunionTel[0].value + " personnes"
+		+ "<br>" + dureeSem;
+	}
+	else {
+		document.getElementById("nombreSem").innerHTML = nombrePleniereTel[0].value + " personnes" + dureeSem;
+	}
+
+	document.getElementById("formatSem").innerHTML = typeSeminaire;
+	
+	document.getElementById("prixSem").innerHTML = prixSeminaire + " €";
+}
+
 document.getElementById("ok").addEventListener("click", removeClass);
 document.getElementById("annuler").addEventListener("click", removeClass);
 
 function removeClass() {
 	document.getElementById("cd-popup").removeAttribute("class", "is-visible");
+}
+
+document.getElementById('date_id').addEventListener("click", function() {
+	document.getElementsByClassName('datepicker-cancel')[0].innerHTML = "Annuler";
+});
+
+document.getElementById("arrow_up").addEventListener("click", showSpec);
+
+function showSpec() {
+	document.getElementById("spec").style.display = "block";
+
+	let elem = document.getElementsByClassName("sidebarTel");
+
+	elem[0].animate([
+	{
+		bottom : "0%",
+		top : "82%"
+	},
+	{
+		bottom : "0%",
+		top : "50%"
+	}], 300);
+
+	elem[0].style.top = "50%";
+
+	document.getElementById("arrow_up").innerHTML = '<i class="material-icons">keyboard_arrow_down</i>';
+	document.getElementById("arrow_up").removeEventListener("click", showSpec);
+	document.getElementById("arrow_up").addEventListener("click", hideSpec);
+}
+
+function hideSpec() {
+	document.getElementById("spec").style.display = "none";
+
+	let elem = document.getElementsByClassName("sidebarTel");
+
+	elem[0].animate([
+	{
+		bottom : "0%",
+		top : "50%"
+	},
+	{
+		bottom : "0%",
+		top : "82%"
+	}], 300);
+
+	elem[0].style.top = "82%";
+
+	document.getElementById("arrow_up").innerHTML = '<i class="material-icons">keyboard_arrow_up</i>';
+	document.getElementById("arrow_up").removeEventListener("click", hideSpec);
+	document.getElementById("arrow_up").addEventListener("click", showSpec);
+}
+
+//Partie générale
+
+document.addEventListener("DOMContentLoaded", onLoad);
+
+function onLoad() {
+	document.getElementById("alert").innerHTML = 'J\'accepte que les informations saisie dans ce formulaire soit ' +
+	'utilisées exclusivement par la société upside afin de me contacter.';
+	document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+	document.getElementById("annuler").removeEventListener("click", removeClass);
+	document.getElementById("annuler").addEventListener("click", noDonnees);
+}
+
+let rgpd = true;
+
+function noDonnees() {
+	rgpd = false;
+
+	document.getElementById("annuler").removeEventListener("click", noDonnees);
+	document.getElementById("annuler").addEventListener("click", removeClass);
+}
+
+function callback(req) {
+	console.log(req.responseText);
+}
+
+document.getElementById("tableau").style.display = "none";
+
+document.getElementsByClassName("sidebar")[0].style.display = "none";
+
+document.getElementById("spec").style.display = "none";
+
+function mail(nom, prenom) {
+	let url = "php/mail.php?nom=" + nom + "&prenom=" + prenom;
+	let requete = new XMLHttpRequest();
+
+	requete.open("POST", url, true);
+
+	requete.addEventListener("load", function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+/* Requête de sauvegarde des utilisateurs */
+
+function requeteUser(nom, prenom, email) {
+	requeteSaveUser(nom, prenom, email);
+}
+
+function requeteUser(nom, prenom, email, tel) {
+	requeteSaveUser(nom, prenom, email, tel);
+}
+
+//Requête Ajax pour la création d'un utilisateur sans téléphone
+
+function requeteSaveUser(nom, prenom, email) {
+
+	let url = 'php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email;
+	let requete = new XMLHttpRequest();
+
+	requete.open('POST', url, true);
+
+	requete.addEventListener('load', function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+//Requête Ajax pour la création d'un utilisateur avec téléphone
+
+function requeteSaveUser(nom, prenom, email, tel) {
+
+	let url = 'php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email + '&tel=' + tel;
+	let requete = new XMLHttpRequest();
+
+	requete.open('POST', url, true);
+
+	requete.addEventListener('load', function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+//Requête Ajax pour la création des devis.
+
+function requeteSaveDevis(user, duree, dureePers, date, moment, nombreDePersonne, remarque, typeSeminaire, nombreReunion, dureeSem, prixSeminaire, prixUpersonne
+	, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur, prixTboisson, prixTwait, prixT, coeff, email, nom, prenom, prixTVA, prixTTC, tel) {
+	let url = "php/requeteDevis.php?date=" + date + "&duree=" + duree + "&dureePers=" + dureePers + "&nombreDePersonne=" + nombreDePersonne
+	+ "&remarque=" + remarque + "&user=" + user + "&typeSeminaire=" + typeSeminaire + "&nombreReunion=" + nombreReunion + "&dureeSem=" + dureeSem
+	+ "&prixSeminaire=" + prixSeminaire + "&prixUpersonne=" + prixUpersonne + "&prixUtraiteur=" + prixUtraiteur + "&prixUboisson=" + prixUboisson
+	+ "&prixUwait=" + prixUwait + "&prixTpersonne=" + prixTpersonne + "&prixTtraiteur=" + prixTtraiteur + "&prixTboisson=" + prixTboisson
+	+ "&prixTwait=" + prixTwait + "&prixT=" + prixT + "&coeff=" + coeff + "&moment=" + moment + "&email=" + email + "&nom=" + nom + "&prenom=" + prenom
+	+ "&prixTVA=" + prixTVA + "&prixTTC=" + prixTTC + "&tel=" + tel;
+
+	let requete = new XMLHttpRequest();
+
+	requete.open("POST", url, true);
+
+	requete.addEventListener("load", function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+function requeteSelectUser(nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem) {
+	let url = "php/requeteSelectUser.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
+	let requete = new XMLHttpRequest();
+
+	requete.open("POST", url, true);
+
+	requete.addEventListener("load", function () {
+		callback2(requete, nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem);
+	});
+
+	requete.send(null);
+}
+
+function callback2(req, nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem) {
+	let prixTpersonne = prixBase * nombreDePersonne;
+	let prixTtraiteur = prixUtraiteur * nombreDePersonne;
+	let prixTboisson = prixUboisson * nombreDePersonne;
+	let prixTwait = prixUwait * nombreDePersonne;
+
+	let prixT = prixTpersonne + prixTtraiteur + prixTboisson + prixTwait;
+	let prixTVA = prixTpersonne * (20/100) + prixTtraiteur * (20/100) + prixTboisson * (20/100) + prixTwait * (20/100);
+	let prixTTC = prixT + prixTVA;
+
+	let time = annee + "-" + mois + "-" + jour;
+	let dureeEnHeure = (Math.trunc(duree / 60)) + "h" + (duree % 60);
+
+	requeteSaveDevis(req.responseText, dureeEnHeure, dureePers, time, moment, parseInt(nombreDePersonne), remarque,
+		typeSeminaire, nombrePersonneReunion, dureeSem, prixSeminaire, prixBase, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur,
+		prixTboisson, prixTwait, prixT, coeff, email, nom, prenom, prixTVA, prixTTC, tel);
+}
+
+function calculPrix(prixBase) {
+	return (duree.value/60) * 13 * prixBase;
+}
+
+function calculPrixTel(prixBase) {
+	return (dureeTel.value/60) * 13 * prixBase;
 }
 
 /* Partie robot */
@@ -790,7 +1641,7 @@ function requeteSaveRobot(date, moment, nombreDePersonne, duree, coeff, prix) {
 	"&duree=" + duree + "&coeff=" + coeff + "&prix=" + prix;
 	let requete = new XMLHttpRequest();
 
-	requete.open("GET", url, true);
+	requete.open("POST", url, true);
 
 	requete.addEventListener("load", function () {
 		callback(requete);
