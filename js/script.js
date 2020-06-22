@@ -6,21 +6,69 @@ let prenom = document.getElementById('prenom_id');
 let email = document.getElementById('email_id');
 let tel = document.getElementById('tel_id');
 
-function removeForm () {
-	if (rgpd == true) {
-		if (tel.value != "") {
-			requeteUser(nom.value, prenom.value, email.value, tel.value);
-		}
-		else {
-			requeteUser(nom.value, prenom.value, email.value);
-		}
+function noDonnees() {
+	rgpd = false;
+
+	form.remove(form);
+
+	divForm2.style.display = 'block';
+	prix.style.display = 'flex';
+
+	document.getElementById("ok").innerHTML = "ok";
+	document.getElementById("annuler").innerHTML = "annuler";
+
+	document.getElementById("annuler").removeEventListener("click", noDonnees);
+	document.getElementById("annuler").addEventListener("click", removeClass);
+
+	document.getElementById("ok").removeEventListener("click", okDonnees);
+	document.getElementById("ok").addEventListener("click", removeClass);
+
+	document.getElementById("cd-popup").removeAttribute("class", "is-visible");
+}
+
+function okDonnees() {
+	rgpd = true;
+
+	if (tel.value != "") {
+		requeteUser(nom.value, prenom.value, email.value, tel.value);
+	}
+	else {
+		requeteUser(nom.value, prenom.value, email.value);
 	}
 
 	form.remove(form);
-	
+
 	divForm2.style.display = 'block';
 	prix.style.display = 'flex';
+
+	document.getElementById("ok").innerHTML = "ok";
+	document.getElementById("annuler").innerHTML = "annuler";
+
+	document.getElementById("ok").removeEventListener("click", okDonnees);
+	document.getElementById("ok").addEventListener("click", removeClass);
+
+	document.getElementById("annuler").removeEventListener("click", noDonnees);
+	document.getElementById("annuler").addEventListener("click", removeClass);
+
+	document.getElementById("cd-popup").removeAttribute("class", "is-visible");
 }
+
+function removeForm () {
+	document.getElementById("alert").innerHTML = 'J\'accepte que les informations saisies dans ce formulaire soient ' +
+	'utilisées exclusivement par la société UPSIDE afin de me contacter. Pour plus d\'information : <a id="mention" href="mention_legal.html">Mention légal</a>';
+	document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+	document.getElementById("ok").innerHTML = "oui";
+	document.getElementById("annuler").innerHTML = "non";
+
+	document.getElementById("annuler").removeEventListener("click", removeClass);
+	document.getElementById("annuler").addEventListener("click", noDonnees);
+
+	document.getElementById("ok").removeEventListener("click", removeClass);
+	document.getElementById("ok").addEventListener("click", okDonnees);
+}
+
+let rgpd;
 
 //Partie 2nd Formulaire
 
@@ -127,7 +175,7 @@ wait[1].addEventListener("click", function() {
 for (let i = 0; i < 3; i ++) {
 	traiteur2[i].addEventListener("click", function() {
 		if (nombreDePersonne.value == 0) {
-			document.getElementById("alert").innerHTML = "Veuillez sélectionner un nombre de participants !"
+			document.getElementById("alert").innerHTML = "Veuillez définir un nombre de participants !"
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 		}
 		else {
@@ -164,7 +212,7 @@ for (let i = 0; i < 3; i ++) {
 
 	boisson2[i].addEventListener("click", function() {
 		if (nombreDePersonne.value == 0) {
-			document.getElementById("alert").innerHTML = "Veuillez sélectionner un nombre de participants !"
+			document.getElementById("alert").innerHTML = "Veuillez définir un nombre de participants !"
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 		}
 		else {
@@ -201,7 +249,7 @@ for (let i = 0; i < 3; i ++) {
 
 	wait2[i].addEventListener("click", function() {
 		if (nombreDePersonne.value == 0) {
-			document.getElementById("alert").innerHTML = "Veuillez sélectionner un nombre de participants !"
+			document.getElementById("alert").innerHTML = "Veuillez définir un nombre de participants !"
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 		}
 		else {
@@ -257,13 +305,13 @@ date.addEventListener("change", function() {
 	moment.addEventListener("change", function() {
 		if (maDate.getDay() == 5 || maDate.getDay() == 6 && parseInt(nombreDePersonne.value >= 30)) {
 			if (moment.value == "journee" || moment.value == "soiree") {
-				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
+				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc UPSIDE est privatisé.";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 			}
 		}
 		else {
 			if (moment.value == "soiree" && parseInt(nombreDePersonne.value >= 30)) {
-				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
+				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc UPSIDE est privatisé.";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 			}
 		}
@@ -353,7 +401,7 @@ duree.addEventListener("change", function() {
 	if (nombreDePersonne.value != "") {
 		coeff = ((duree.value * 13) / nombreDePersonne.value) / 60;
 		if (coeff < 0.5) {
-			document.getElementById("alert").innerHTML = "Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
+			document.getElementById("alert").innerHTML = "Vous avez choisi une durée trop courte, nous vous conseillons de l'augmenter !";
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 			for (let i = 0; i < tabDuree.length; i ++) {
@@ -375,7 +423,7 @@ duree.addEventListener("change", function() {
 			dureePers = 60;
 
 			if (coeff >= 1.5 && coeff <= 2) {
-				document.getElementById("alert").innerHTML = "En choisissant ces options, les activitées d'attente vous sont offertes !";
+				document.getElementById("alert").innerHTML = "En choisissant ces options, les activités d'attente vous sont offertes !";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 				document.getElementById("attente").style.display = "none";
@@ -430,7 +478,7 @@ nombreDePersonne.addEventListener("change", function() {
 	if (duree.value != "") {
 		coeff = ((duree.value * 13) / nombreDePersonne.value) / 60;
 		if (coeff < 0.5) {
-			document.getElementById("alert").innerHTML = "Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
+			document.getElementById("alert").innerHTML = "Vous avez choisi une durée trop courte, nous vous conseillons de l'augmenter !";
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 			for (let i = 0; i < tabDuree.length; i ++) {
@@ -452,7 +500,7 @@ nombreDePersonne.addEventListener("change", function() {
 			dureePers = 60;
 
 			if (coeff > 1.3) {
-				document.getElementById("alert").innerHTML = "En choisissant ces options, les activitées d'attente vous sont offertes !";
+				document.getElementById("alert").innerHTML = "En choisissant ces options, les activités d'attente vous sont offertes !";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 				document.getElementById("attente").style.display = "none";
@@ -561,7 +609,7 @@ nombreReunion[0].addEventListener("click", function() {
 
 nombreReunion[0].addEventListener("change", function() {
 	if (nombreReunion[0].value > 25 || nombreReunion[0].value < 2) {
-		document.getElementById("alert").innerHTML = "Pour ce format, nous n'acceptons que de 2 à 25 participants, veuillez réinsérer une bonne valeur.";
+		document.getElementById("alert").innerHTML = "La capacité maximale de notre salle de réunion est de 25 personnes, vous pouvez soit dimunuer le nombre de participants, soit opter pour le format séminaire.";
 		document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 		nombreReunion[0].value = "";
@@ -588,7 +636,7 @@ nombrePleniere[0].addEventListener("click", function() {
 
 nombrePleniere[0].addEventListener("change", function() {
 	if (nombrePleniere[0].value > 60 || nombrePleniere[0].value < 2) {
-		document.getElementById("alert").innerHTML = "Pour ce format, nous n'acceptons que de 2 à 60 participants, veuillez réinsérer une bonne valeur.";
+		document.getElementById("alert").innerHTML = "La capacité maximale de l'espace de séminaire en plénière est de 60 personnes.";
 		document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 		nombrePleniere[0].value = "";
@@ -686,15 +734,15 @@ popup.addEventListener("change", function() {
 		if (duree.value != "" && nombreDePersonne.value != "") {
 			if (coeff < 0.5 && nombreDePersonne.value >= 30) {
 				document.getElementById("alert").innerHTML =
-				"A partir de trente personnes, le parc upside est privatiser." +
-				"<br><br>Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
+				"A partir de trente personnes, le parc UPSIDE est privatisé." +
+				"<br><br>Vous avez choisi une durée trop courte, nous vous conseillons de l'augmenter !";
 				
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 				document.getElementById("private").innerHTML = "Privatisation";
 			}
 		}
 		else if (nombreDePersonne.value >= 30) {
-			document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
+			document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc UPSIDE est privatisé.";
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 			document.getElementById("private").innerHTML = "Privatisation";
@@ -711,20 +759,66 @@ let prenomTel = document.getElementById('prenom_tel_id');
 let emailTel = document.getElementById('email_tel_id');
 let telTel = document.getElementById('tel_tel_id');
 
-function removeFormTel () {
-	if (rgpd == true) {
-		if (tel.value != "") {
-			requeteUser(nomTel.value, prenomTel.value, emailTel.value, telTel.value);
-		}
-		else {
-			requeteUser(nomTel.value, prenomTel.value, emailTel.value);
-		}
+function noDonneesTel() {
+	rgpd = false;
+
+	formTel.remove(formTel);
+
+	formTel2.style.display = 'block';
+	prix.style.display = 'flex';
+
+	document.getElementById("ok").innerHTML = "ok";
+	document.getElementById("annuler").innerHTML = "annuler";
+
+	document.getElementById("annuler").removeEventListener("click", noDonneesTel);
+	document.getElementById("annuler").addEventListener("click", removeClass);
+
+	document.getElementById("ok").removeEventListener("click", okDonneesTel);
+	document.getElementById("ok").addEventListener("click", removeClass);
+
+	document.getElementById("cd-popup").removeAttribute("class", "is-visible");
+}
+
+function okDonneesTel() {
+	rgpd = true;
+
+	if (tel.value != "") {
+		requeteUser(nomTel.value, prenomTel.value, emailTel.value, telTel.value);
+	}
+	else {
+		requeteUser(nomTel.value, prenomTel.value, emailTel.value);
 	}
 
 	formTel.remove(formTel);
-	
+
 	formTel2.style.display = 'block';
 	prix.style.display = 'flex';
+
+	document.getElementById("ok").innerHTML = "ok";
+	document.getElementById("annuler").innerHTML = "annuler";
+
+	document.getElementById("ok").removeEventListener("click", okDonneesTel);
+	document.getElementById("ok").addEventListener("click", removeClass);
+
+	document.getElementById("annuler").removeEventListener("click", noDonneesTel);
+	document.getElementById("annuler").addEventListener("click", removeClass);
+
+	document.getElementById("cd-popup").removeAttribute("class", "is-visible");
+}
+
+function removeFormTel () {
+	document.getElementById("alert").innerHTML = 'J\'accepte que les informations saisies dans ce formulaire soient ' +
+	'utilisées exclusivement par la société UPSIDE afin de me contacter. Pour plus d\'informations : <a id="mention" href="mention_legal.html">Mention légal</a>';
+	document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+	document.getElementById("ok").innerHTML = "oui";
+	document.getElementById("annuler").innerHTML = "non";
+
+	document.getElementById("annuler").removeEventListener("click", removeClass);
+	document.getElementById("annuler").addEventListener("click", noDonneesTel);
+
+	document.getElementById("ok").removeEventListener("click", removeClass);
+	document.getElementById("ok").addEventListener("click", okDonneesTel);
 }
 
 /* Second formualire téléphone */
@@ -940,13 +1034,13 @@ dateTel.addEventListener("change", function() {
 	momentTel.addEventListener("change", function() {
 		if (maDate.getDay() == 5 || maDate.getDay() == 6 && parseInt(nombreDePersonneTel.value >= 30)) {
 			if (momentTel.value == "journee" || momentTel.value == "soiree") {
-				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
+				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc UPSIDE est privatisé.";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 			}
 		}
 		else {
 			if (momentTel.value == "soiree" && parseInt(nombreDePersonneTel.value >= 30)) {
-				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
+				document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc UPSIDE est privatisé.";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 			}
 		}
@@ -1032,7 +1126,7 @@ dureeTel.addEventListener("change", function() {
 	if (nombreDePersonneTel.value != "") {
 		coeff = ((dureeTel.value * 13) / nombreDePersonneTel.value) / 60;
 		if (coeff < 0.5) {
-			document.getElementById("alert").innerHTML = "Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
+			document.getElementById("alert").innerHTML = "Vous avez choisi une durée trop courte, nous vous conseillons de l'augmenter !";
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 			for (let i = 0; i < tabDureeTel.length; i ++) {
@@ -1054,7 +1148,7 @@ dureeTel.addEventListener("change", function() {
 			dureePers = 60;
 
 			if (coeff >= 1.5 && coeff <= 2) {
-				document.getElementById("alert").innerHTML = "En choisissant ces options, les activitées d'attente vous sont offertes !";
+				document.getElementById("alert").innerHTML = "En choisissant ces options, les activités d'attente vous sont offertes !";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 				document.getElementById("attenteTel").style.display = "none";
@@ -1109,7 +1203,7 @@ nombreDePersonneTel.addEventListener("change", function() {
 	if (dureeTel.value != "") {
 		coeff = ((dureeTel.value * 13) / nombreDePersonneTel.value) / 60;
 		if (coeff < 0.5) {
-			document.getElementById("alert").innerHTML = "Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
+			document.getElementById("alert").innerHTML = "Vous avez choisi une durée trop courte, nous vous conseillons de l'augmenter !";
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 			for (let i = 0; i < tabDureeTel.length; i ++) {
@@ -1131,7 +1225,7 @@ nombreDePersonneTel.addEventListener("change", function() {
 			dureePers = 60;
 
 			if (coeff > 1.3) {
-				document.getElementById("alert").innerHTML = "En choisissant ces options, les activitées d'attente vous sont offertes !";
+				document.getElementById("alert").innerHTML = "En choisissant ces options, les activités d'attente vous sont offertes !";
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 				document.getElementById("attenteTel").style.display = "none";
@@ -1185,7 +1279,7 @@ reunionTel2[0].addEventListener("click", function() {
 });
 
 reunionTel2[1].addEventListener("click", function() {
-	document.getElementById("seminaire2").style.display = "flex";
+	document.getElementById("seminaire2").style.display = "table-row";
 	tempsReunionTel.style.display = "block";
 	tempsPleniereTel.style.display = "none";
 
@@ -1201,7 +1295,7 @@ reunionTel2[1].addEventListener("click", function() {
 });
 
 reunionTel2[2].addEventListener("click", function() {
-	document.getElementById("seminaire2").style.display = "flex";
+	document.getElementById("seminaire2").style.display = "table-row";
 	tempsPleniereTel.style.display = "block";
 	tempsReunionTel.style.display = "none";
 
@@ -1236,7 +1330,7 @@ nombreReunionTel[0].addEventListener("click", function() {
 
 nombreReunionTel[0].addEventListener("change", function() {
 	if (nombreReunionTel[0].value > 25 || nombreReunionTel[0].value < 2) {
-		document.getElementById("alert").innerHTML = "Pour ce format, nous n'acceptons que de 2 à 25 participants, veuillez réinsérer une bonne valeur.";
+		document.getElementById("alert").innerHTML = "La capacité maximale de notre salle de réunion est de 25 personnes, vous pouvez soit dimunuer le nombre de participants, soit opter pour le format séminaire.";
 		document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 		nombreReunionTel[0].value = "";
@@ -1263,7 +1357,7 @@ nombrePleniereTel[0].addEventListener("click", function() {
 
 nombrePleniereTel[0].addEventListener("change", function() {
 	if (nombrePleniereTel[0].value > 60 || nombrePleniereTel[0].value < 2) {
-		document.getElementById("alert").innerHTML = "Pour ce format, nous n'acceptons que de 2 à 60 participants, veuillez réinsérer une bonne valeur.";
+		document.getElementById("alert").innerHTML = "La capacité maximale de l'espace de séminaire en plénière est de 60 personnes.";
 		document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 		nombrePleniereTel[0].value = "";
@@ -1307,15 +1401,15 @@ popupTel.addEventListener("change", function() {
 		if (dureeTel.value != "" && nombreDePersonneTel.value != "") {
 			if (coeff < 0.5 && nombreDePersonneTel.value >= 30) {
 				document.getElementById("alert").innerHTML =
-				"A partir de trente personnes, le parc upside est privatiser." +
-				"<br><br>Vous avez choisit une durée trop courte, nous vous conseillons de l'augmenter !";
-				
+				"A partir de trente personnes, le parc UPSIDE est privatisé." +
+				"<br><br>Vous avez choisi une durée trop courte, nous vous conseillons de l'augmenter !";
+
 				document.getElementById("cd-popup").setAttribute("class", "is-visible");
 				document.getElementById("private").innerHTML = '<i class="material-icons">block</i>';
 			}
 		}
 		else if (nombreDePersonneTel.value >= 30) {
-			document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc upside est privatiser.";
+			document.getElementById("alert").innerHTML = "A partir de trente personnes, le parc UPSIDE est privatisé.";
 			document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 			document.getElementById("private").innerHTML = '<i class="material-icons">block</i>';
@@ -1380,7 +1474,7 @@ function completeDevisTel() {
 	}
 
 	document.getElementById("formatSem").innerHTML = typeSeminaire;
-	
+
 	document.getElementById("prixSem").innerHTML = prixSeminaire + " €";
 }
 
@@ -1442,26 +1536,6 @@ function hideSpec() {
 }
 
 //Partie générale
-
-document.addEventListener("DOMContentLoaded", onLoad);
-
-function onLoad() {
-	document.getElementById("alert").innerHTML = 'J\'accepte que les informations saisie dans ce formulaire soit ' +
-	'utilisées exclusivement par la société upside afin de me contacter.';
-	document.getElementById("cd-popup").setAttribute("class", "is-visible");
-
-	document.getElementById("annuler").removeEventListener("click", removeClass);
-	document.getElementById("annuler").addEventListener("click", noDonnees);
-}
-
-let rgpd = true;
-
-function noDonnees() {
-	rgpd = false;
-
-	document.getElementById("annuler").removeEventListener("click", noDonnees);
-	document.getElementById("annuler").addEventListener("click", removeClass);
-}
 
 function callback(req) {
 	console.log(req.responseText);

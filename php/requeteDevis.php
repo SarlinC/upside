@@ -118,7 +118,7 @@ $headers[] = 'MIME-Version: 1.0';
 $headers[] = 'Content-Type: text/html; charset="utf-8"';
 
      // En-têtes additionnels
-$headers[] = 'From: devis@upside-vr.fr';
+$headers[] = 'From: Upside <devis@upside-vr.fr>';
 
      // Envoi
 mail($to, $subject, $message, implode("\r\n", $headers));

@@ -42,6 +42,11 @@ B {
   display: contents;
 }
 
+#mention {
+  color: white;
+  text-decoration: underline;
+}
+
 #logo {
 	width: 64px;
 	height: 64px;
@@ -278,6 +283,19 @@ B {
     max-width: 30%;
   }
 
+  #formTel2 .divspe input {
+    max-width: 50%;
+  }
+
+  #formTel2 .divspe label {
+    max-width: 50%;
+  }
+
+  #formTel2 .divspe select {
+    max-width: 50%;
+    font-size: 75%;
+  }
+
   .collapsible-header {
     font-size: xx-large;
   }
@@ -316,7 +334,7 @@ B {
     border-radius: 0;
     outline: none;
     height: 3rem;
-    width: 50%;
+    width: 100%;
     font-size: 16px;
     margin: 0;
     padding: 0;
@@ -611,6 +629,9 @@ ul:not(.browser-default) > li {
     margin: auto;
     padding-right: 2%;
     color: white;
+    font-size: larger;
+    padding-top: 1%;
+    padding-bottom: 1%;
   }
 
 /* Text Inputs + Textarea
@@ -653,7 +674,7 @@ textarea.materialize-textarea {
   outline: none;
   height: 3rem;
   width: 100%;
-  font-size: 16px;
+  font-size: medium;
   margin: 0 0 8px 0;
   padding: 0;
   -webkit-box-shadow: none;
@@ -798,7 +819,6 @@ select.browser-default {
 select {
   background-color: rgba(34, 34, 34, 0.9);
   width: 100%;
-  padding: 5px;
   border: 1px solid #f2f2f2;
   border-radius: 2px;
   height: 3rem;
