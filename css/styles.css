@@ -1,16 +1,5 @@
-@font-face {
-  font-family: 'NeutraText-Bold';
-  font-style: normal;
-  font-weight: normal;
-  src: local('NeutraText-Bold'), url("./fonts/neutra-text-bold.woff") format("woff");
-}
-
-nav div a:hover {
-	text-decoration: underline;
-}
-
 body {
-	background-color: #E0E0E0;
+	background-color: transparent;
 	display: block;
 	width: 100%;
   margin: auto;
@@ -21,7 +10,7 @@ main {
 }
 
 input {
-	color: white;
+	color: white !important;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -33,13 +22,30 @@ p {
   color: white;
 }
 
-nav div ul {
-  float: right;
+.cd-buttons {
+  margin: auto;
+  display: flex;
+}
+
+ul li {
+  margin-left: 0 !important;
+}
+
+.cd-popup-container h1 {
+  font-size: xx-large;
 }
 
 B {
-  color: white;
+  color: #1ed799;
   display: contents;
+}
+
+.sidebar.divspe div {
+  margin: auto;
+}
+
+#prix {
+  font-size: 150%;
 }
 
 #mention {
@@ -77,7 +83,7 @@ B {
 
 .nombreReunion {
   padding-left: 3%;
-  width: 10%;
+  width: 15%;
 }
 
 #alert {
@@ -90,10 +96,6 @@ B {
 
 #reunion div label {
   display: inline-block;
-}
-
-.sidebarTel {
-  display: none;
 }
 
 .divspe {
@@ -264,7 +266,7 @@ B {
   }
 
   input {
-    font-size: small !important;
+    font-size: x-small !important;
   }
 
   select {
@@ -287,13 +289,21 @@ B {
     max-width: 50%;
   }
 
-  #formTel2 .divspe label {
-    max-width: 50%;
-  }
-
   #formTel2 .divspe select {
     max-width: 50%;
-    font-size: 75%;
+    font-size: 65%;
+  }
+
+  #formTel2 .divspe label {
+    max-width: 80%;
+  }
+
+  #reunionTel label span {
+    max-width: 75%;
+  }
+
+  #reunionTel input {
+    max-width: 35%;
   }
 
   .collapsible-header {
@@ -305,9 +315,12 @@ B {
   }
 
   .sidebar {
+    display: none;
     width: 80% !important;
     padding-left: 10% !important;
     font-size: larger !important;
+    margin-top: 5%;
+    padding-bottom: 5%;
   }
 
   .content {
@@ -330,7 +343,6 @@ B {
   #reunionTel input[type=number]:not(.browser-default) {
     background-color: transparent;
     border: none;
-    color: #eceff1;
     border-radius: 0;
     outline: none;
     height: 3rem;
@@ -363,12 +375,6 @@ B {
     z-index: 1;
   }
 
-@media (max-width: 340px) {
-  .parallax-container {
-    height: 350px !important;
-  }
-}
-
 /*////// MATERIALIZE //////*/
 
 ul:not(.browser-default) {
@@ -381,7 +387,7 @@ ul:not(.browser-default) > li {
 }
 
 /* 2dp elevation modified*/
-.z-depth-1, nav, .btn, .collapsible {
+.z-depth-1, .btn, .collapsible {
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
@@ -389,34 +395,6 @@ ul:not(.browser-default) > li {
 .z-depth-1-half, .btn:hover {
   -webkit-box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
-}
-
-.parallax-container {
-  position: relative;
-  overflow: hidden;
-  height: 250px;
-}
-
-.parallax-container .parallax {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-}
-
-.parallax-container .parallax img {
-  opacity: 0;
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
 }
 
 /*********************
@@ -429,32 +407,6 @@ ul:not(.browser-default) > li {
     }
   }
 
-  .page-footer {
-    padding-top: 20px;
-    color: #fff;
-    background-color: #222;
-  }
-
-  .page-footer .footer-copyright {
-    overflow: hidden;
-    min-height: 50px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    padding: 10px 0px;
-    color: rgba(255, 255, 255, 0.8);
-    background-color: rgba(51, 51, 51, 0.08);
-  }
-
   table, th, td {
     border: none;
   }
@@ -464,6 +416,7 @@ ul:not(.browser-default) > li {
     display: table;
     border-collapse: collapse;
     border-spacing: 0;
+    border-radius: 15px;
     background-color: #333;
     color: #FFF;
   }
@@ -482,52 +435,9 @@ ul:not(.browser-default) > li {
 
   .section {
     display: flex;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    height: 100%;
+    padding: 5%;
     position: relative;
-    background-color: #222;
-  }
-
-  nav {
-    color: #fff;
-    background-color: #222;
-    width: 100%;
-    height: 56px;
-    line-height: 56px;
-  }
-
-  nav a {
-    color: #fff;
-  }
-
-  nav div {
-    position: relative;
-  }
-
-  nav ul {
-    margin: 0;
-  }
-
-  nav ul li {
-    -webkit-transition: background-color .3s;
-    transition: background-color .3s;
-    float: left;
-    padding: 0;
-  }
-
-  nav ul a {
-    -webkit-transition: background-color .3s;
-    transition: background-color .3s;
-    font-size: 1rem;
-    color: #fff;
-    display: block;
-    padding: 0 15px;
-    cursor: pointer;
-  }
-
-  nav ul a:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: transparent;
   }
 
   a {
@@ -541,7 +451,6 @@ ul:not(.browser-default) > li {
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'NeutraText-Bold';
     color: white;
   }
 
@@ -556,13 +465,14 @@ ul:not(.browser-default) > li {
     height: 36px;
     line-height: 36px;
     padding: 0 16px;
+    background-color: white;
     text-transform: uppercase;
     vertical-align: middle;
     -webkit-tap-highlight-color: white;
   }
 
   .btn-flat {
-    background-color: #455a64;
+    background-color: black;
   }
 
   .modal {
@@ -588,7 +498,6 @@ ul:not(.browser-default) > li {
   }
 
   .collapsible-header {
-    font-family: 'NeutraText-Bold';
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -624,13 +533,12 @@ ul:not(.browser-default) > li {
   }
 
   label {
-    font-family: 'NeutraText-Bold';
     display: block;
     margin: auto;
     padding-right: 2%;
     color: white;
-    font-size: larger;
-    padding-top: 1%;
+    font-size: medium;
+    padding-top: 0.5%;
     padding-bottom: 1%;
   }
 
@@ -690,7 +598,6 @@ textarea.materialize-textarea {
 #reunion input[type=number]:not(.browser-default) {
   background-color: transparent;
   border: none;
-  color: #eceff1;
   border-radius: 0;
   outline: none;
   height: 3rem;
@@ -786,12 +693,12 @@ textarea.materialize-textarea {
 [type="radio"]:checked + span:after,
 [type="radio"].with-gap:checked + span:before,
 [type="radio"].with-gap:checked + span:after {
-  border: 2px solid #455a64;
+  border: 2px solid white;
 }
 
 [type="radio"]:checked + span:after,
 [type="radio"].with-gap:checked + span:after {
-  background-color: #455a64;
+  background-color: white;
 }
 
 [type="radio"]:checked + span:after {
@@ -807,17 +714,15 @@ textarea.materialize-textarea {
 
 /* Select Field
 ========================================================================== */
-select {
-  display: none;
-  color: white;
-}
 
 select.browser-default {
   display: block;
 }
 
 select {
-  background-color: rgba(34, 34, 34, 0.9);
+  background-color: rgba(34, 34, 34, 0.9) !important;
+  display: none;
+  color: white !important;
   width: 100%;
   border: 1px solid #f2f2f2;
   border-radius: 2px;
@@ -829,21 +734,20 @@ select:disabled {
 }
 
 .sidebar {
-  background-color: #222;
+  background-color: white;
   width: 30%;
-  text-align: inherit;
-  padding-left: 2%;
-  padding-right: 1%;
+  text-align: center;
+  margin-left: 5%;
+  border-radius: 15px;
   font-size: 200%;
 }
 
 .sidebar p {
-  color : #90a4ae;
+  color : black;
   font-size: x-large;
 }
 
 .content {
-  padding-left: 10%;
   max-width: 1280px;
   width: 70%;
 }
@@ -930,7 +834,7 @@ select:disabled {
   -webkit-flex: 1 auto;
   -ms-flex: 1 auto;
   flex: 1 auto;
-  background-color: #455a64;
+  background-color: #222222;
   color: #fff;
   padding: 20px 22px;
   font-weight: 500;
@@ -993,12 +897,12 @@ select:disabled {
 }
 
 .datepicker-table td.is-today {
-  color: #455a64;
+  color: #222222;
 }
 
 .datepicker-table td.is-selected {
   max-width: 2%;
-  background-color: #455a64;
+  background-color: #222222;
   color: white;
 }
 
@@ -1067,9 +971,9 @@ select:disabled {
     -webkit-flex: 0 1 270px;
     -ms-flex: 0 1 270px;
     flex: 0 1 270px;
-    margin-top: 1% #455a64;
-    margin-left: 1% #455a64;
-    margin-bottom: 1% #455a64;
+    margin-top: 1% #222222;
+    margin-left: 1% #222222;
+    margin-bottom: 1% #222222;
   }
   .datepicker-controls,
   .datepicker-table,

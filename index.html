@@ -6,10 +6,6 @@
 
 	<title>UPSIDE - Votre devis en ligne</title>
 
-	<!-- Compiled and minified JavaScript -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
 	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -17,24 +13,14 @@
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
 
 	<!-- CSS and Script perso-->
-	<link rel="stylesheet" type="text/css" href="css/styles.css">
-	<script type="text/javascript" src="js/script.js" defer></script>
+	<link rel="stylesheet" type="text/css" href="https://www.upside-vr.fr/DevisEnLigne/css/styles.css">
 </head>
 
 <!--body-->
 
 <body>
 
-	<header>
-
-	</header>
-
 	<main>
-
-		<div class="parallax-container">
-			<div class="parallax"><img src="src/background1.PNG" alt="background 1"></div>
-		</div>
-
 		<!--formulaire-->
 
 		<div class="section">
@@ -280,6 +266,7 @@
 												<input class="with-gap" name="reunion" type="radio" value="1" required>
 												<span>Oui, format réunion (2 à 25 personnes)</span>
 											</label>
+											<label>Nombre de participants :</label>
 											<label class="nombreReunion">
 												<input name="nombreReunion" placeholder="_ _" type="number" min="2" max="25">
 											</label>
@@ -301,6 +288,7 @@
 												<input class="with-gap" name="reunion" type="radio" value="2" required>
 												<span>Oui, format plénière (2 à 60 personnes)</span>
 											</label>
+											<label>Nombre de participants :</label>
 											<label class="nombreReunion">
 												<input name="nombrePleniere" placeholder="_ _" type="number" min="2" max="60">
 											</label>
@@ -698,10 +686,16 @@
 				</div>
 			</div>
 
-			<div class="sidebar">
-				<p>
-					Pour votre événement du <B id="date2"></B>, <B id="moment2"></B>,<br>pour <B id="nbrPersonne"></B> personnes,<br>pour une durée de jeu de <B id="duree2"></B><br>le tarif est de : <B id="prix"></B>
-				</p>
+			<div class="sidebar divspe">
+				<div>
+					<p id="noSide">
+						Votre tarif s'affichera ici automatiquement.
+					</p>
+
+					<p id="side">
+						Pour votre événement du <B id="date2"></B>, <B id="moment2"></B>,<br>pour <B id="nbrPersonne"></B> personnes,<br>pour une durée de jeu de <br><B id="duree2"></B><br><br>Le tarif est de : <br><B id="prix"></B>
+					</p>
+				</div>
 			</div>
 
 			<div id="cd-popup" role="alert">
@@ -709,35 +703,22 @@
 					<h1>Upside vous informe :</h1>
 					<p id="alert"></p>
 					<ul class="cd-buttons">
-						<li><a id="ok" href="#!">OK</a></li>
-						<li><a id="annuler" href="#!">ANNULE</a></li>
+						<li><a id="ok" href="#">OK</a></li>
+						<li><a id="annuler" href="#">ANNULE</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 
-		<div class="parallax-container">
-			<div class="parallax"><img src="src/background2.PNG" alt="background 2"></div>
-		</div>
-
 	</main>
 
-	<!--Pied de page-->
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-	<footer class="page-footer">
-		<div>
-			<img id="logo2" src="src/logo2.PNG" alt="logo_upside_2">
-		</div>
-		<div>
-			© 2020 All right reserved to Upside
-		</div>
-	</footer>
+	<script type="text/javascript" src="https://www.upside-vr.fr/DevisEnLigne/js/script.js"></script>
+
 	<script>
-		//parallax
-		$(document).ready(function(){
-			$('.parallax').parallax();
-		});
-
 		//selecteur
 		$(document).ready(function(){
 			$('select').formSelect();

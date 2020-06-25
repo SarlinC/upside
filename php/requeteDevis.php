@@ -78,37 +78,244 @@ $to  = $_GET['email'];
      // Sujet
 $subject = 'Votre devis';
 
+$boisson = "";
+$traiteur = "";
+$simulateur = "";
+$seminaire = "";
+
+if (!($nombreBoisson == "")) {
+	$boisson = '<tr><td>Forfait boisson : </td><td>' . $nombreBoisson . ' boissons par personne</td><td>' . $_GET['prixUboisson'] . ' €</td><td>' . $_GET['prixTboisson'] . ' €</td></tr>';
+}
+
+if (!($menu == "")) {
+	$traiteur = '<tr><td>Traiteur : </td><td>' . $menu . '</td><td>' . $_GET['prixUtraiteur'] . ' €</td><td>' . $_GET['prixTtraiteur'] . ' €</td></tr>';
+}
+
+if (!($nombreWait == "")) {
+	$simulateur = '<tr><td>Simulateurs : </td><td>' . $nombreWait . ' par personne</td><td>' . $_GET['prixUwait'] . ' €</td><td>' . $_GET['prixTwait'] . ' €</td></tr>';
+}
+
+if (!($_GET['nombreReunion'] == "")) {
+	$seminaire = '<tr><td>Salle de séminaire de type : ' . $_GET['typeSeminaire'] . '</td><td>' . $_GET['nombreReunion'] . ' participants</td><td></td><td>' . $_GET['prixSeminaire'] . '</td></tr>';
+}
+
      // message
 $message = '
 <html>
 	<head>
 		<meta charset="utf-8">
 		<title>Devis de votre événement</title>
+
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+		
+		<style type="text/css">
+
+	         table, tr, td {
+
+	            border: 2px solid #635D5D !important;
+
+	            border-collapse: collapse;
+
+	            padding: 2% 1%;
+
+	            text-align: center;
+
+	            width: 80%;
+
+	            margin: auto;
+
+	        }
+
+	        thead {
+	        	background-color: #D03838;
+
+	        	text-align: center;
+
+	        	padding: 2% 1%;
+
+	        	color: white;
+	        }
+
+	        tbody {
+	        	background-color: #E3D4D4;
+
+	        	text-align: center;
+
+	        	padding: 2% 1%;
+
+	        	color: black;
+	        }
+
+	        p {
+	        	color: white;
+	        	text-align: left;
+	        	display: flex;
+	        }
+
+	        td{
+
+	            width: 25%;
+
+	        }
+
+	        h1, h2, h3, h4 {
+
+	            text-align: center;
+
+	        }	 
+
+	        .wrapper{
+
+	            text-align: center;
+
+	        }
+
+	        .logo{
+
+	            width: 4em;
+
+	            margin: 1% 2%;
+
+	        }
+
+	        b {
+
+	        	color: #51CDB4;
+	        	
+	        }
+
+	        .prix {
+	        	background-color: #3D3A3A;
+	        	color: white;
+	        	width: 80%;
+	        	margin: auto;
+	        	text-align: right;
+	        	display: flex;
+	        }
+
+	        .pspe {
+	        	text-align: left;
+	        	margin-left: 2%;
+	        }
+    	</style>
 	</head>
 	<body>
-		<p>Bonjour ' . $_GET['prenom'] . '</p>
-		<p>Vous avez demandé un devis pour un événement chez UPSIDE et nous vous en remercions.</p>
-		<p>Voici le détail de votre demande :</p>
-		<p>
-			<ul>
-				<li>Date : ' . $_GET['date'] . '</li>
-				<li>Durée de l\'événement : ' . $_GET['duree'] . ' minutes</li>
-				<li>Nombre de participants : ' . $_GET['nombreDePersonne'] . '</li>
-				<li>Temps de jeu par personne : ' . $_GET['dureePers'] . ' minutes</li>
-				<li>Forfait boisson : ' . $nombreBoisson . ' par personne & ' . $_GET['prixUboisson'] . ' € par personne</li>
-				<li>Simulateurs : ' . $nombreWait . ' & ' . $_GET['prixUwait'] . ' € par personne</li>
-				<li>Traiteur : ' . $menu . ' & ' . $_GET['prixUtraiteur'] . ' € par personne</li>
-				<li>Salle de séminaire : ' . $_GET['nombreReunion'] . ' & ' . $_GET['typeSeminaire'] . ' & ' . $_GET['prixSeminaire'] . '</li>
-				<li>Simulateurs : ' . $nombreWait . ' & ' . $_GET['prixUwait'] . ' € par personne</li>
-			</ul>
-		</p>
-		<p>
-			<ul>
-				<li>Total HT : ' . $_GET['prixT'] . ' €</li>
-				<li>TVA : ' . $_GET['prixTVA'] . ' €</li>
-				<li>Total TTC : ' . $_GET['prixTTC'] . ' €</li>
-			</ul>
-		</p>
+		<div style="max-width:800px;margin:10; font-family: "Montserrat", sans-serif;">
+
+	        <div style="text-align: center;">
+		        <a href="https://www.upside-vr.fr">
+		        	<img style="width: 60%;" src="https://www.cypher-vr.com/media/logo/logo-upside" alt="UPSIDE" border="0">
+		        </a>
+	        </div>
+
+	        <div class="wrapper">
+
+				<h2>Bonjour ' . $_GET['prenom'] . '</h2>
+				<h4>Vous avez demandé un devis pour un événement chez UPSIDE et nous vous en remercions.</h4>
+				<h3>Voici les détails de votre demande pour le ' . $_GET['date'] . ' d\'une durée de ' . $_GET['duree'] . ' pour un temps de jeu de ' . $_GET['dureePers'] . ' minutes par personne.</h3>
+
+				<table>
+					<thead>
+						<tr>
+							<td>
+								Désignation :
+							</td>
+
+							<td>
+								Quantitée :
+							</td>
+
+							<td>
+								Prix Unitaire :
+							</td>
+
+							<td>
+								Total HT :
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								Nombre de participants :
+							</td>
+
+							<td>
+								' . $_GET['nombreDePersonne'] . '
+							</td>
+
+							<td>
+								' . $_GET['prixUpersonne'] . ' €
+							</td>
+
+							<td>
+								' . $_GET['prixTpersonne'] . ' €
+							</td>
+						</tr>
+							' . $boisson . '
+							' . $traiteur . '
+							' . $simulateur . '
+							' . $seminaire . '
+					</tbody>
+				</table>
+
+				<br>
+				
+				<div class="prix">
+					<div style="width: 100%;">
+					</div>
+
+					<div style="text-align: -webkit-center; width: 40%;">
+						<h1>Détail du prix :</h1>
+
+						<h2>
+							<div style="display: flex;"><p style="text-align: right; display: block; width: 50%;">Total HT : </p><p class="pspe"><b>' . $_GET['prixT'] . '</b> €</p></div>
+
+							<div style="display: flex;"><p style="text-align: right; display: block; width: 50%;">TVA : </p><p class="pspe"><b>' . $_GET['prixTVA'] . '</b> €</p></div>
+							
+							<div style="display: flex;"><p style="text-align: right; display: block; width: 50%;">Total TTC : </p><p class="pspe"><b>' . $_GET['prixTTC'] . '</b> €</p></div>
+						</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<br>
+		<br>
+
+		 <div style="border: 2px solid #51CDB4; width: 80%; margin: auto;">
+
+            <h3 style="text-align: center; color: black;">
+
+                <strong>UPSIDE s\'engage pour vous accueillir dans les meilleures conditions :</strong>
+
+            </h3>
+
+            <ul>
+
+                <li>Gel hydro alcoolique à votre disposition</li>
+
+                <li>Nettoyage et désinfection systématique des équipements entre les sessions</li>
+
+                <li>Animateurs équipés de masques ou visières de protection</li>
+
+                <li>Marquage au sol pour respecter la distanciation physique</li>
+
+                <li>Locaux nettoyés et désinfectés quotidiennement</li>
+
+            </ul>
+
+            <p style="text-align: center; color: black;">
+
+                <strong>Cliquez
+
+                    <a href="https://www.upside-vr.fr/hygiene">ici</a> pour visiter notre page dédiée.
+
+                </strong>
+
+            </p>
+
+        </div>
 	</body>
 </html>
 ';
@@ -129,37 +336,222 @@ $message2 = '
 <html>
 	<head>
 		<title>Devis d\'un événement</title>
+
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+		<style type="text/css">
+
+	        table, tr, td {
+
+	            border: 2px solid #635D5D !important;
+
+	            border-collapse: collapse;
+
+	            padding: 2% 1%;
+
+	            text-align: center;
+
+	            width: 80%;
+
+	            margin: auto;
+
+	        }
+
+	        thead {
+	        	background-color: #D03838;
+
+	        	text-align: center;
+
+	        	padding: 2% 1%;
+
+	        	color: white;
+	        }
+
+	        tbody {
+	        	background-color: #E3D4D4;
+
+	        	text-align: center;
+
+	        	padding: 2% 1%;
+
+	        	color: black;
+	        }
+
+	        p {
+	        	color: white;
+	        	text-align: left;
+	        	display: flex;
+	        }
+
+	        td{
+
+	            width: 25%;
+
+	        }
+
+	        h1, h2, h3, h4 {
+
+	            text-align: center;
+
+	        }	 
+
+	        .wrapper{
+
+	            text-align: center;
+
+	        }
+
+	        .logo{
+
+	            width: 4em;
+
+	            margin: 1% 2%;
+
+	        }
+
+	        b {
+
+	        	color: #51CDB4;
+	        	
+	        }
+
+	        .prix {
+	        	background-color: #3D3A3A;
+	        	color: white;
+	        	width: 80%;
+	        	margin: auto;
+	        	text-align: right;
+	        	display: flex;
+	        }
+
+	        .pspe {
+	        	text-align: left;
+	        	margin-left: 2%;
+	        }
+    	</style>
 	</head>
 	<body>
-		<p>Nom :' . $_GET['nom'] . ' Prenom : ' . $_GET['prenom'] . ' Adresse : ' . $_GET['email'] . ' Numéro de téléphone : ' . $_GET['tel'] . '</p>
-		<p>Vous a demandé un devis pour un événement chez UPSIDE.</p>
-		<p>Voici le détail de sa demande :</p>
-	<p>
-		<ul>
-			<li> Date : ' . $_GET['date'] . ' </li>
-			<li>Durée de l\'événement : ' . $_GET['duree'] . ' minutes</li>
-			<li>Nombre de participants : ' . $_GET['nombreDePersonne'] . '</li>
-			<li>Coeff : ' . $_GET['coeff'] . '</li>
-			<li>Temps de jeu par personne : ' . $_GET['dureePers'] . ' minutes</li>
-			<li>Forfait boisson : ' . $nombreBoisson . ' par personne & ' . $_GET['prixUboisson'] . ' € par personne</li>
-			<li>Simulateurs : ' . $nombreWait . ' & ' . $_GET['prixUwait'] . ' € par personne</li>
-			<li>Traiteur : ' . $menu . ' & ' . $_GET['prixUtraiteur'] . ' € par personne</li>
-			<li>Salle de séminaire : ' . $_GET['nombreReunion'] . ' & ' . $_GET['typeSeminaire'] . ' & ' . $_GET['prixSeminaire'] . '</li>
-			<li>Simulateurs : ' . $nombreWait . ' & ' . $_GET['prixUwait'] . ' € par personne</li>
-		</ul>
-	</p>
-	<p>
-		<ul>
-			<li>Total HT : ' . $_GET['prixT'] . ' €</li>
-			<li>TVA : ' . $_GET['prixTVA'] . ' €</li>
-			<li>Total TTC : ' . $_GET['prixTTC'] . ' €</li>
-		</ul>
-	</p>
+		<div style="max-width:800px;margin:10; font-family: "Montserrat", sans-serif;">
+
+	        <div style="text-align: center;">
+		        <a href="https://www.upside-vr.fr">
+		        	<img style="width: 60%;" src="https://www.cypher-vr.com/media/logo/logo-upside" alt="UPSIDE" border="0">
+		        </a>
+	        </div>
+
+	        <div class="wrapper">
+
+				<h2>Nom :' . $_GET['nom'] . ' Prenom : ' . $_GET['prenom'] . ' Adresse : ' . $_GET['email'] . ' Numéro de téléphone : ' . $_GET['tel'] . '</h2>
+				<h4>Vous a demandé un devis pour un événement chez UPSIDE.</h4>
+				<h3>Voici les détails de sa demande pour le ' . $_GET['date'] . ' d\'une durée de ' . $_GET['duree'] . ' pour un temps de jeu de ' . $_GET['dureePers'] . ' minutes par personne.</h3>
+
+				<table>
+					<thead>
+						<tr>
+							<td>
+								Désignation :
+							</td>
+
+							<td>
+								Quantitée :
+							</td>
+
+							<td>
+								Prix Unitaire :
+							</td>
+
+							<td>
+								Total HT :
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								Nombre de participants :
+							</td>
+
+							<td>
+								' . $_GET['nombreDePersonne'] . '
+							</td>
+
+							<td>
+								' . $_GET['prixUpersonne'] . ' €
+							</td>
+
+							<td>
+								' . $_GET['prixTpersonne'] . ' €
+							</td>
+						</tr>
+							' . $boisson . '
+							' . $traiteur . '
+							' . $simulateur . '
+							' . $seminaire . '
+					</tbody>
+				</table>
+
+				<br>
+				
+				<div class="prix">
+					<div style="width: 100%;">
+					</div>
+					
+					<div style="text-align: -webkit-center; width: 40%;">
+						<h1 style="text-align: left;">Détail du prix :</h1>
+
+						<h2>
+							<div style="display: flex;"><p style="text-align: right; display: block; width: 50%;">Total HT : </p><p class="pspe"><b>' . $_GET['prixT'] . '</b> €</p></div>
+
+							<div style="display: flex;"><p style="text-align: right; display: block; width: 50%;">TVA : </p><p class="pspe"><b>' . $_GET['prixTVA'] . '</b> €</p></div>
+							
+							<div style="display: flex;"><p style="text-align: right; display: block; width: 50%;">Total TTC : </p><p class="pspe"><b>' . $_GET['prixTTC'] . '</b> €</p></div>
+						</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<br>
+		<br>
+
+		 <div style="border: 2px solid #51CDB4; width: 80%; margin: auto;">
+
+            <h3 style="text-align: center; color: black;">
+
+                <strong>UPSIDE s\'engage pour vous accueillir dans les meilleures conditions :</strong>
+
+            </h3>
+
+            <ul>
+
+                <li>Gel hydro alcoolique à votre disposition</li>
+
+                <li>Nettoyage et désinfection systématique des équipements entre les sessions</li>
+
+                <li>Animateurs équipés de masques ou visières de protection</li>
+
+                <li>Marquage au sol pour respecter la distanciation physique</li>
+
+                <li>Locaux nettoyés et désinfectés quotidiennement</li>
+
+            </ul>
+
+            <p style="text-align: center; color: black;">
+
+                <strong>Cliquez
+
+                    <a href="https://www.upside-vr.fr/hygiene">ici</a> pour visiter notre page dédiée.
+
+                </strong>
+
+            </p>
+
+        </div>
 	</body>
 </html>
 ';
 
-mail("devis@upside-vr.fr", $subject2, $message2, implode("\r\n", $headers));
+//mail("devis@upside-vr.fr", $subject2, $message2, implode("\r\n", $headers));
 
 	// lancement de la requête SQL avec selectByName et
 	// récupération du résultat de la requête SQL

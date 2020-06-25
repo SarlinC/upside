@@ -1,3 +1,132 @@
+//Partie générale
+
+function callback(req) {
+	console.log(req.responseText);
+}
+
+let side = document.getElementById("side");
+side.style.display = "none";
+
+document.getElementById("tableau").style.display = "none";
+
+document.getElementById("spec").style.display = "none";
+
+function mail(nom, prenom) {
+	let url = "https://upside-vr.fr/DevisEnLigne/php/mail.php?nom=" + nom + "&prenom=" + prenom;
+	let requete = new XMLHttpRequest();
+
+	requete.open("POST", url, true);
+
+	requete.addEventListener("load", function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+/* Requête de sauvegarde des utilisateurs */
+
+function requeteUser(nom, prenom, email) {
+	requeteSaveUser(nom, prenom, email);
+}
+
+function requeteUser(nom, prenom, email, tel) {
+	requeteSaveUser(nom, prenom, email, tel);
+}
+
+//Requête Ajax pour la création d'un utilisateur sans téléphone
+
+function requeteSaveUser(nom, prenom, email) {
+
+	let url = 'https://upside-vr.fr/DevisEnLigne/php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email;
+	let requete = new XMLHttpRequest();
+
+	requete.open('POST', url, true);
+
+	requete.addEventListener('load', function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+//Requête Ajax pour la création d'un utilisateur avec téléphone
+
+function requeteSaveUser(nom, prenom, email, tel) {
+
+	let url = 'https://upside-vr.fr/DevisEnLigne/php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email + '&tel=' + tel;
+	let requete = new XMLHttpRequest();
+
+	requete.open('POST', url, true);
+
+	requete.addEventListener('load', function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+//Requête Ajax pour la création des devis.
+
+function requeteSaveDevis(user, duree, dureePers, date, moment, nombreDePersonne, remarque, typeSeminaire, nombreReunion, dureeSem, prixSeminaire, prixUpersonne
+	, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur, prixTboisson, prixTwait, prixT, coeff, email, nom, prenom, prixTVA, prixTTC, tel) {
+	let url = "https://upside-vr.fr/DevisEnLigne/php/requeteDevis.php?date=" + date + "&duree=" + duree + "&dureePers=" + dureePers + "&nombreDePersonne=" + nombreDePersonne
+	+ "&remarque=" + remarque + "&user=" + user + "&typeSeminaire=" + typeSeminaire + "&nombreReunion=" + nombreReunion + "&dureeSem=" + dureeSem
+	+ "&prixSeminaire=" + prixSeminaire + "&prixUpersonne=" + prixUpersonne + "&prixUtraiteur=" + prixUtraiteur + "&prixUboisson=" + prixUboisson
+	+ "&prixUwait=" + prixUwait + "&prixTpersonne=" + prixTpersonne + "&prixTtraiteur=" + prixTtraiteur + "&prixTboisson=" + prixTboisson
+	+ "&prixTwait=" + prixTwait + "&prixT=" + prixT + "&coeff=" + coeff + "&moment=" + moment + "&email=" + email + "&nom=" + nom + "&prenom=" + prenom
+	+ "&prixTVA=" + prixTVA + "&prixTTC=" + prixTTC + "&tel=" + tel;
+
+	let requete = new XMLHttpRequest();
+
+	requete.open("POST", url, true);
+
+	requete.addEventListener("load", function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+function requeteSelectUser(nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem) {
+	let url = "https://upside-vr.fr/DevisEnLigne/php/requeteSelectUser.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
+	let requete = new XMLHttpRequest();
+
+	requete.open("POST", url, true);
+
+	requete.addEventListener("load", function () {
+		callback2(requete, nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem);
+	});
+
+	requete.send(null);
+}
+
+function callback2(req, nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem) {
+	let prixTpersonne = prixBase * nombreDePersonne;
+	let prixTtraiteur = prixUtraiteur * nombreDePersonne;
+	let prixTboisson = prixUboisson * nombreDePersonne;
+	let prixTwait = prixUwait * nombreDePersonne;
+
+	let prixT = prixTpersonne + prixTtraiteur + prixTboisson + prixTwait;
+	let prixTVA = prixTpersonne * (20/100) + prixTtraiteur * (20/100) + prixTboisson * (20/100) + prixTwait * (20/100);
+	let prixTTC = prixT + prixTVA;
+
+	let time = annee + "-" + mois + "-" + jour;
+	let dureeEnHeure = (Math.trunc(duree / 60)) + "h" + (duree % 60);
+
+	requeteSaveDevis(req.responseText, dureeEnHeure, dureePers, time, moment, parseInt(nombreDePersonne), remarque,
+		typeSeminaire, nombrePersonneReunion, dureeSem, prixSeminaire, prixBase, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur,
+		prixTboisson, prixTwait, prixT, coeff, email, nom, prenom, prixTVA, prixTTC, tel);
+}
+
+function calculPrix(prixBase) {
+	return (duree.value/60) * 13 * prixBase;
+}
+
+function calculPrixTel(prixBase) {
+	return (dureeTel.value/60) * 13 * prixBase;
+}
+
 //Partie 1er Formulaire
 let form = document.getElementById('form');
 
@@ -12,7 +141,6 @@ function noDonnees() {
 	form.remove(form);
 
 	divForm2.style.display = 'block';
-	prix.style.display = 'flex';
 
 	document.getElementById("ok").innerHTML = "ok";
 	document.getElementById("annuler").innerHTML = "annuler";
@@ -39,7 +167,6 @@ function okDonnees() {
 	form.remove(form);
 
 	divForm2.style.display = 'block';
-	prix.style.display = 'flex';
 
 	document.getElementById("ok").innerHTML = "ok";
 	document.getElementById("annuler").innerHTML = "annuler";
@@ -55,7 +182,7 @@ function okDonnees() {
 
 function removeForm () {
 	document.getElementById("alert").innerHTML = 'J\'accepte que les informations saisies dans ce formulaire soient ' +
-	'utilisées exclusivement par la société UPSIDE afin de me contacter. Pour plus d\'information : <a id="mention" href="mention_legal.html">Mention légal</a>';
+	'utilisées exclusivement par la société UPSIDE afin de me contacter. Pour plus d\'information : <a id="mention" href="mention_legal.html">Mentions légales</a>';
 	document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 	document.getElementById("ok").innerHTML = "oui";
@@ -88,7 +215,6 @@ let remarque = document.getElementById("remarque_id");
 let duree = document.getElementById("duree_id");
 
 let prix = document.getElementById("prix");
-prix.style.display = "none";
 
 let traiteur = document.getElementsByName("traiteur");
 let boisson = document.getElementsByName("boisson");
@@ -388,7 +514,9 @@ let dureePers;
 
 duree.addEventListener("change", function() {
 	if (date.value != "" && moment.value != "" && nombreDePersonne.value != "") {
-		document.getElementsByClassName("sidebar")[0].style.display = "flex";
+		side.style.display = "flex";
+		document.getElementById("noSide").style.display = "none";
+
 		document.getElementById("date2").innerHTML = date.value;
 		document.getElementById("moment2").innerHTML = tabMoment[moment.value];
 		document.getElementById("nbrPersonne").innerHTML = nombreDePersonne.value;
@@ -439,7 +567,9 @@ duree.addEventListener("change", function() {
 
 date.addEventListener("change", function() {
 	if (duree.value != "" && moment.value != "" && nombreDePersonne.value != "") {
-		document.getElementsByClassName("sidebar")[0].style.display = "flex";
+		side.style.display = "flex";
+		document.getElementById("noSide").style.display = "none";
+
 		document.getElementById("date2").innerHTML = date.value;
 		document.getElementById("moment2").innerHTML = tabMoment[moment.value];
 		document.getElementById("nbrPersonne").innerHTML = nombreDePersonne.value;
@@ -452,7 +582,9 @@ date.addEventListener("change", function() {
 
 moment.addEventListener("change", function() {
 	if (date.value != "" && duree.value != "" && nombreDePersonne.value != "") {
-		document.getElementsByClassName("sidebar")[0].style.display = "flex";
+		side.style.display = "flex";
+		document.getElementById("noSide").style.display = "none";
+
 		document.getElementById("date2").innerHTML = date.value;
 		document.getElementById("moment2").innerHTML = tabMoment[moment.value];
 		document.getElementById("nbrPersonne").innerHTML = nombreDePersonne.value;
@@ -465,7 +597,9 @@ moment.addEventListener("change", function() {
 
 nombreDePersonne.addEventListener("change", function() {
 	if (date.value != "" && moment.value != "" && duree.value != "") {
-		document.getElementsByClassName("sidebar")[0].style.display = "flex";
+		side.style.display = "flex";
+		document.getElementById("noSide").style.display = "none";
+
 		document.getElementById("date2").innerHTML = date.value;
 		document.getElementById("moment2").innerHTML = tabMoment[moment.value];
 		document.getElementById("nbrPersonne").innerHTML = nombreDePersonne.value;
@@ -808,7 +942,7 @@ function okDonneesTel() {
 
 function removeFormTel () {
 	document.getElementById("alert").innerHTML = 'J\'accepte que les informations saisies dans ce formulaire soient ' +
-	'utilisées exclusivement par la société UPSIDE afin de me contacter. Pour plus d\'informations : <a id="mention" href="mention_legal.html">Mention légal</a>';
+	'utilisées exclusivement par la société UPSIDE afin de me contacter. Pour plus d\'informations : <a id="mention" href="mention_legal.html">Mentions légales</a>';
 	document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 	document.getElementById("ok").innerHTML = "oui";
@@ -1535,134 +1669,6 @@ function hideSpec() {
 	document.getElementById("arrow_up").addEventListener("click", showSpec);
 }
 
-//Partie générale
-
-function callback(req) {
-	console.log(req.responseText);
-}
-
-document.getElementById("tableau").style.display = "none";
-
-document.getElementsByClassName("sidebar")[0].style.display = "none";
-
-document.getElementById("spec").style.display = "none";
-
-function mail(nom, prenom) {
-	let url = "php/mail.php?nom=" + nom + "&prenom=" + prenom;
-	let requete = new XMLHttpRequest();
-
-	requete.open("POST", url, true);
-
-	requete.addEventListener("load", function () {
-		callback(requete);
-	});
-
-	requete.send(null);
-}
-
-/* Requête de sauvegarde des utilisateurs */
-
-function requeteUser(nom, prenom, email) {
-	requeteSaveUser(nom, prenom, email);
-}
-
-function requeteUser(nom, prenom, email, tel) {
-	requeteSaveUser(nom, prenom, email, tel);
-}
-
-//Requête Ajax pour la création d'un utilisateur sans téléphone
-
-function requeteSaveUser(nom, prenom, email) {
-
-	let url = 'php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email;
-	let requete = new XMLHttpRequest();
-
-	requete.open('POST', url, true);
-
-	requete.addEventListener('load', function () {
-		callback(requete);
-	});
-
-	requete.send(null);
-}
-
-//Requête Ajax pour la création d'un utilisateur avec téléphone
-
-function requeteSaveUser(nom, prenom, email, tel) {
-
-	let url = 'php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email + '&tel=' + tel;
-	let requete = new XMLHttpRequest();
-
-	requete.open('POST', url, true);
-
-	requete.addEventListener('load', function () {
-		callback(requete);
-	});
-
-	requete.send(null);
-}
-
-//Requête Ajax pour la création des devis.
-
-function requeteSaveDevis(user, duree, dureePers, date, moment, nombreDePersonne, remarque, typeSeminaire, nombreReunion, dureeSem, prixSeminaire, prixUpersonne
-	, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur, prixTboisson, prixTwait, prixT, coeff, email, nom, prenom, prixTVA, prixTTC, tel) {
-	let url = "php/requeteDevis.php?date=" + date + "&duree=" + duree + "&dureePers=" + dureePers + "&nombreDePersonne=" + nombreDePersonne
-	+ "&remarque=" + remarque + "&user=" + user + "&typeSeminaire=" + typeSeminaire + "&nombreReunion=" + nombreReunion + "&dureeSem=" + dureeSem
-	+ "&prixSeminaire=" + prixSeminaire + "&prixUpersonne=" + prixUpersonne + "&prixUtraiteur=" + prixUtraiteur + "&prixUboisson=" + prixUboisson
-	+ "&prixUwait=" + prixUwait + "&prixTpersonne=" + prixTpersonne + "&prixTtraiteur=" + prixTtraiteur + "&prixTboisson=" + prixTboisson
-	+ "&prixTwait=" + prixTwait + "&prixT=" + prixT + "&coeff=" + coeff + "&moment=" + moment + "&email=" + email + "&nom=" + nom + "&prenom=" + prenom
-	+ "&prixTVA=" + prixTVA + "&prixTTC=" + prixTTC + "&tel=" + tel;
-
-	let requete = new XMLHttpRequest();
-
-	requete.open("POST", url, true);
-
-	requete.addEventListener("load", function () {
-		callback(requete);
-	});
-
-	requete.send(null);
-}
-
-function requeteSelectUser(nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem) {
-	let url = "php/requeteSelectUser.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
-	let requete = new XMLHttpRequest();
-
-	requete.open("POST", url, true);
-
-	requete.addEventListener("load", function () {
-		callback2(requete, nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem);
-	});
-
-	requete.send(null);
-}
-
-function callback2(req, nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem) {
-	let prixTpersonne = prixBase * nombreDePersonne;
-	let prixTtraiteur = prixUtraiteur * nombreDePersonne;
-	let prixTboisson = prixUboisson * nombreDePersonne;
-	let prixTwait = prixUwait * nombreDePersonne;
-
-	let prixT = prixTpersonne + prixTtraiteur + prixTboisson + prixTwait;
-	let prixTVA = prixTpersonne * (20/100) + prixTtraiteur * (20/100) + prixTboisson * (20/100) + prixTwait * (20/100);
-	let prixTTC = prixT + prixTVA;
-
-	let time = annee + "-" + mois + "-" + jour;
-	let dureeEnHeure = (Math.trunc(duree / 60)) + "h" + (duree % 60);
-
-	requeteSaveDevis(req.responseText, dureeEnHeure, dureePers, time, moment, parseInt(nombreDePersonne), remarque,
-		typeSeminaire, nombrePersonneReunion, dureeSem, prixSeminaire, prixBase, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur,
-		prixTboisson, prixTwait, prixT, coeff, email, nom, prenom, prixTVA, prixTTC, tel);
-}
-
-function calculPrix(prixBase) {
-	return (duree.value/60) * 13 * prixBase;
-}
-
-function calculPrixTel(prixBase) {
-	return (dureeTel.value/60) * 13 * prixBase;
-}
-
 /* Partie robot */
 
 /*function robot() {
@@ -1711,7 +1717,7 @@ function calculPrixTel(prixBase) {
 }
 
 function requeteSaveRobot(date, moment, nombreDePersonne, duree, coeff, prix) {
-	let url = "php/requeteSaveRobot.php?date=" + date + "&moment=" + moment + "&nombreDePersonne=" + nombreDePersonne +
+	let url = "https://upside-vr.fr/DevisEnLigne/php/requeteSaveRobot.php?date=" + date + "&moment=" + moment + "&nombreDePersonne=" + nombreDePersonne +
 	"&duree=" + duree + "&coeff=" + coeff + "&prix=" + prix;
 	let requete = new XMLHttpRequest();
 
