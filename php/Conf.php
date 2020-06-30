@@ -7,26 +7,22 @@ class Conf {
     // Le nom d'hote est webinfo a l'IUT
     // ou localhost sur votre machine
 
-    'hostname' => 'bgzhckuabdel.mysql.db',
-    //'hostname' => 'webinfo.iutmontp.univ-montp2.fr',
+    'hostname' => 'localhost:3306',
 
     // A l'IUT, vous avez une BDD nommee comme votre login
     // Sur votre machine, vous devrez creer une BDD
 
-    'database' => 'bgzhckuabdel',
-    //'database' => 'sarlinc',
+    'database' => 'wp_9wn2g',
 
     // A l'IUT, c'est votre login
     // Sur votre machine, vous avez surement un compte 'root'
 
-    'login' => 'bgzhckuabdel',
-    //'login' => 'sarlinc',
+    'login' => 'devis',
 
     // A l'IUT, c'est votre mdp (INE par defaut)
     // Sur votre machine personelle, vous avez creez ce mdp a l'installation
 
-    'password' => 'SaNaT0229'
-    //'password' => 'DavidLaTarlouze'
+    'password' => 'Y1s44p^v'
   );
    
   static public function getLogin() {

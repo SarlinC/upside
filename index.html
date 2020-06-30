@@ -5,6 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>UPSIDE - Votre devis en ligne</title>
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://www.upside-vr.fr/DevisEnLigne/js/jquery.min.js"></script>
+	<script src="https://www.upside-vr.fr/DevisEnLigne/js/materialize.min.js"></script>
 
 	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,6 +17,10 @@
 
 	<!-- CSS and Script perso-->
 	<link rel="stylesheet" type="text/css" href="https://www.upside-vr.fr/DevisEnLigne/css/styles.css">
+	<script type="text/javascript" src="https://www.upside-vr.fr/DevisEnLigne/js/script.js" defer></script>
+
+	<link href="https://www.upside-vr.fr/DevisEnLigne/css/datepicker.css" rel="stylesheet">
+	<script src="https://www.upside-vr.fr/DevisEnLigne/js/datepicker.js"></script>
 </head>
 
 <!--body-->
@@ -24,6 +31,7 @@
 		<!--formulaire-->
 
 		<div class="section">
+
 			<div class="sidebarTel">
 				<p>
 					<i id="arrow_up" class="material-icons">keyboard_arrow_up</i>
@@ -47,6 +55,7 @@
 			</div>
 			<div class="content">
 				<form id="form" onsubmit="removeForm(); return false;" method="POST">
+
 					<div>
 						<label for="prenom_id">Prénom:<span> *</span></label>
 						<input type="text" name="prenom" id="prenom_id" placeholder="Ex: Jean" required>
@@ -107,7 +116,7 @@
 								<div class="collapsible-body">
 									<div>
 										<label for="date_id">Indiquez la date souhaitée:<span>*</span></label>
-										<input type="text" class="datepicker" name="date" id="date_id" required>
+										<input type="text" name="date" id="date_id" autocomplete="off" required>
 									</div>
 
 									<div>
@@ -331,7 +340,7 @@
 								<div class="collapsible-body">
 									<div class="divspe">
 										<label for="date_tel_id"><i class="material-icons">calendar_today</i> Une date ?</label>
-										<input type="text" class="datepicker" placeholder="Insérez une date" name="date" id="date_tel_id" required>
+										<input type="date" name="date" id="date_tel_id" autocomplete="off" required>
 									</div>
 
 									<div class="divspe">
@@ -712,45 +721,41 @@
 
 	</main>
 
-	<!-- Compiled and minified JavaScript -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-	<script type="text/javascript" src="https://www.upside-vr.fr/DevisEnLigne/js/script.js"></script>
-
 	<script>
 		//selecteur
-		$(document).ready(function(){
-			$('select').formSelect();
+		jQuery(document).ready(function(){
+			jQuery('select').formSelect();
 		});
 
-		//date picker
-		$(document).ready(function(){
-			$('.datepicker').datepicker({
-				format: "dd/mm/yyyy",
-				i18n : {
-					months : ["Janvier", "Fervrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"],
-					monthsShort : ["Jan", "Fev", "Mar", "Avr", "Mai", "Jui", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec"],
-					weekdays : ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
-					weekdaysShort : ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
-					weekdaysAbbrev : ["L", "M", "Me", "J", "V", "S", "D"]
-				}
-			});
-		});
-
-		$(document).ready(function(){
+		jQuery(document).ready(function(){
 			//close popup when clicking the esc keyboard button
-			$(document).keyup(function(event){
+			jQuery(document).keyup(function(event){
 				if(event.which=='27'){
-					$('#cd-popup').removeClass('is-visible');
+					jQuery('#cd-popup').removeClass('is-visible');
 				}
 			});
 		});
 
 		//collapsible
-		$(document).ready(function(){
-			$('.collapsible').collapsible();
+		jQuery(document).ready(function(){
+			jQuery('.collapsible').collapsible();
 		});
-	</script>
-</body>
-</html>
+
+		const picker = datepicker('#date_id',
+		{
+			startDay : 1,
+			customDays: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+			customMonths: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+			customOverlayMonths: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+			overlayButtons: 'Selectionner',
+			overlayPlaceholder: 'Entrer une année',
+
+			formatter: (input, date, instance) => {
+				const value = date.toLocaleDateString()
+    				input.value = value // => '1/1/2099'
+    			}
+    		});
+
+    	</script>
+    </body>
+    </html>

@@ -1,132 +1,3 @@
-//Partie générale
-
-function callback(req) {
-	console.log(req.responseText);
-}
-
-let side = document.getElementById("side");
-side.style.display = "none";
-
-document.getElementById("tableau").style.display = "none";
-
-document.getElementById("spec").style.display = "none";
-
-function mail(nom, prenom) {
-	let url = "https://upside-vr.fr/DevisEnLigne/php/mail.php?nom=" + nom + "&prenom=" + prenom;
-	let requete = new XMLHttpRequest();
-
-	requete.open("POST", url, true);
-
-	requete.addEventListener("load", function () {
-		callback(requete);
-	});
-
-	requete.send(null);
-}
-
-/* Requête de sauvegarde des utilisateurs */
-
-function requeteUser(nom, prenom, email) {
-	requeteSaveUser(nom, prenom, email);
-}
-
-function requeteUser(nom, prenom, email, tel) {
-	requeteSaveUser(nom, prenom, email, tel);
-}
-
-//Requête Ajax pour la création d'un utilisateur sans téléphone
-
-function requeteSaveUser(nom, prenom, email) {
-
-	let url = 'https://upside-vr.fr/DevisEnLigne/php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email;
-	let requete = new XMLHttpRequest();
-
-	requete.open('POST', url, true);
-
-	requete.addEventListener('load', function () {
-		callback(requete);
-	});
-
-	requete.send(null);
-}
-
-//Requête Ajax pour la création d'un utilisateur avec téléphone
-
-function requeteSaveUser(nom, prenom, email, tel) {
-
-	let url = 'https://upside-vr.fr/DevisEnLigne/php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email + '&tel=' + tel;
-	let requete = new XMLHttpRequest();
-
-	requete.open('POST', url, true);
-
-	requete.addEventListener('load', function () {
-		callback(requete);
-	});
-
-	requete.send(null);
-}
-
-//Requête Ajax pour la création des devis.
-
-function requeteSaveDevis(user, duree, dureePers, date, moment, nombreDePersonne, remarque, typeSeminaire, nombreReunion, dureeSem, prixSeminaire, prixUpersonne
-	, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur, prixTboisson, prixTwait, prixT, coeff, email, nom, prenom, prixTVA, prixTTC, tel) {
-	let url = "https://upside-vr.fr/DevisEnLigne/php/requeteDevis.php?date=" + date + "&duree=" + duree + "&dureePers=" + dureePers + "&nombreDePersonne=" + nombreDePersonne
-	+ "&remarque=" + remarque + "&user=" + user + "&typeSeminaire=" + typeSeminaire + "&nombreReunion=" + nombreReunion + "&dureeSem=" + dureeSem
-	+ "&prixSeminaire=" + prixSeminaire + "&prixUpersonne=" + prixUpersonne + "&prixUtraiteur=" + prixUtraiteur + "&prixUboisson=" + prixUboisson
-	+ "&prixUwait=" + prixUwait + "&prixTpersonne=" + prixTpersonne + "&prixTtraiteur=" + prixTtraiteur + "&prixTboisson=" + prixTboisson
-	+ "&prixTwait=" + prixTwait + "&prixT=" + prixT + "&coeff=" + coeff + "&moment=" + moment + "&email=" + email + "&nom=" + nom + "&prenom=" + prenom
-	+ "&prixTVA=" + prixTVA + "&prixTTC=" + prixTTC + "&tel=" + tel;
-
-	let requete = new XMLHttpRequest();
-
-	requete.open("POST", url, true);
-
-	requete.addEventListener("load", function () {
-		callback(requete);
-	});
-
-	requete.send(null);
-}
-
-function requeteSelectUser(nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem) {
-	let url = "https://upside-vr.fr/DevisEnLigne/php/requeteSelectUser.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
-	let requete = new XMLHttpRequest();
-
-	requete.open("POST", url, true);
-
-	requete.addEventListener("load", function () {
-		callback2(requete, nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem);
-	});
-
-	requete.send(null);
-}
-
-function callback2(req, nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem) {
-	let prixTpersonne = prixBase * nombreDePersonne;
-	let prixTtraiteur = prixUtraiteur * nombreDePersonne;
-	let prixTboisson = prixUboisson * nombreDePersonne;
-	let prixTwait = prixUwait * nombreDePersonne;
-
-	let prixT = prixTpersonne + prixTtraiteur + prixTboisson + prixTwait;
-	let prixTVA = prixTpersonne * (20/100) + prixTtraiteur * (20/100) + prixTboisson * (20/100) + prixTwait * (20/100);
-	let prixTTC = prixT + prixTVA;
-
-	let time = annee + "-" + mois + "-" + jour;
-	let dureeEnHeure = (Math.trunc(duree / 60)) + "h" + (duree % 60);
-
-	requeteSaveDevis(req.responseText, dureeEnHeure, dureePers, time, moment, parseInt(nombreDePersonne), remarque,
-		typeSeminaire, nombrePersonneReunion, dureeSem, prixSeminaire, prixBase, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur,
-		prixTboisson, prixTwait, prixT, coeff, email, nom, prenom, prixTVA, prixTTC, tel);
-}
-
-function calculPrix(prixBase) {
-	return (duree.value/60) * 13 * prixBase;
-}
-
-function calculPrixTel(prixBase) {
-	return (dureeTel.value/60) * 13 * prixBase;
-}
-
 //Partie 1er Formulaire
 let form = document.getElementById('form');
 
@@ -421,12 +292,33 @@ let annee;
 
 let prixBase = 0;
 
-date.addEventListener("change", function() {
+let dateCalendar = document.getElementsByClassName('qs-square');
+
+date.addEventListener("change", modifDate);
+
+for(let i=0; i < dateCalendar.length; i++){
+
+	dateCalendar[i].addEventListener('click', modifDate);
+
+}
+
+
+
+function modifDate() {
 	jour = date.value.slice(0,2);
 	mois = date.value.slice(3,5);
 	annee = date.value.slice(6,10);
 
 	maDate = new Date(annee, mois - 1, jour);
+
+	let dateDuJour = new Date(Date.now());
+
+	if (maDate <= dateDuJour) {
+		document.getElementById("alert").innerHTML = "Vous ne pouvez pas sélectionner la date du jour ou une date antérieur.";
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+		date.value = "";
+	}
 
 	moment.addEventListener("change", function() {
 		if (maDate.getDay() == 5 || maDate.getDay() == 6 && parseInt(nombreDePersonne.value >= 30)) {
@@ -442,11 +334,12 @@ date.addEventListener("change", function() {
 			}
 		}
 	});
-});
+}
 
 let tabDuree = document.getElementById("duree_id");
 
 moment.addEventListener("change", function(){
+
 	if (date.value != "") {
 		if (maDate.getDay() == 5 || maDate.getDay() == 6) {
 			if (moment.value == "matinee") {
@@ -1619,10 +1512,6 @@ function removeClass() {
 	document.getElementById("cd-popup").removeAttribute("class", "is-visible");
 }
 
-document.getElementById('date_id').addEventListener("click", function() {
-	document.getElementsByClassName('datepicker-cancel')[0].innerHTML = "Annuler";
-});
-
 document.getElementById("arrow_up").addEventListener("click", showSpec);
 
 function showSpec() {
@@ -1667,6 +1556,135 @@ function hideSpec() {
 	document.getElementById("arrow_up").innerHTML = '<i class="material-icons">keyboard_arrow_up</i>';
 	document.getElementById("arrow_up").removeEventListener("click", hideSpec);
 	document.getElementById("arrow_up").addEventListener("click", showSpec);
+}
+
+//Partie générale
+
+function callback(req) {
+	console.log(req.responseText);
+}
+
+let side = document.getElementById("side");
+side.style.display = "none";
+
+document.getElementById("tableau").style.display = "none";
+
+document.getElementById("spec").style.display = "none";
+
+function mail(nom, prenom) {
+	let url = "https://www.upside-vr.fr/DevisEnLigne/php/mail.php?nom=" + nom + "&prenom=" + prenom;
+	let requete = new XMLHttpRequest();
+
+	requete.open("POST", url, true);
+
+	requete.addEventListener("load", function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+/* Requête de sauvegarde des utilisateurs */
+
+function requeteUser(nom, prenom, email) {
+	requeteSaveUser(nom, prenom, email);
+}
+
+function requeteUser(nom, prenom, email, tel) {
+	requeteSaveUser(nom, prenom, email, tel);
+}
+
+//Requête Ajax pour la création d'un utilisateur sans téléphone
+
+function requeteSaveUser(nom, prenom, email) {
+
+	let url = 'https://www.upside-vr.fr/DevisEnLigne/php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email;
+	let requete = new XMLHttpRequest();
+
+	requete.open('POST', url, true);
+
+	requete.addEventListener('load', function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+//Requête Ajax pour la création d'un utilisateur avec téléphone
+
+function requeteSaveUser(nom, prenom, email, tel) {
+
+	let url = 'https://www.upside-vr.fr/DevisEnLigne/php/requeteUtilisateur.php?nom=' + nom + '&prenom=' + prenom + '&email=' + email + '&tel=' + tel;
+	let requete = new XMLHttpRequest();
+
+	requete.open('POST', url, true);
+
+	requete.addEventListener('load', function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+//Requête Ajax pour la création des devis.
+
+function requeteSaveDevis(user, duree, dureePers, date, moment, nombreDePersonne, remarque, typeSeminaire, nombreReunion, dureeSem, prixSeminaire, prixUpersonne
+	, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur, prixTboisson, prixTwait, prixT, coeff, email, nom, prenom, prixTVA, prixTTC, tel) {
+	let url = "https://www.upside-vr.fr/DevisEnLigne/php/requeteDevis.php?date=" + date + "&duree=" + duree + "&dureePers=" + dureePers + "&nombreDePersonne=" + nombreDePersonne
+	+ "&remarque=" + remarque + "&user=" + user + "&typeSeminaire=" + typeSeminaire + "&nombreReunion=" + nombreReunion + "&dureeSem=" + dureeSem
+	+ "&prixSeminaire=" + prixSeminaire + "&prixUpersonne=" + prixUpersonne + "&prixUtraiteur=" + prixUtraiteur + "&prixUboisson=" + prixUboisson
+	+ "&prixUwait=" + prixUwait + "&prixTpersonne=" + prixTpersonne + "&prixTtraiteur=" + prixTtraiteur + "&prixTboisson=" + prixTboisson
+	+ "&prixTwait=" + prixTwait + "&prixT=" + prixT + "&coeff=" + coeff + "&moment=" + moment + "&email=" + email + "&nom=" + nom + "&prenom=" + prenom
+	+ "&prixTVA=" + prixTVA + "&prixTTC=" + prixTTC + "&tel=" + tel;
+
+	let requete = new XMLHttpRequest();
+
+	requete.open("POST", url, true);
+
+	requete.addEventListener("load", function () {
+		callback(requete);
+	});
+
+	requete.send(null);
+}
+
+function requeteSelectUser(nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem) {
+	let url = "https://www.upside-vr.fr/DevisEnLigne/php/requeteSelectUser.php?nom=" + nom + "&prenom=" + prenom + "&email=" + email;
+	let requete = new XMLHttpRequest();
+
+	requete.open("POST", url, true);
+
+	requete.addEventListener("load", function () {
+		callback2(requete, nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem);
+	});
+
+	requete.send(null);
+}
+
+function callback2(req, nom, prenom, email, tel, duree, moment, nombreDePersonne, remarque, typeSeminaire, nombrePersonneReunion, dureeSem) {
+	let prixTpersonne = prixBase * nombreDePersonne;
+	let prixTtraiteur = prixUtraiteur * nombreDePersonne;
+	let prixTboisson = prixUboisson * nombreDePersonne;
+	let prixTwait = prixUwait * nombreDePersonne;
+
+	let prixT = prixTpersonne + prixTtraiteur + prixTboisson + prixTwait;
+	let prixTVA = prixTpersonne * (20/100) + prixTtraiteur * (20/100) + prixTboisson * (20/100) + prixTwait * (20/100);
+	let prixTTC = prixT + prixTVA;
+
+	let time = annee + "-" + mois + "-" + jour;
+	let dureeEnHeure = (Math.trunc(duree / 60)) + "h" + (duree % 60);
+
+	requeteSaveDevis(req.responseText, dureeEnHeure, dureePers, time, moment, parseInt(nombreDePersonne), remarque,
+		typeSeminaire, nombrePersonneReunion, dureeSem, prixSeminaire, prixBase, prixUtraiteur, prixUboisson, prixUwait, prixTpersonne, prixTtraiteur,
+		prixTboisson, prixTwait, prixT, coeff, email, nom, prenom, prixTVA, prixTTC, tel);
+}
+
+function calculPrix(prixBase) {
+	return (duree.value/60) * 13 * prixBase;
+}
+
+function calculPrixTel(prixBase) {
+	return (dureeTel.value/60) * 13 * prixBase;
 }
 
 /* Partie robot */
@@ -1717,7 +1735,7 @@ function hideSpec() {
 }
 
 function requeteSaveRobot(date, moment, nombreDePersonne, duree, coeff, prix) {
-	let url = "https://upside-vr.fr/DevisEnLigne/php/requeteSaveRobot.php?date=" + date + "&moment=" + moment + "&nombreDePersonne=" + nombreDePersonne +
+	let url = "https://www.upside-vr.fr/DevisEnLigne/php/requeteSaveRobot.php?date=" + date + "&moment=" + moment + "&nombreDePersonne=" + nombreDePersonne +
 	"&duree=" + duree + "&coeff=" + coeff + "&prix=" + prix;
 	let requete = new XMLHttpRequest();
 
