@@ -53,7 +53,7 @@ function okDonnees() {
 
 function removeForm () {
 	document.getElementById("alert").innerHTML = 'J\'accepte que les informations saisies dans ce formulaire soient ' +
-	'utilisées exclusivement par la société UPSIDE afin de me contacter. Pour plus d\'information : <a id="mention" href="mention_legal.html">Mentions légales</a>';
+	'utilisées exclusivement par la société UPSIDE afin de me contacter. Pour plus d\'information : <a id="mention" href="https://www.upside-vr.fr/DevisEnLigne/">Mentions légales</a>';
 	document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
 	document.getElementById("ok").innerHTML = "oui";
@@ -292,17 +292,21 @@ let annee;
 
 let prixBase = 0;
 
-let dateCalendar = document.getElementsByClassName('qs-square');
+let dateCalendar = document.getElementsByClassName('qs-num');
 
-date.addEventListener("change", modifDate);
+eventOnCalendar();
 
-for(let i=0; i < dateCalendar.length; i++){
-
-	dateCalendar[i].addEventListener('click', modifDate);
-
+for (let i = 0; i < document.getElementsByClassName('qs-arrow').length; i ++) {
+	document.getElementsByClassName('qs-arrow')[i].addEventListener('click', eventOnCalendar);
 }
 
+function eventOnCalendar() {
+	for(let i = 0; i < dateCalendar.length; i ++){
+		dateCalendar[i].addEventListener('click', modifDate);
+	}
+}
 
+date.addEventListener("change", modifDate);
 
 function modifDate() {
 	jour = date.value.slice(0,2);

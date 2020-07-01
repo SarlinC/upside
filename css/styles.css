@@ -22,6 +22,10 @@ p {
   color: white;
 }
 
+.master-holder select:not(.gfield_select) {
+  background-image: none;
+}
+
 .cd-buttons {
   margin: auto;
   display: flex;
@@ -270,17 +274,17 @@ B {
   }
 
   #formTel2 .divspe input {
-    max-width: 50%;
+    max-width: 60%;
   }
 
   #formTel2 .divspe select {
-    max-width: 50%;
-    font-size: 45%;
+    max-width: 60%;
+    font-size: smaller;
     min-width: 0;
   }
 
   #formTel2 .divspe label {
-    max-width: 50%;
+    max-width: 30%;
   }
 
   #reunionTel label span {
@@ -712,6 +716,7 @@ select {
   border: 1px solid #f2f2f2;
   border-radius: 2px;
   height: 3rem;
+  background-image: none;
 }
 
 select:disabled {
