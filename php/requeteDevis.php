@@ -551,7 +551,7 @@ $message2 = '
 </html>
 ';
 
-//mail("devis@upside-vr.fr", $subject2, $message2, implode("\r\n", $headers));
+mail("devis@upside-vr.fr", $subject2, $message2, implode("\r\n", $headers));
 
 	// lancement de la requête SQL avec selectByName et
 	// récupération du résultat de la requête SQL

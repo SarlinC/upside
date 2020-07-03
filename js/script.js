@@ -109,7 +109,7 @@ let prixUwait = 0;
 traiteur[0].addEventListener("click", function() {
 	document.getElementById("traiteur").style.display = "block";
 	document.getElementById("tarifTraiteur").innerHTML = "Forfait traiteur";
-	document.getElementById("tr").style.display = "visible";
+	document.getElementById("tr").style.display = "table-row";
 });
 
 traiteur[1].addEventListener("click", function() {
@@ -130,7 +130,7 @@ traiteur[1].addEventListener("click", function() {
 boisson[0].addEventListener("click", function() {
 	document.getElementById("boisson").style.display = "block";
 	document.getElementById("tarifBar").innerHTML = "Forfait BAR";
-	document.getElementById("bar").style.display = "visible";
+	document.getElementById("bar").style.display = "table-row";
 });
 
 boisson[1].addEventListener("click", function() {
@@ -151,7 +151,7 @@ boisson[1].addEventListener("click", function() {
 wait[0].addEventListener("click", function() {
 	document.getElementById("wait").style.display = "block";
 	document.getElementById("tarifWait").innerHTML = "Forfait simulateur";
-	document.getElementById("simulateur").style.display = "visible";
+	document.getElementById("simulateur").style.display = "table-row";
 });
 
 wait[1].addEventListener("click", function() {
@@ -269,7 +269,7 @@ for (let i = 0; i < 3; i ++) {
 				prixUwait = 10;
 			}
 			if (wait2[2].checked) {
-				simu = "3 simulations";
+				simu = "En illimité";
 				document.getElementById("prixUwait").innerHTML = "15 €";
 				prixUwait = 15;
 			}
@@ -292,26 +292,28 @@ let annee;
 
 let prixBase = 0;
 
-let dateCalendar = document.getElementsByClassName('qs-num');
-
-eventOnCalendar();
+/*let dateCalendar = document.getElementsByClassName('qs-num');
 
 for (let i = 0; i < document.getElementsByClassName('qs-arrow').length; i ++) {
 	document.getElementsByClassName('qs-arrow')[i].addEventListener('click', eventOnCalendar);
 }
 
+eventOnCalendar();
+
 function eventOnCalendar() {
 	for(let i = 0; i < dateCalendar.length; i ++){
-		dateCalendar[i].addEventListener('click', modifDate);
-	}
-}
+		dateCalendar[i].addEventListener('click', function() {
 
-date.addEventListener("change", modifDate);
+		});
+	}
+}*/
+
+date.addEventListener("blur", modifDate);
 
 function modifDate() {
-	jour = date.value.slice(0,2);
-	mois = date.value.slice(3,5);
-	annee = date.value.slice(6,10);
+	jour = date.value.slice(8,10);
+	mois = date.value.slice(5,7);
+	annee = date.value.slice(0,4);
 
 	maDate = new Date(annee, mois - 1, jour);
 
@@ -411,10 +413,10 @@ let dureePers;
 
 duree.addEventListener("change", function() {
 	if (date.value != "" && moment.value != "" && nombreDePersonne.value != "") {
-		side.style.display = "flex";
+		side.style.display = "inline";
 		document.getElementById("noSide").style.display = "none";
 
-		document.getElementById("date2").innerHTML = date.value;
+		document.getElementById("date2").innerHTML = jour + "/" + mois + "/" + annee;
 		document.getElementById("moment2").innerHTML = tabMoment[moment.value];
 		document.getElementById("nbrPersonne").innerHTML = nombreDePersonne.value;
 		prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
@@ -464,10 +466,10 @@ duree.addEventListener("change", function() {
 
 date.addEventListener("change", function() {
 	if (duree.value != "" && moment.value != "" && nombreDePersonne.value != "") {
-		side.style.display = "flex";
+		side.style.display = "inline";
 		document.getElementById("noSide").style.display = "none";
 
-		document.getElementById("date2").innerHTML = date.value;
+		document.getElementById("date2").innerHTML = jour + "/" + mois + "/" + annee;
 		document.getElementById("moment2").innerHTML = tabMoment[moment.value];
 		document.getElementById("nbrPersonne").innerHTML = nombreDePersonne.value;
 		prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
@@ -479,10 +481,10 @@ date.addEventListener("change", function() {
 
 moment.addEventListener("change", function() {
 	if (date.value != "" && duree.value != "" && nombreDePersonne.value != "") {
-		side.style.display = "flex";
+		side.style.display = "inline";
 		document.getElementById("noSide").style.display = "none";
 
-		document.getElementById("date2").innerHTML = date.value;
+		document.getElementById("date2").innerHTML = jour + "/" + mois + "/" + annee;
 		document.getElementById("moment2").innerHTML = tabMoment[moment.value];
 		document.getElementById("nbrPersonne").innerHTML = nombreDePersonne.value;
 		prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
@@ -494,10 +496,10 @@ moment.addEventListener("change", function() {
 
 nombreDePersonne.addEventListener("change", function() {
 	if (date.value != "" && moment.value != "" && duree.value != "") {
-		side.style.display = "flex";
+		side.style.display = "inline";
 		document.getElementById("noSide").style.display = "none";
 
-		document.getElementById("date2").innerHTML = date.value;
+		document.getElementById("date2").innerHTML = jour + "/" + mois + "/" + annee;
 		document.getElementById("moment2").innerHTML = tabMoment[moment.value];
 		document.getElementById("nbrPersonne").innerHTML = nombreDePersonne.value;
 		prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
@@ -602,6 +604,8 @@ reunion2[1].addEventListener("click", function() {
 	}
 
 	nombrePleniere[0].value = "";
+
+	document.getElementsByName("nombreReunion")[0].setAttribute("required", "");
 });
 
 reunion2[2].addEventListener("click", function() {
@@ -618,6 +622,8 @@ reunion2[2].addEventListener("click", function() {
 	}
 
 	nombreReunion[0].value = "";
+
+	document.getElementsByName("nombrePleniere")[0].setAttribute("required", "");
 });
 
 nombreReunion[0].addEventListener("click", function() {
@@ -701,12 +707,14 @@ tempsPleniere2[1].addEventListener("click", function() {
 function removeForm2() {
 	completeDevis();
 
-	document.getElementById("tableau").style.display = "flex";
+	document.getElementById("tableau").style.display = "block";
 
 	if (rgpd == true) {
 		requeteSelectUser(nom.value, prenom.value, email.value, tel.value, duree.value, moment.value, nombreDePersonne.value, remarque.value,
 			typeSeminaire, nombrePersonneReunion, dureeSem);
-	}	
+	}
+
+	document.getElementsByClassName("sidebar")[0].style.display = "block";
 
 	form2.remove(form2);
 }
@@ -721,7 +729,7 @@ function completeDevis() {
 	let prixTVA = prixTpersonne * (20/100) + prixTtraiteur * (20/100) + prixTboisson * (20/100) + prixTwait * (20/100);
 	let prixTTC = prixT + prixTVA;
 
-	document.getElementsByClassName("sidebar")[0].innerHTML = '<div><p>Prix HT : ' + prixT + '€</p><p>TVA : ' + prixTVA + ' €</p><p>Prix TTC : ' + prixTTC + ' €</p>'
+	document.getElementsByClassName("sidebar")[0].innerHTML = '<div><p>Total HT : ' + prixT + '€</p><p>TVA : ' + prixTVA + ' €</p><p>Total TTC : ' + prixTTC + ' €</p>'
 	+ '<button id="contact" class="btn" type="submit">Être rappelé</button></div>';
 
 	document.getElementById("contact").addEventListener("click", function() {
@@ -1040,7 +1048,7 @@ for (let i = 0; i < 3; i ++) {
 				prixUwait = 10;
 			}
 			if (waitTel2[2].checked) {
-				simu = "3 simulations";
+				simu = "En illimité";
 				document.getElementById("prixUwait").innerHTML = "15 €";
 				prixUwait = 15;
 			}
@@ -1145,7 +1153,7 @@ momentTel.addEventListener("change", function(){
 dureeTel.addEventListener("change", function() {
 	if (dateTel.value != "" && momentTel.value != "" && nombreDePersonneTel.value != "") {
 		document.getElementsByClassName("sidebarTel")[0].style.display = "block";
-		document.getElementById("dateTel").innerHTML = dateTel.value;
+		document.getElementById("dateTel").innerHTML = jour + "/" + mois + "/" + annee;
 		document.getElementById("nombrePersonneTel").innerHTML = nombreDePersonneTel.value;
 		document.getElementById("momentTel").innerHTML = momentTel.value;
 		document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
@@ -1196,7 +1204,7 @@ dureeTel.addEventListener("change", function() {
 dateTel.addEventListener("change", function() {
 	if (dureeTel.value != "" && momentTel.value != "" && nombreDePersonneTel.value != "") {
 		document.getElementsByClassName("sidebarTel")[0].style.display = "block";
-		document.getElementById("dateTel").innerHTML = dateTel.value;
+		document.getElementById("dateTel").innerHTML = jour + "/" + mois + "/" + annee;
 		document.getElementById("nombrePersonneTel").innerHTML = nombreDePersonneTel.value;
 		document.getElementById("momentTel").innerHTML = momentTel.value;
 		document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
@@ -1209,7 +1217,7 @@ dateTel.addEventListener("change", function() {
 momentTel.addEventListener("change", function() {
 	if (dateTel.value != "" && dureeTel.value != "" && nombreDePersonneTel.value != "") {
 		document.getElementsByClassName("sidebarTel")[0].style.display = "block";
-		document.getElementById("dateTel").innerHTML = dateTel.value;
+		document.getElementById("dateTel").innerHTML = jour + "/" + mois + "/" + annee;
 		document.getElementById("nombrePersonneTel").innerHTML = nombreDePersonneTel.value;
 		document.getElementById("momentTel").innerHTML = momentTel.value;
 		document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
@@ -1222,7 +1230,7 @@ momentTel.addEventListener("change", function() {
 nombreDePersonneTel.addEventListener("change", function() {
 	if (dateTel.value != "" && momentTel.value != "" && dureeTel.value != "") {
 		document.getElementsByClassName("sidebarTel")[0].style.display = "block";
-		document.getElementById("dateTel").innerHTML = dateTel.value;
+		document.getElementById("dateTel").innerHTML = jour + "/" + mois + "/" + annee;
 		document.getElementById("nombrePersonneTel").innerHTML = nombreDePersonneTel.value;
 		document.getElementById("momentTel").innerHTML = momentTel.value;
 		document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
@@ -1323,6 +1331,8 @@ reunionTel2[1].addEventListener("click", function() {
 	}
 
 	nombrePleniere[0].value = "";
+
+	document.getElementsByName("nombreReunionTel")[0].setAttribute("required", "");
 });
 
 reunionTel2[2].addEventListener("click", function() {
@@ -1339,6 +1349,8 @@ reunionTel2[2].addEventListener("click", function() {
 	}
 
 	nombreReunionTel[0].value = "";
+
+	document.getElementsByName("nombrePleniereTel")[0].setAttribute("required", "");
 });
 
 nombreReunionTel[0].addEventListener("click", function() {
@@ -1455,7 +1467,6 @@ function removeFormTel2() {
 	completeDevisTel();
 
 	document.getElementsByClassName("sidebarTel")[0].style.display = "none";
-	document.getElementsByClassName("sidebar")[0].style.display = "flex";
 
 	document.getElementById("tableau").style.display = "block";
 
@@ -1463,6 +1474,8 @@ function removeFormTel2() {
 		requeteSelectUser(nomTel.value, prenomTel.value, emailTel.value, telTel.value, dureeTel.value, momentTel.value, nombreDePersonneTel.value, remarqueTel.value,
 			typeSeminaire, nombrePersonneReunionTel, dureeSem);
 	}
+
+	document.getElementsByClassName("sidebar")[0].style.display = "block";	
 
 	form2Tel.remove(form2Tel);
 }
@@ -1477,7 +1490,7 @@ function completeDevisTel() {
 	let prixTVA = prixTpersonne * (20/100) + prixTtraiteur * (20/100) + prixTboisson * (20/100) + prixTwait * (20/100);
 	let prixTTC = prixT + prixTVA;
 
-	document.getElementsByClassName("sidebar")[0].innerHTML = '<div><p>Prix HT : ' + prixT + '€</p><p>TVA : ' + prixTVA + ' €</p><p>Prix TTC : ' + prixTTC + ' €</p>'
+	document.getElementsByClassName("sidebar")[0].innerHTML = '<div><p>Total HT : ' + prixT + '€</p><p>TVA : ' + prixTVA + ' €</p><p>Total TTC : ' + prixTTC + ' €</p>'
 	+ '<button id="contact" class="btn" type="submit">Être rappelé</button></div>';
 
 	document.getElementById("contact").addEventListener("click", function() {

@@ -2,12 +2,12 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
 	<title>UPSIDE - Votre devis en ligne</title>
 	<!-- Compiled and minified JavaScript -->
-	<script src="https://www.upside-vr.fr/DevisEnLigne/js/jquery.min.js"></script>
-	<script src="https://www.upside-vr.fr/DevisEnLigne/js/materialize.min.js"></script>
+	<script src="https://upside-vr.fr/DevisEnLigne/js/jquery.min.js"></script>
+	<script src="https://upside-vr.fr/DevisEnLigne/js/materialize.min.js"></script>
 
 	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,11 +16,11 @@
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
 
 	<!-- CSS and Script perso-->
-	<link rel="stylesheet" type="text/css" href="https://www.upside-vr.fr/DevisEnLigne/css/styles.css">
-	<script type="text/javascript" src="https://www.upside-vr.fr/DevisEnLigne/js/script.js" defer></script>
+	<link rel="stylesheet" type="text/css" href="https://upside-vr.fr/DevisEnLigne/css/styles.css">
+	<script type="text/javascript" src="https://upside-vr.fr/DevisEnLigne/js/script.js" defer></script>
 
-	<link href="https://www.upside-vr.fr/DevisEnLigne/css/datepicker.css" rel="stylesheet">
-	<script src="https://www.upside-vr.fr/DevisEnLigne/js/datepicker.js"></script>
+	<!--<link href="https://upside-vr.fr/DevisEnLigne/css/datepicker.css" rel="stylesheet">
+	<script src="https://upside-vr.fr/DevisEnLigne/js/datepicker.js"></script>-->
 </head>
 
 <!--body-->
@@ -77,7 +77,7 @@
 					</div>
 
 					<div>
-						<button class="btn" type="submit" name="action">Continuer</button>
+						<button class="btn" type="submit">Continuer</button>
 					</div>
 				</form>
 
@@ -103,7 +103,7 @@
 					</div>
 
 					<div class="boutton">
-						<button class="btn" type="submit" name="action">Continuer</button>
+						<button class="btn" type="submit">Continuer</button>
 					</div>
 				</form>
 
@@ -116,7 +116,7 @@
 								<div class="collapsible-body">
 									<div>
 										<label for="date_id">Indiquez la date souhaitée:<span>*</span></label>
-										<input type="text" name="date" id="date_id" autocomplete="off" required>
+										<input type="date" name="date" id="date_id" required>
 									</div>
 
 									<div>
@@ -164,6 +164,7 @@
 							<li>
 								<div class="collapsible-header">Quelques options pour agrémenter votre événement ? </div>
 								<div class="collapsible-body">
+									<div class="divspe">
 									<label>Forfait traiteur ?<span> * </span></label>
 									<p>
 										<label>
@@ -195,8 +196,9 @@
 											<span>Formule à 30 € par personne, entrée/plat/dessert</span>
 										</label>
 									</div>
+								</div>
 
-									<div>
+									<div class="divspe">
 										<label>Forfait bar ?<span> * </span></label>
 										<p>
 											<label>
@@ -230,7 +232,7 @@
 										</div>
 									</div>
 
-									<div id="attente">
+									<div id="attente" class="divspe">
 										<label>Un accès à nos simulateurs à sensations ?<span> * </span></label>
 										<p>
 											<label>
@@ -277,17 +279,17 @@
 											</label>
 											<label>Nombre de participants :</label>
 											<label class="nombreReunion">
-												<input name="nombreReunion" placeholder="_ _" type="number" min="2" max="25">
+												<input name="nombreReunion" placeholder="_ _" type="number" min="2" max="25" required>
 											</label>
 										</div>
 
 										<div id="tempsReunion">
 											<label>
-												<input class="with-gap" name="tempsReunion" type="radio" value="0">
+												<input class="with-gap" name="tempsReunion" type="radio" value="0" required>
 												<span>1/2 Journée ?</span>
 											</label>
 											<label>
-												<input class="with-gap" name="tempsReunion" type="radio" value="1">
+												<input class="with-gap" name="tempsReunion" type="radio" value="1" required>
 												<span>Journée entière ?</span>
 											</label>
 										</div>
@@ -299,17 +301,17 @@
 											</label>
 											<label>Nombre de participants :</label>
 											<label class="nombreReunion">
-												<input name="nombrePleniere" placeholder="_ _" type="number" min="2" max="60">
+												<input name="nombrePleniere" placeholder="_ _" type="number" min="2" max="60" required>
 											</label>
 										</div>
 
 										<div id="tempsPleniere">
 											<label>
-												<input class="with-gap" name="tempsPleniere" type="radio" value="0">
+												<input class="with-gap" name="tempsPleniere" type="radio" value="0" required>
 												<span>1/2 Journée ?</span>
 											</label>
 											<label>
-												<input class="with-gap" name="tempsPleniere" type="radio" value="1">
+												<input class="with-gap" name="tempsPleniere" type="radio" value="1" required>
 												<span>Journée entière ?</span>
 											</label>
 										</div>
@@ -324,7 +326,7 @@
 						</div>
 
 						<div>
-							<button class="btn" src="#tableau" type="submit">Finaliser</button>
+							<button class="btn" type="submit">Finaliser</button>
 						</div>
 					</form>
 				</div>
@@ -503,6 +505,7 @@
 												<span>Réunion (2 à 25 personnes)</span>
 											</label>
 											<label class="nombreReunion">
+												<label>Nombre de participants :</label>
 												<input name="nombreReunionTel" placeholder="_ _" type="number" min="2" max="25">
 											</label>
 										</div>
@@ -524,6 +527,7 @@
 												<span>Plénière (2 à 60 personnes)</span>
 											</label>
 											<label class="nombreReunion">
+												<label>Nombre de participants :</label>
 												<input name="nombrePleniereTel" placeholder="_ _" type="number" min="2" max="60">
 											</label>
 										</div>
@@ -549,7 +553,7 @@
 						</div>
 
 						<div class="boutton">
-							<button class="btn" src="#tableau" type="submit">Finaliser</button>
+							<button class="btn" type="submit">Finaliser</button>
 						</div>
 					</form>
 				</div>
@@ -702,7 +706,7 @@
 					</p>
 
 					<p id="side">
-						Pour votre événement du <B id="date2"></B>, <B id="moment2"></B>,<br>pour <B id="nbrPersonne"></B> personnes,<br>pour une durée de jeu de <br><B id="duree2"></B><br><br>Le tarif est de : <br><B id="prix"></B>
+						Pour votre événement du <B id="date2"></B>, <B id="moment2"></B>, pour <B id="nbrPersonne"></B> personnes, pour une durée de jeu de <B id="duree2"></B><br>Le tarif est de : <br><B id="prix"></B>
 					</p>
 				</div>
 			</div>
@@ -741,7 +745,7 @@
 			jQuery('.collapsible').collapsible();
 		});
 
-		const picker = datepicker('#date_id',
+		/*const picker = datepicker('#date_id',
 		{
 			startDay : 1,
 			customDays: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
@@ -754,7 +758,7 @@
 				const value = date.toLocaleDateString()
     				input.value = value // => '1/1/2099'
     			}
-    		});
+    		});*/
 
     	</script>
     </body>

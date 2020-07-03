@@ -46,6 +46,7 @@ B {
 
 .sidebar.divspe div {
   margin: auto;
+  padding: 3%;
 }
 
 #prix {
@@ -85,9 +86,9 @@ B {
   padding-left: 3%;
 }
 
-.nombreReunion {
-  padding-left: 3%;
-  width: 15%;
+.nombreReunion label {
+  display: inline;
+  font-size: medium;
 }
 
 #alert {
@@ -103,7 +104,7 @@ B {
 }
 
 .divspe {
-  display: flex;
+  display: inline;
 }
 
 .boutton {
@@ -240,17 +241,13 @@ B {
 
 @media only screen and (min-width: 1170px) {
   .cd-popup-container {
-    margin: 8em auto;
+    margin: 16em auto;
   }
 }
 
 @media (max-width: 640px) {
   body {
     width: 100%;
-  }
-
-  label {
-    font-size: x-large;
   }
 
   input {
@@ -265,38 +262,22 @@ B {
     font-size: xx-small;
   }
 
+  label {
+    font-size: medium;
+  }
+
   #formTel input {
-    max-width: 65%;
+    font-size: larger;
   }
 
   #formTel label {
-    max-width: 30%;
-  }
-
-  #formTel2 .divspe input {
-    max-width: 60%;
+    font-size: x-large;
+    margin-top: 2%;
   }
 
   #formTel2 .divspe select {
-    max-width: 60%;
-    font-size: smaller;
+    font-size: x-small;
     min-width: 0;
-  }
-
-  #formTel2 .divspe label {
-    max-width: 30%;
-  }
-
-  #reunionTel label span {
-    max-width: 75%;
-  }
-
-  #reunionTel input {
-    max-width: 35%;
-  }
-
-  .collapsible-header {
-    font-size: xx-large;
   }
 
   .section {
@@ -305,16 +286,8 @@ B {
 
   .sidebar {
     display: none;
-    width: 80% !important;
-    padding-left: 10% !important;
+    width: 100%;
     font-size: larger !important;
-    margin-top: 5%;
-    padding-bottom: 5%;
-  }
-
-  .content {
-    width: 89% !important;
-    padding-left: 5% !important;
   }
 
   .modal {
@@ -330,12 +303,13 @@ B {
   }
 
   #reunionTel input[type=number]:not(.browser-default) {
+    display: inline;
     background-color: transparent;
     border: none;
     border-radius: 0;
     outline: none;
     height: 3rem;
-    width: 100%;
+    width: 34%;
     font-size: 16px;
     margin: 0;
     padding: 0;
@@ -348,6 +322,10 @@ B {
     transition: box-shadow .3s, border .3s;
     transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
   }
+}
+
+.collapsible-header {
+  font-size: xx-large;
 }
 
 .sidebarTel {
@@ -523,12 +501,10 @@ ul:not(.browser-default) > li {
 
   label {
     display: block;
-    margin: auto;
-    padding-right: 2%;
     color: white;
-    font-size: medium;
-    padding-top: 0.5%;
     padding-bottom: 1%;
+    font-size: x-large;
+    margin-top: 2%;
   }
 
 /* Text Inputs + Textarea
@@ -725,11 +701,13 @@ select:disabled {
 
 .sidebar {
   background-color: white;
-  width: 30%;
+  width: 100%;
   text-align: center;
-  margin-left: 5%;
-  border-radius: 15px;
   font-size: 200%;
+  height: auto;
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 
 .sidebar p {
@@ -738,10 +716,13 @@ select:disabled {
 }
 
 .content {
-  max-width: 1280px;
-  width: 70%;
+  width: 100%;
 }
 
 .dropdown-content.select-dropdown {
   display: none;
+}
+
+.active {
+  width: 100%;
 }
