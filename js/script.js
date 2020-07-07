@@ -554,8 +554,6 @@ let tempsReunion = document.getElementById("tempsReunion");
 let tempsPleniere = document.getElementById("tempsPleniere");
 
 let reunion2 = document.getElementsByName("reunion");
-let nombreReunion = document.getElementsByName("nombreReunion");
-let nombrePleniere = document.getElementsByName("nombrePleniere");
 let tempsReunion2 = document.getElementsByName("tempsReunion");
 let tempsPleniere2 = document.getElementsByName("tempsPleniere");
 
@@ -563,10 +561,19 @@ tempsReunion.style.display = "none";
 tempsPleniere.style.display = "none";
 
 let prixSeminaire = 0;
-let nombrePersonneReunion = nombreReunion[0].value;
+let nombrePersonneReunion = nombreDePersonne.value;
 
 let typeSeminaire;
 let dureeSem;
+
+nombreDePersonne.addEventListener("change", function() {
+	if (nombreDePersonne.value < 25) {
+		reunion2[1].removeAttribute("disabled", "");
+	}
+	else if (nombreDePersonne.value < 60) {
+		reunion2[2].removeAttribute("disabled", "");
+	}
+});
 
 reunion2[0].addEventListener("click", function() {
 	document.getElementById("seminaire2").style.display = "none";
@@ -583,18 +590,29 @@ reunion2[0].addEventListener("click", function() {
 		tempsPleniere2[i].removeAttribute("required", "");
 	}
 
-	nombreReunion[0].value = "";
-	nombrePleniere[0].value = "";
+	nombrePersonneReunion = "";
 
 	prixSeminaire = 0;
 	prix.innerHTML = (calculPrix(prixBase) + pTotal + prixSeminaire) + " € HT";
 });
 
 reunion2[1].addEventListener("click", function() {
-	document.getElementById("seminaire2").style.display = "table-row";
-	tempsReunion.style.display = "inline-block";
-	tempsPleniere.style.display = "none";
 
+	if (nombreDePersonne.value > 25) {
+		document.getElementById("alert").innerHTML = "La capacité maximale de notre salle de réunion est de 25 personnes, vous pouvez soit dimunuer le nombre de participants, soit opter pour le format séminaire.";
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+		reunion2[1].setAttribute("disabled", "");
+		reunion2[1].checked = false;
+		tempsReunion.style.display = "none";
+	}
+	else {
+		tempsReunion.style.display = "inline-block";
+	}
+
+	document.getElementById("seminaire2").style.display = "table-row";
+	tempsPleniere.style.display = "none";
+	
 	typeSeminaire = "reunion";
 
 	for (let i = 0; i != 2; i ++) {
@@ -603,81 +621,38 @@ reunion2[1].addEventListener("click", function() {
 		tempsPleniere2[i].removeAttribute("required", "");
 	}
 
-	nombrePleniere[0].value = "";
-
-	document.getElementsByName("nombreReunion")[0].setAttribute("required", "");
+	nombrePersonneReunion = nombreDePersonne.value;
 });
 
 reunion2[2].addEventListener("click", function() {
-	document.getElementById("seminaire2").style.display = "table-row";
-	tempsPleniere.style.display = "inline-block";
-	tempsReunion.style.display = "none";
 
-	typeSeminaire = "plénière";
-
-	for (let i = 0; i != 2; i ++) {
-		tempsReunion2[i].checked = false;
-		tempsReunion2[i].removeAttribute("required", "");
-		tempsPleniere2[i].setAttribute("required", "");
-	}
-
-	nombreReunion[0].value = "";
-
-	document.getElementsByName("nombrePleniere")[0].setAttribute("required", "");
-});
-
-nombreReunion[0].addEventListener("click", function() {
-	tempsReunion.style.display = "inline-block";
-	tempsPleniere.style.display = "none";
-
-	reunion2[1].checked = true;
-	reunion2[2].checked = false;
-
-	typeSeminaire = "réunion";
-
-	for (let i = 0; i != 2; i ++) {
-		tempsPleniere2[i].checked = false;
-		tempsReunion2[i].setAttribute("required", "");
-		tempsPleniere2[i].removeAttribute("required", "");
-	}
-
-	nombrePleniere[0].value = "";
-});
-
-nombreReunion[0].addEventListener("change", function() {
-	if (nombreReunion[0].value > 25 || nombreReunion[0].value < 2) {
-		document.getElementById("alert").innerHTML = "La capacité maximale de notre salle de réunion est de 25 personnes, vous pouvez soit dimunuer le nombre de participants, soit opter pour le format séminaire.";
-		document.getElementById("cd-popup").setAttribute("class", "is-visible");
-
-		nombreReunion[0].value = "";
-	}
-});
-
-nombrePleniere[0].addEventListener("click", function() {
-	tempsReunion.style.display = "none";
-	tempsPleniere.style.display = "inline-block";
-
-	reunion2[2].checked = true;
-	reunion2[1].checked = false;
-
-	typeSeminaire = "plénière";
-
-	for (let i = 0; i != 2; i ++) {
-		tempsReunion2[i].checked = false;
-		tempsReunion2[i].removeAttribute("required", "");
-		tempsPleniere2[i].setAttribute("required", "");
-	}
-
-	nombreReunion[0].value = "";
-});
-
-nombrePleniere[0].addEventListener("change", function() {
-	if (nombrePleniere[0].value > 60 || nombrePleniere[0].value < 2) {
+	if (nombreDePersonne.value > 60) {	
 		document.getElementById("alert").innerHTML = "La capacité maximale de l'espace de séminaire en plénière est de 60 personnes.";
 		document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
-		nombrePleniere[0].value = "";
+		reunion2[1].setAttribute("disabled", "");
+		reunion2[2].setAttribute("disabled", "");
+		
+		reunion2[2].checked = false;
+		tempsPleniere.style.display = "none";
 	}
+	else {
+		tempsPleniere.style.display = "inline-block";
+		reunion2[2].removeAttribute("disabled", "");		
+	}
+
+	document.getElementById("seminaire2").style.display = "table-row";
+	tempsReunion.style.display = "none";
+
+	typeSeminaire = "plénière";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsReunion2[i].checked = false;
+		tempsReunion2[i].removeAttribute("required", "");
+		tempsPleniere2[i].setAttribute("required", "");
+	}
+
+	nombrePersonneReunion = nombreDePersonne.value;
 });
 
 tempsReunion2[0].addEventListener("click", function() {
@@ -747,13 +722,8 @@ function completeDevis() {
 	document.getElementById("prixUpersonne").innerHTML = prixBase + " €";
 	document.getElementById("prixTpersonne").innerHTML = prixBase * nombreDePersonne.value + " €";
 
-	if (typeSeminaire == "reunion") {
-		document.getElementById("nombreSem").innerHTML = nombreReunion[0].value + " personnes"
-		+ "<br>" + dureeSem;
-	}
-	else {
-		document.getElementById("nombreSem").innerHTML = nombrePleniere[0].value + " personnes" + dureeSem;
-	}
+	document.getElementById("nombreSem").innerHTML = nombrePersonneReunion + " personnes"
+	+ "<br>" + dureeSem;	
 
 	document.getElementById("formatSem").innerHTML = typeSeminaire;
 	
@@ -1064,9 +1034,9 @@ for (let i = 0; i < 3; i ++) {
 /* Gestion des moments téléphone */
 
 dateTel.addEventListener("change", function() {
-	jour = dateTel.value.slice(0,2);
-	mois = dateTel.value.slice(3,5);
-	annee = dateTel.value.slice(6,10);
+	jour = dateTel.value.slice(8,10);
+	mois = dateTel.value.slice(5,7);
+	annee = dateTel.value.slice(0,4);
 
 	maDate = new Date(annee, mois - 1, jour);
 
@@ -1285,8 +1255,6 @@ let tempsReunionTel = document.getElementById("tempsReunionTel");
 let tempsPleniereTel = document.getElementById("tempsPleniereTel");
 
 let reunionTel2 = document.getElementsByName("reunionTel");
-let nombreReunionTel = document.getElementsByName("nombreReunionTel");
-let nombrePleniereTel = document.getElementsByName("nombrePleniereTel");
 let tempsReunionTel2 = document.getElementsByName("tempsReunionTel");
 let tempsPleniereTel2 = document.getElementsByName("tempsPleniereTel");
 
@@ -1294,7 +1262,16 @@ tempsReunionTel.style.display = "none";
 tempsPleniereTel.style.display = "none";
 document.getElementById("seminaire2").style.display = "none";
 
-let nombrePersonneReunionTel = nombreReunionTel[0].value;
+let nombrePersonneReunionTel = nombreDePersonneTel.value;
+
+nombreDePersonneTel.addEventListener("change", function() {
+	if (nombreDePersonneTel.value < 25) {
+		reunionTel2[1].removeAttribute("disabled", "");
+	}
+	else if (nombreDePersonneTel.value < 60) {
+		reunionTel2[2].removeAttribute("disabled", "");
+	}
+});
 
 reunionTel2[0].addEventListener("click", function() {
 	tempsReunionTel.style.display = "none";
@@ -1309,84 +1286,60 @@ reunionTel2[0].addEventListener("click", function() {
 		tempsReunionTel2[i].removeAttribute("required", "");
 		tempsPleniereTel2[i].removeAttribute("required", "");
 	}
-
-	nombreReunionTel[0].value = "";
-	nombrePleniereTel[0].value = "";
-
+	
+	nombrePersonneReunionTel = "";
+	
 	prixSeminaire = 0;
 	document.getElementById("prixTel").innerHTML = (calculPrixTel(prixBase) + pTotal + prixSeminaire) + " € HT";
 });
 
 reunionTel2[1].addEventListener("click", function() {
-	document.getElementById("seminaire2").style.display = "table-row";
-	tempsReunionTel.style.display = "block";
-	tempsPleniereTel.style.display = "none";
 
-	typeSeminaire = "réunion";
-
-	for (let i = 0; i != 2; i ++) {
-		tempsPleniereTel2[i].checked = false;
-		tempsReunionTel2[i].setAttribute("required", "");
-		tempsPleniereTel2[i].removeAttribute("required", "");
-	}
-
-	nombrePleniere[0].value = "";
-
-	document.getElementsByName("nombreReunionTel")[0].setAttribute("required", "");
-});
-
-reunionTel2[2].addEventListener("click", function() {
-	document.getElementById("seminaire2").style.display = "table-row";
-	tempsPleniereTel.style.display = "block";
-	tempsReunionTel.style.display = "none";
-
-	typeSeminaire = "plénière";
-
-	for (let i = 0; i != 2; i ++) {
-		tempsReunionTel2[i].checked = false;
-		tempsReunionTel2[i].removeAttribute("required", "");
-		tempsPleniereTel2[i].setAttribute("required", "");
-	}
-
-	nombreReunionTel[0].value = "";
-
-	document.getElementsByName("nombrePleniereTel")[0].setAttribute("required", "");
-});
-
-nombreReunionTel[0].addEventListener("click", function() {
-	tempsReunionTel.style.display = "block";
-	tempsPleniereTel.style.display = "none";
-
-	reunionTel2[1].checked = true;
-	reunionTel2[2].checked = false;
-
-	typeSeminaire = "réunion";
-
-	for (let i = 0; i != 2; i ++) {
-		tempsPleniereTel2[i].checked = false;
-		tempsReunionTel2[i].setAttribute("required", "");
-		tempsPleniereTel2[i].removeAttribute("required", "");
-	}
-
-	nombrePleniereTel[0].value = "";
-});
-
-nombreReunionTel[0].addEventListener("change", function() {
-	if (nombreReunionTel[0].value > 25 || nombreReunionTel[0].value < 2) {
+	if (nombreDePersonneTel.value > 25) {
 		document.getElementById("alert").innerHTML = "La capacité maximale de notre salle de réunion est de 25 personnes, vous pouvez soit dimunuer le nombre de participants, soit opter pour le format séminaire.";
 		document.getElementById("cd-popup").setAttribute("class", "is-visible");
 
-		nombreReunionTel[0].value = "";
+		reunionTel2[1].setAttribute("disabled", "");
+		reunionTel2[1].checked = false;
+		tempsReunionTel.style.display = "none";
 	}
+	else {
+		tempsReunionTel.style.display = "block";
+	}
+
+	document.getElementById("seminaire2").style.display = "table-row";
+	tempsPleniereTel.style.display = "none";
+
+	typeSeminaire = "réunion";
+
+	for (let i = 0; i != 2; i ++) {
+		tempsPleniereTel2[i].checked = false;
+		tempsReunionTel2[i].setAttribute("required", "");
+		tempsPleniereTel2[i].removeAttribute("required", "");
+	}
+
+	nombrePersonneReunionTel = nombreDePersonne.value;
 });
 
-nombrePleniereTel[0].addEventListener("click", function() {
+reunionTel2[2].addEventListener("click", function() {
+
+	if (nombreDePersonneTel.value > 60) {	
+		document.getElementById("alert").innerHTML = "La capacité maximale de l'espace de séminaire en plénière est de 60 personnes.";
+		document.getElementById("cd-popup").setAttribute("class", "is-visible");
+
+		reunionTel2[1].setAttribute("disabled", "");
+		reunionTel2[2].setAttribute("disabled", "");
+		
+		reunionTel2[2].checked = false;
+		tempsPleniereTel.style.display = "none";
+	}
+	else {
+		tempsPleniereTel.style.display = "block";
+		reunionTel2[2].removeAttribute("disabled", "");		
+	}
+
+	document.getElementById("seminaire2").style.display = "table-row";
 	tempsReunionTel.style.display = "none";
-	tempsPleniereTel.style.display = "block";
-
-	reunionTel2[2].checked = true;
-	reunionTel2[1].checked = false;
-
 	typeSeminaire = "plénière";
 
 	for (let i = 0; i != 2; i ++) {
@@ -1395,16 +1348,7 @@ nombrePleniereTel[0].addEventListener("click", function() {
 		tempsPleniereTel2[i].setAttribute("required", "");
 	}
 
-	nombreReunionTel[0].value = "";
-});
-
-nombrePleniereTel[0].addEventListener("change", function() {
-	if (nombrePleniereTel[0].value > 60 || nombrePleniereTel[0].value < 2) {
-		document.getElementById("alert").innerHTML = "La capacité maximale de l'espace de séminaire en plénière est de 60 personnes.";
-		document.getElementById("cd-popup").setAttribute("class", "is-visible");
-
-		nombrePleniereTel[0].value = "";
-	}
+	nombrePersonneReunionTel = nombreDePersonne.value;
 });
 
 tempsReunionTel2[0].addEventListener("click", function() {
@@ -1509,13 +1453,8 @@ function completeDevisTel() {
 	document.getElementById("prixUpersonne").innerHTML = prixBase + " €";
 	document.getElementById("prixTpersonne").innerHTML = prixBase * nombreDePersonneTel.value + " €";
 
-	if (typeSeminaire == "reunion") {
-		document.getElementById("nombreSem").innerHTML = nombreReunionTel[0].value + " personnes"
-		+ "<br>" + dureeSem;
-	}
-	else {
-		document.getElementById("nombreSem").innerHTML = nombrePleniereTel[0].value + " personnes" + dureeSem;
-	}
+	document.getElementById("nombreSem").innerHTML = nombrePersonneReunionTel + " personnes"
+	+ "<br>" + dureeSem;
 
 	document.getElementById("formatSem").innerHTML = typeSeminaire;
 

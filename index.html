@@ -72,8 +72,8 @@
 					</div>
 
 					<div>
-						<label for="tel_id">Téléphone: </label>
-						<input type="tel" name="tel" id="tel_id" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" placeholder="Ex: 06 XX XX XX XX">
+						<label for="tel_id">Téléphone:<span> *</span></label>
+						<input type="tel" name="tel" id="tel_id" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" placeholder="Ex: 06 XX XX XX XX" required>
 					</div>
 
 					<div>
@@ -99,7 +99,7 @@
 
 					<div class="divspe">
 						<label for="tel_tel_id"><i class="material-icons">phone</i></label>
-						<input type="tel" name="tel" id="tel_tel_id" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" placeholder="Ex: 06 XX XX XX XX">
+						<input type="tel" name="tel" id="tel_tel_id" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" placeholder="Ex: 06 XX XX XX XX" required>
 					</div>
 
 					<div class="boutton">
@@ -277,10 +277,6 @@
 												<input class="with-gap" name="reunion" type="radio" value="1" required>
 												<span>Oui, format réunion (2 à 25 personnes)</span>
 											</label>
-											<label>Nombre de participants :</label>
-											<label class="nombreReunion">
-												<input name="nombreReunion" placeholder="_ _" type="number" min="2" max="25" required>
-											</label>
 										</div>
 
 										<div id="tempsReunion">
@@ -298,10 +294,6 @@
 											<label>
 												<input class="with-gap" name="reunion" type="radio" value="2" required>
 												<span>Oui, format plénière (2 à 60 personnes)</span>
-											</label>
-											<label>Nombre de participants :</label>
-											<label class="nombreReunion">
-												<input name="nombrePleniere" placeholder="_ _" type="number" min="2" max="60" required>
 											</label>
 										</div>
 
@@ -504,10 +496,6 @@
 												<input class="with-gap" name="reunionTel" type="radio" value="1" required>
 												<span>Réunion (2 à 25 personnes)</span>
 											</label>
-											<label class="nombreReunion">
-												<label>Nombre de participants :</label>
-												<input name="nombreReunionTel" placeholder="_ _" type="number" min="2" max="25">
-											</label>
 										</div>
 
 										<div id="tempsReunionTel" class="divspe">
@@ -525,10 +513,6 @@
 											<label>
 												<input class="with-gap" name="reunionTel" type="radio" value="2" required>
 												<span>Plénière (2 à 60 personnes)</span>
-											</label>
-											<label class="nombreReunion">
-												<label>Nombre de participants :</label>
-												<input name="nombrePleniereTel" placeholder="_ _" type="number" min="2" max="60">
 											</label>
 										</div>
 

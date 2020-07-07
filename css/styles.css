@@ -26,6 +26,11 @@ p {
   background-image: none;
 }
 
+.material-icons {
+  vertical-align: middle;
+  margin-top: -.55ex;
+}
+
 .cd-buttons {
   margin: auto;
   display: flex;
